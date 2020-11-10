@@ -1,15 +1,17 @@
 import React from "react";
 
-import { useRouter, Router } from "next/router";
+import { useRouter } from "next/router";
 import Head from "next/head";
-import Link from "next/link";
+
+import Layout from "../components/Layout/Layout";
+import Gallery from "../components/Gallery/Gallery";
 
 // data
 import { getAllPostsWithSlug, getPost } from "../lib/api";
 
 // styles
 import styles from "../styles/Home.module.css";
-import blogStyles from "../styles/Blog.module.css";
+import singleStyles from "../styles/Single.module.css";
 
 export default function Post({ postData }) {
   const router = useRouter();
@@ -25,35 +27,20 @@ export default function Post({ postData }) {
     }/${newDate.getFullYear()}`;
   };
 
-  console.log("fallback", router.isFallback);
+  console.log(postData);
   return (
     <div className={styles.container}>
       <Head>
         <title>{postData.title}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <main className={styles.main}>
-        {router.isFallback ? (
-          <h2>Loading...</h2>
-        ) : (
-          <article className={blogStyles.postmeta}>
-            <div className={blogStyles.postmeta}>
-              <h1 className={styles.title}>{postData.title}</h1>
-              <p>{formatDate(postData.date)}</p>
-            </div>
-            <div
-              className="post-content content"
-              dangerouslySetInnerHTML={{ __html: postData.content }}
-            />
-          </article>
-        )}
-        <p>
-          <Link href="/">
-            <a>back to articles</a>
-          </Link>
-        </p>
-      </main>
+      <Layout>
+        <h1>{postData.title}</h1>
+        {postData.extraPostInfo.gallery ? (
+          <Gallery images={postData.extraPostInfo.gallery} />
+        ) : null}
+        <div dangerouslySetInnerHTML={{ __html: postData.content }}></div>
+      </Layout>
     </div>
   );
 }
@@ -69,7 +56,6 @@ export async function getServerSidePaths() {
 
 export async function getServerSideProps({ params }) {
   const data = await getPost(params.post);
-
   return {
     props: {
       postData: data.post,

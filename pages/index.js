@@ -1,12 +1,55 @@
 import Head from "next/head";
 import Link from "next/link";
 
+import Layout from "../components/Layout/Layout";
+
 // data
 import { getAllPosts } from "../lib/api";
 
 // styles
 import styles from "../styles/Home.module.css";
-import blogStyles from "../styles/Blog.module.css";
+import blogStyles from "../styles/Single.module.css";
+
+export default function Home({ allPosts: { edges } }) {
+  console.log(edges);
+  return (
+    <div className={styles.container}>
+      <Head>
+        <title>Blog articles page</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
+      <Layout>
+        <main className={styles.main}>
+          <h1 className={styles.title}>Latest blog articles</h1>
+          <hr />
+          <section>
+            {edges.map(({ node }) => (
+              <div className={blogStyles.listitem} key={node.id}>
+                <div className={blogStyles.listitem__thumbnail}>
+                  <figure>
+                    {node.featuredImage ? (
+                      <img
+                        src={node.featuredImage.node.sourceUrl}
+                        alt={node.title}
+                      />
+                    ) : null}
+                  </figure>
+                </div>
+                <div className={blogStyles.listitem__content}>
+                  <h2>{node.title}</h2>
+                  <Link href={`/${node.slug}`}>
+                    <a>Read more</a>
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </section>
+        </main>
+      </Layout>
+    </div>
+  );
+}
 
 export async function getServerSideProps() {
   const allPosts = await getAllPosts();
@@ -16,44 +59,3 @@ export async function getServerSideProps() {
     },
   };
 }
-
-const Home = ({ allPosts: { edges } }) => {
-  console.log(edges);
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Blog articles page</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>Latest blog articles</h1>
-        <hr />
-        <section>
-          {edges.map(({ node }) => (
-            <div className={blogStyles.listitem} key={node.id}>
-              <div className={blogStyles.listitem__thumbnail}>
-                <figure>
-                  {node.featuredImage ? (
-                    <img
-                      src={node.featuredImage.node.sourceUrl}
-                      alt={node.title}
-                    />
-                  ) : null}
-                </figure>
-              </div>
-              <div className={blogStyles.listitem__content}>
-                <h2>{node.title}</h2>
-                <Link href={`/${node.slug}`}>
-                  <a>Read more</a>
-                </Link>
-              </div>
-            </div>
-          ))}
-        </section>
-      </main>
-    </div>
-  );
-};
-
-export default Home;
