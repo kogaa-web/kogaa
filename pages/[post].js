@@ -5,11 +5,11 @@ import Head from "next/head";
 import Link from "next/link";
 
 // data
-import { getAllPostsWithSlug, getPost } from "../../lib/api";
+import { getAllPostsWithSlug, getPost } from "../lib/api";
 
 // styles
-import styles from "../../styles/Home.module.css";
-import blogStyles from "../../styles/Blog.module.css";
+import styles from "../styles/Home.module.css";
+import blogStyles from "../styles/Blog.module.css";
 
 export default function Post({ postData }) {
   const router = useRouter();
@@ -20,7 +20,6 @@ export default function Post({ postData }) {
 
   const formatDate = (date) => {
     const newDate = new Date(date);
-
     return `${newDate.getDate()}/${
       newDate.getMonth() + 1
     }/${newDate.getFullYear()}`;
@@ -50,7 +49,7 @@ export default function Post({ postData }) {
           </article>
         )}
         <p>
-          <Link href="/blog">
+          <Link href="/">
             <a>back to articles</a>
           </Link>
         </p>
@@ -63,13 +62,13 @@ export async function getServerSidePaths() {
   const allPosts = await getAllPostsWithSlug();
 
   return {
-    paths: allPosts.edges.map(({ node }) => `/blog/${node.slug}`) || [],
+    paths: allPosts.edges.map(({ node }) => `/${node.slug}`) || [],
     fallback: true,
   };
 }
 
 export async function getServerSideProps({ params }) {
-  const data = await getPost(params.slug);
+  const data = await getPost(params.post);
 
   return {
     props: {

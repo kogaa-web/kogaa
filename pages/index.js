@@ -44,7 +44,7 @@ const Home = ({ allPosts: { edges } }) => {
               </div>
               <div className={blogStyles.listitem__content}>
                 <h2>{node.title}</h2>
-                <Link href={`/blog/${node.slug}`}>
+                <Link href={`/${node.slug}`}>
                   <a>Read more</a>
                 </Link>
               </div>
