@@ -1,3 +1,10 @@
+import Footer from "../Footer/Footer";
+
 export default function layout(props) {
-  return <div>menu{props.children}footer</div>;
+  return (
+    <div>
+      {props.children}
+      <Footer />
+    </div>
+  );
 }
