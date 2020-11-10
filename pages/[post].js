@@ -20,13 +20,6 @@ export default function Post({ postData }) {
     return <p>hmm... looks like an error</p>;
   }
 
-  const formatDate = (date) => {
-    const newDate = new Date(date);
-    return `${newDate.getDate()}/${
-      newDate.getMonth() + 1
-    }/${newDate.getFullYear()}`;
-  };
-
   console.log(postData);
   return (
     <div className={styles.container}>

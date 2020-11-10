@@ -2,13 +2,13 @@ import Head from "next/head";
 import Link from "next/link";
 
 import Layout from "../components/Layout/Layout";
+import Card from "../components/Card/Card";
 
 // data
 import { getAllPosts } from "../lib/api";
 
 // styles
 import styles from "../styles/Home.module.css";
-import blogStyles from "../styles/Single.module.css";
 
 export default function Home({ allPosts: { edges } }) {
   console.log(edges);
@@ -20,32 +20,9 @@ export default function Home({ allPosts: { edges } }) {
       </Head>
 
       <Layout>
-        <main className={styles.main}>
-          <h1 className={styles.title}>Latest blog articles</h1>
-          <hr />
-          <section>
-            {edges.map(({ node }) => (
-              <div className={blogStyles.listitem} key={node.id}>
-                <div className={blogStyles.listitem__thumbnail}>
-                  <figure>
-                    {node.featuredImage ? (
-                      <img
-                        src={node.featuredImage.node.sourceUrl}
-                        alt={node.title}
-                      />
-                    ) : null}
-                  </figure>
-                </div>
-                <div className={blogStyles.listitem__content}>
-                  <h2>{node.title}</h2>
-                  <Link href={`/${node.slug}`}>
-                    <a>Read more</a>
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </section>
-        </main>
+        {edges.map(({ node }) => (
+          <Card post={node} key={node.id} />
+        ))}
       </Layout>
     </div>
   );
