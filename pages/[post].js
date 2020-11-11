@@ -29,8 +29,8 @@ export default function Post({ postData }) {
       </Head>
       <Layout>
         <h1>{postData.title}</h1>
-        {postData.extraPostInfo.gallery ? (
-          <Gallery images={postData.extraPostInfo.gallery} />
+        {postData.gallery.gallery ? (
+          <Gallery images={postData.gallery.gallery} />
         ) : null}
         <div dangerouslySetInnerHTML={{ __html: postData.content }}></div>
       </Layout>
