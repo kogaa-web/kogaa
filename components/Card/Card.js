@@ -10,12 +10,7 @@ export default function card({ post }) {
       ) : null}
       <p>{formatDate(post.date)}</p>
       <h2>{post.title}</h2>
-      <p>
-        {
-          //post.excerpt.replace(/(<([^>]+)>)/gi, "")
-          post.excerpt
-        }
-      </p>
+      <p>{post.excerpt.replace(/(<([^>]+)>)/gi, "")}</p>
     </div>
   );
 }

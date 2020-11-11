@@ -10,8 +10,8 @@ import { getAllPosts } from "../lib/api";
 // styles
 import styles from "../styles/Home.module.css";
 
-export default function Home({ allPosts: { edges } }) {
-  console.log(edges);
+export default function Home({ allPosts }) {
+  console.log(allPosts);
   return (
     <div className={styles.container}>
       <Head>
@@ -20,7 +20,7 @@ export default function Home({ allPosts: { edges } }) {
       </Head>
 
       <Layout>
-        {edges.map(({ node }) => (
+        {allPosts.map(({ node }) => (
           <Card post={node} key={node.id} />
         ))}
       </Layout>
