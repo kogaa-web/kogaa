@@ -1,0 +1,6 @@
+@media (min-width: 1024px) {
+  .Content {
+    column-count: 2;
+    column-gap: 65px;
+  }
+}

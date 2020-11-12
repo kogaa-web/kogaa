@@ -37,7 +37,10 @@ export default function Post({ postData }) {
             <strong>{postData.role.role}</strong>
           </p>
         ) : null}
-        <div dangerouslySetInnerHTML={{ __html: postData.content }}></div>
+        <div
+          className={singleStyles.Content}
+          dangerouslySetInnerHTML={{ __html: postData.content }}
+        ></div>
       </Layout>
     </div>
   );
