@@ -17,7 +17,7 @@ export default function Post({ postData }) {
   const router = useRouter();
 
   if ((!router.isFallback && !postData?.slug) || !postData) {
-    return <p>hmm... looks like an error</p>;
+    return <p>post error</p>;
   }
 
   console.log(postData);
@@ -38,20 +38,22 @@ export default function Post({ postData }) {
   );
 }
 
+// Get all possible paths
 export async function getServerSidePaths() {
   const allPosts = await getAllPostsWithSlug();
-
   return {
     paths: allPosts.edges.map(({ node }) => `/${node.slug}`) || [],
     fallback: true,
   };
 }
 
+// Get data for current post by slug
 export async function getServerSideProps({ params }) {
+  console.log(params.post);
   const data = await getPost(params.post);
   return {
     props: {
-      postData: data.post,
+      postData: data,
     },
   };
 }
