@@ -4,13 +4,21 @@ import classes from "./Card.module.css";
 import { formatDate } from "../../lib/util";
 
 export default function card({ post }) {
+  let imageClass = classes.Circle;
   console.log(post);
+  if (post.contentType.node.name === "architects") {
+    imageClass = classes.Triangle;
+  }
   return (
     <div className={classes.Card}>
       {post.featuredImage ? (
         <Link href={`/${post.slug}`}>
           <a>
-            <img src={post.featuredImage.node.sourceUrl} alt={post.title} />
+            <img
+              className={imageClass}
+              src={post.featuredImage.node.sourceUrl}
+              alt={post.title}
+            />
           </a>
         </Link>
       ) : null}

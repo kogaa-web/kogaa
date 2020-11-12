@@ -18,9 +18,11 @@ export default function Home({ allPosts }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        {allPosts.map(({ node }) => (
-          <Card post={node} key={node.id} />
-        ))}
+        <div className={styles.Cards}>
+          {allPosts.map(({ node }) => (
+            <Card post={node} key={node.id} />
+          ))}
+        </div>
       </Layout>
     </div>
   );
