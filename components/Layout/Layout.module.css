@@ -1,0 +1,15 @@
+.Layout {
+  max-width: 1250px;
+  margin: 0 auto;
+  padding: 0 26px;
+}
+@media (min-width: 480px) {
+  .Layout {
+    padding: 0 51px;
+  }
+}
+@media (min-width: 1366px) {
+  .Layout {
+    padding: 0;
+  }
+}

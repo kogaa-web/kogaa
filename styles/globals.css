@@ -24,3 +24,6 @@ a:active {
 h1 {
   font-size: 34px;
 }
+img {
+  max-width: 100%;
+}

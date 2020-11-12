@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Link from "next/link";
 
 import Layout from "../components/Layout/Layout";
 import Card from "../components/Card/Card";
@@ -18,7 +17,6 @@ export default function Home({ allPosts }) {
         <title>Blog articles page</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
       <Layout>
         {allPosts.map(({ node }) => (
           <Card post={node} key={node.id} />

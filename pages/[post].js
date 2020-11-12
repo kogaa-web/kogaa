@@ -28,10 +28,11 @@ export default function Post({ postData }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <h1>{postData.title}</h1>
         {postData.gallery.gallery ? (
           <Gallery images={postData.gallery.gallery} />
         ) : null}
+        <h1>{postData.title}</h1>
+        {postData.role ? <h2>{postData.role.role}</h2> : null}
         <div dangerouslySetInnerHTML={{ __html: postData.content }}></div>
       </Layout>
     </div>
