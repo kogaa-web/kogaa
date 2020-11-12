@@ -3,4 +3,7 @@
     column-count: 2;
     column-gap: 65px;
   }
+  .Content > *:first-child {
+    margin-top: 0;
+  }
 }

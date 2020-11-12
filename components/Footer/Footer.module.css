@@ -1,3 +1,13 @@
 .Footer hr {
   width: 65px;
+  margin-bottom: 80px;
+}
+@media (min-width: 1366px) {
+  .Footer hr {
+    margin-bottom: 120px;
+  }
+}
+.Footer p,
+.Footer a {
+  font-weight: 300;
 }

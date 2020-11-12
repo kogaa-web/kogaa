@@ -1,0 +1,13 @@
+.Gallery {
+  margin: 0 -26px;
+}
+@media (min-width: 480px) {
+  .Gallery {
+    margin: 0 -51px;
+  }
+}
+@media (min-width: 1366px) {
+  .Gallery {
+    margin: 0;
+  }
+}
