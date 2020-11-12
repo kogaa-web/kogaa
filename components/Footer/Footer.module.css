@@ -4,6 +4,8 @@
 }
 @media (min-width: 1366px) {
   .Footer hr {
+    border: none;
+    border-bottom: 1px solid black;
     margin-bottom: 120px;
   }
 }

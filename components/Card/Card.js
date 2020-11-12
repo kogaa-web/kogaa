@@ -22,13 +22,15 @@ export default function card({ post }) {
           </a>
         </Link>
       ) : null}
-      <p>{formatDate(post.date)}</p>
+      <p className={classes.Date}>{formatDate(post.date)}</p>
       <Link href={`/${post.slug}`}>
         <a>
           <h2>{post.title}</h2>
         </a>
       </Link>
-      <p>{post.excerpt.replace(/(<([^>]+)>)/gi, "")}</p>
+      <p className={classes.Excerpt}>
+        {post.excerpt.replace(/(<([^>]+)>)/gi, "")}
+      </p>
     </div>
   );
 }
