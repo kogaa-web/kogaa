@@ -32,9 +32,16 @@ export default function Home({ allPosts }) {
     }
   };
 
-  const loadMorePosts = () => {
-    console.log("Load more posts");
-  };
+  async function loadMorePosts() {
+    const newPosts = await getAllPosts(endCursor);
+    setHasNextPage(newPosts.pageInfo.hasNextPage);
+    setEndCursor(newPosts.pageInfo.endCursor);
+    const allPosts = [...posts];
+    newPosts.edges.map((post) => {
+      allPosts.push(post);
+    });
+    setPosts(allPosts);
+  }
 
   console.log(allPosts);
   return (
