@@ -11,24 +11,29 @@ import styles from "../styles/Home.module.css";
 import { useState, useEffect } from "react";
 
 export default function Home({ allPosts }) {
-  // window.addEventListener("scroll", onScrollHandler);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [posts, setPosts] = useState(allPosts.edges);
+  const [hasNextPage, setHasNextPage] = useState(allPosts.pageInfo.hasNextPage);
+  const [endCursor, setEndCursor] = useState(allPosts.pageInfo.endCursor);
 
+  // Adding and removing scroll handler
   useEffect(() => {
     window.addEventListener("scroll", onScrollHandler);
     return () => window.removeEventListener("scroll", onScrollHandler);
   });
 
-  const [loadingMore, setLoadingMore] = useState(false);
-  const [enoughPosts, setEnoughPosts] = useState(false);
-
   // Detecting scroll to bottom of the page
   const onScrollHandler = () => {
     const siteHeight = document.body.scrollHeight;
     const scrollPosition = window.scrollY + window.innerHeight * 2;
-    if (scrollPosition >= siteHeight && !loadingMore && !enoughPosts) {
+    if (scrollPosition >= siteHeight && !loadingMore && hasNextPage) {
       setLoadingMore(true);
-      console.log("Load more posts");
+      loadMorePosts();
     }
+  };
+
+  const loadMorePosts = () => {
+    console.log("Load more posts");
   };
 
   console.log(allPosts);
@@ -40,7 +45,7 @@ export default function Home({ allPosts }) {
       </Head>
       <Layout>
         <div className={styles.Cards}>
-          {allPosts.map(({ node }) => (
+          {posts.map(({ node }) => (
             <Card post={node} key={node.id} />
           ))}
         </div>
@@ -50,7 +55,7 @@ export default function Home({ allPosts }) {
 }
 
 export async function getServerSideProps() {
-  const allPosts = await getAllPosts();
+  const allPosts = await getAllPosts("");
   return {
     props: {
       allPosts,
