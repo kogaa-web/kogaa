@@ -1,36 +1,47 @@
 import Link from "next/link";
-import { useState, useCallback } from "react";
+import { useState, useRef, useEffect } from "react";
 
 import classes from "./Card.module.css";
 import { formatDate } from "../../lib/util";
 
 export default function card({ post }) {
   const [loaded, setLoaded] = useState(false);
+  const image = useRef();
+
   if (!post.featuredImage) {
     setLoaded(true);
   }
+
   let imageClass = classes.Circle;
   if (post.contentType.node.name === "architects") {
     imageClass = classes.Triangle;
   }
 
-  const onLoad = useCallback(() => {
-    console.log("loaded");
-    setLoaded(true);
+  useEffect(() => {
+    if (image.current.complete) {
+      setLoaded(true);
+    }
   }, []);
+
+  if (!post.featuredImage) {
+    setLoaded(true);
+  }
 
   return (
     <div className={classes.Card}>
-      <Link href={`/${post.slug}`}>
-        <a>
-          <img
-            className={imageClass}
-            src={post.featuredImage.node.sourceUrl}
-            alt={post.title}
-            onLoad={onLoad}
-          />
-        </a>
-      </Link>
+      {post.featuredImage ? (
+        <Link href={`/${post.slug}`}>
+          <a>
+            <img
+              ref={image}
+              className={imageClass}
+              src={post.featuredImage.node.sourceUrl}
+              alt={post.title}
+              onLoad={() => setLoaded(true)}
+            />
+          </a>
+        </Link>
+      ) : null}
 
       {loaded ? (
         <>
