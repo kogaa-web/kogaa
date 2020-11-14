@@ -8,8 +8,29 @@ import { getAllPosts } from "../lib/api";
 
 // styles
 import styles from "../styles/Home.module.css";
+import { useState, useEffect } from "react";
 
 export default function Home({ allPosts }) {
+  // window.addEventListener("scroll", onScrollHandler);
+
+  useEffect(() => {
+    window.addEventListener("scroll", onScrollHandler);
+    return () => window.removeEventListener("scroll", onScrollHandler);
+  });
+
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [enoughPosts, setEnoughPosts] = useState(false);
+
+  // Detecting scroll to bottom of the page
+  const onScrollHandler = () => {
+    const siteHeight = document.body.scrollHeight;
+    const scrollPosition = window.scrollY + window.innerHeight * 2;
+    if (scrollPosition >= siteHeight && !loadingMore && !enoughPosts) {
+      setLoadingMore(true);
+      console.log("Load more posts");
+    }
+  };
+
   console.log(allPosts);
   return (
     <div className={styles.container}>

@@ -5,7 +5,6 @@ import { formatDate } from "../../lib/util";
 
 export default function card({ post }) {
   let imageClass = classes.Circle;
-  console.log(post);
   if (post.contentType.node.name === "architects") {
     imageClass = classes.Triangle;
   }
