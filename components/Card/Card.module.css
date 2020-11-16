@@ -1,24 +1,35 @@
 .Card {
   width: 100%;
 }
-
+.Card img {
+  margin-bottom: 6px;
+}
 .Card a {
   color: inherit;
 }
-
+.Card h2 {
+  margin: 14px 0 13px 0;
+}
 .Circle {
   border-radius: 100%;
 }
-
 .Triangle {
   clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
 }
-.Date {
+.Date,
+.Category {
   font-size: 12px;
   font-weight: 300;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.Category {
+  color: #ef4123;
+  margin-left: auto;
 }
 .Excerpt {
   font-size: 14px;
+  margin-bottom: 76px;
 }
 @media (min-width: 768px) {
   .Card {

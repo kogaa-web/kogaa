@@ -2,6 +2,7 @@ import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
 
 import classes from "./Card.module.css";
+import globalClasses from "../../styles/Global.module.css";
 import { formatDate } from "../../lib/util";
 
 export default function card({ post }) {
@@ -45,7 +46,10 @@ export default function card({ post }) {
 
       {loaded ? (
         <>
-          <p className={classes.Date}>{formatDate(post.date)}</p>
+          <div className={globalClasses.Flex}>
+            <p className={classes.Date}>{formatDate(post.date)}</p>
+            <p className={classes.Category}>events</p>
+          </div>
           <Link href={`/${post.slug}`}>
             <a>
               <h2>{post.title}</h2>

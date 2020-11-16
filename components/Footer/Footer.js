@@ -9,8 +9,8 @@ const footer = () => (
       <a href="#">Linkedin</a>
       <a href="mailto:office@kogaa.eu">office@kogaa.eu</a>
       <p className={classes.CopyrightMobile}>© 2020 KOGAA</p>
+      <p className={classes.CopyrightDesktop}>© 2020 KOGAA Studio</p>
     </div>
-    <p className={classes.CopyrightDesktop}>© 2020 KOGAA Studio</p>
   </footer>
 );
 
