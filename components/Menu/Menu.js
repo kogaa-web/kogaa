@@ -8,7 +8,7 @@ export default function menu() {
   return (
     <div className={classes.MainMenu}>
       <Logo />
-      <Circle />
+      <Circle className={classes.Active} />
       <Square />
       <Triangle />
     </div>
