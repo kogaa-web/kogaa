@@ -1,0 +1,18 @@
+.MainMenu {
+  display: flex;
+  border-bottom: 1px solid #ef4123;
+  justify-content: space-between;
+  padding: 30px 0 19px 0;
+}
+
+@media (min-width: 768px) {
+  .MainMenu {
+    padding-top: 50px;
+  }
+}
+
+@media (min-width: 1366px) {
+  .MainMenu {
+    padding-top: 60px;
+  }
+}
