@@ -13,9 +13,12 @@ export default function card({ post }) {
     setLoaded(true);
   }
 
-  let imageClass = classes.Circle;
-  if (post.contentType.node.name === "architects") {
+  let imageClass = null;
+  if (post.contentType.node.name === "about") {
     imageClass = classes.Triangle;
+  }
+  if (post.contentType.node.name === "news") {
+    imageClass = classes.Circle;
   }
 
   useEffect(() => {
