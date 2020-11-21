@@ -3,21 +3,14 @@ import { useState, useRef, useEffect } from "react";
 
 import classes from "./Card.module.css";
 import globalClasses from "../../styles/Global.module.css";
-import { formatDate } from "../../lib/util";
+import { formatDate, getCategories } from "../../lib/util";
 
 export default function card({ post }) {
   const [loaded, setLoaded] = useState(false);
   const image = useRef();
 
   // Get categories
-  let categories = [];
-  if (post.newsCats) {
-    categories = post.newsCats.nodes;
-  } else if (post.projectsCats) {
-    categories = post.projectsCats.nodes;
-  } else if (post.projectsCats) {
-    categories = post.aboutCats.nodes;
-  }
+  const categories = getCategories(post);
 
   const cardClasses = [classes.Card];
   if (post.contentType.node.name === "about") {
