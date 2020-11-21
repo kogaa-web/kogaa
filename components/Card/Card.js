@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, Fragment } from "react";
 
 import classes from "./Card.module.css";
 import globalClasses from "../../styles/Global.module.css";
@@ -9,7 +9,6 @@ export default function card({ post }) {
   const [loaded, setLoaded] = useState(false);
   const image = useRef();
 
-  // Get categories
   const categories = getCategories(post);
 
   const cardClasses = [classes.Card];
@@ -54,12 +53,12 @@ export default function card({ post }) {
             <div className={classes.Categories}>
               {categories.map((category, index) => {
                 return (
-                  <>
+                  <Fragment key={category.name}>
                     <Link href={`/${category.name}`}>
                       <a>{category.name}</a>
                     </Link>
                     {categories[index + 1] && "|"}
-                  </>
+                  </Fragment>
                 );
               })}
             </div>

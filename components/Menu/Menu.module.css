@@ -16,7 +16,9 @@
     padding-top: 60px;
   }
 }
-
+.MainMenu g {
+  transition: all 0.1s ease-out;
+}
 .Active g {
   fill: #ef4123;
 }

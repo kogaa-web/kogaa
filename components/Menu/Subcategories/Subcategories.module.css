@@ -1,0 +1,9 @@
+.Subcategories {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.Subcategories a {
+  color: #ef4123;
+}
