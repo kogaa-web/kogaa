@@ -13,12 +13,12 @@ export default function card({ post }) {
     setLoaded(true);
   }
 
-  let imageClass = null;
+  const cardClasses = [classes.Card];
   if (post.contentType.node.name === "about") {
-    imageClass = classes.Triangle;
+    cardClasses.push(classes.Triangle);
   }
   if (post.contentType.node.name === "news") {
-    imageClass = classes.Circle;
+    cardClasses.push(classes.Circle);
   }
 
   useEffect(() => {
@@ -32,13 +32,12 @@ export default function card({ post }) {
   }
 
   return (
-    <div className={classes.Card}>
+    <div className={cardClasses.join(" ")}>
       {post.featuredImage ? (
         <Link href={`/${post.slug}`}>
           <a>
             <img
               ref={image}
-              className={imageClass}
               src={post.featuredImage.node.sourceUrl}
               alt={post.title}
               onLoad={() => setLoaded(true)}

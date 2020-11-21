@@ -10,10 +10,10 @@
 .Card h2 {
   margin: 14px 0 13px 0;
 }
-.Circle {
+.Circle img {
   border-radius: 100%;
 }
-.Triangle {
+.Triangle img {
   clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
 }
 .Date,
