@@ -17,15 +17,18 @@
   clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
 }
 .Date,
-.Category {
+.Categories a {
   font-size: 12px;
   font-weight: 300;
   margin-top: 0;
   margin-bottom: 0;
 }
-.Category {
+.Categories {
   color: #ef4123;
   margin-left: auto;
+}
+.Categories a {
+  margin: 0 4px;
 }
 .Excerpt {
   font-size: 14px;

@@ -9,8 +9,14 @@ export default function card({ post }) {
   const [loaded, setLoaded] = useState(false);
   const image = useRef();
 
-  if (!post.featuredImage) {
-    setLoaded(true);
+  // Get categories
+  let categories = [];
+  if (post.newsCats) {
+    categories = post.newsCats.nodes;
+  } else if (post.projectsCats) {
+    categories = post.projectsCats.nodes;
+  } else if (post.projectsCats) {
+    categories = post.aboutCats.nodes;
   }
 
   const cardClasses = [classes.Card];
@@ -21,12 +27,14 @@ export default function card({ post }) {
     cardClasses.push(classes.Circle);
   }
 
+  // Load text only when image is loaded for smooth animation of appearing
   useEffect(() => {
     if (image.current.complete) {
       setLoaded(true);
     }
   }, []);
 
+  // Handling case when there is no featured image
   if (!post.featuredImage) {
     setLoaded(true);
   }
@@ -50,7 +58,18 @@ export default function card({ post }) {
         <>
           <div className={globalClasses.Flex}>
             <p className={classes.Date}>{formatDate(post.date)}</p>
-            <p className={classes.Category}>events</p>
+            <div className={classes.Categories}>
+              {categories.map((category, index) => {
+                return (
+                  <>
+                    <Link href={`/${category.name}`}>
+                      <a>{category.name}</a>
+                    </Link>
+                    {categories[index + 1] && "|"}
+                  </>
+                );
+              })}
+            </div>
           </div>
           <Link href={`/${post.slug}`}>
             <a>
