@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
 import classes from "./Menu.module.css";
@@ -9,9 +9,16 @@ import Triangle from "../../assets/triangle.svg";
 import { fetchCategories } from "../../lib/api";
 import Subcategories from "./Subcategories/Subcategories";
 
-export default function menu({ categories }) {
-  console.log(categories);
+export default function menu() {
+  const [categories, setCategories] = useState(null);
   const [category, setCategory] = useState(null);
+
+  useEffect(async () => {
+    if (!categories) {
+      const subcats = await fetchCategories();
+      setCategories(subcats);
+    }
+  });
 
   return (
     <>
@@ -52,16 +59,9 @@ export default function menu({ categories }) {
           </a>
         </Link>
       </div>
-      {/*category ? <Subcategories categories={categories[category]} /> : null*/}
+      {categories && category ? (
+        <Subcategories categories={categories[category].nodes} />
+      ) : null}
     </>
   );
-}
-
-export async function getServerSideProps() {
-  const categories = await fetchCategories();
-  return {
-    props: {
-      categories,
-    },
-  };
 }
