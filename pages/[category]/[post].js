@@ -3,15 +3,15 @@ import React from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
 
-import Layout from "../components/Layout/Layout";
-import Gallery from "../components/Gallery/Gallery";
+import Layout from "../../components/Layout/Layout";
+import Gallery from "../../components/Gallery/Gallery";
 
 // data
-import { getAllPostsWithSlug, getPost } from "../lib/api";
+import { getAllPostsWithSlug, getPost } from "../../lib/api";
 
 // styles
-import styles from "../styles/Home.module.css";
-import singleStyles from "../styles/Single.module.css";
+import styles from "../../styles/Home.module.css";
+import singleStyles from "../../styles/Single.module.css";
 
 export default function Post({ postData }) {
   const router = useRouter();

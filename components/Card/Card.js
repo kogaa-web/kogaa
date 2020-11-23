@@ -34,7 +34,7 @@ export default function card({ post }) {
   return (
     <div className={cardClasses.join(" ")}>
       {post.featuredImage ? (
-        <Link href={`/${post.slug}`}>
+        <Link href={`/${post.contentType.node.name}/${post.slug}`}>
           <a>
             <img
               ref={image}
@@ -63,7 +63,7 @@ export default function card({ post }) {
               })}
             </div>
           </div>
-          <Link href={`/${post.slug}`}>
+          <Link href={`/${post.contentType.node.name}/${post.slug}`}>
             <a>
               <h2>{post.title}</h2>
             </a>
