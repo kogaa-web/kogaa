@@ -1,9 +1,64 @@
 .Gallery {
   margin: 0 -26px;
+  position: relative;
+  padding-bottom: 62.4%;
+}
+.Gallery img {
+  position: absolute;
+}
+.InactiveImage {
+  /* animation: fadeOut 0.6s ease forwards; */
+  animation: none;
+  z-index: 0;
+}
+.ActiveImage {
+  z-index: 1;
+  animation: fadeIn 0.5s ease forwards;
+}
+@keyframes fadeOut {
+  99% {
+    display: block;
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.Indicators {
+  position: absolute;
+  left: 51px;
+  bottom: 30px;
+}
+.Indicators button {
+  border: none;
+  border-radius: 100%;
+  padding: 0;
+  margin-right: 10px;
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.5);
+  outline: none;
+}
+.Indicators .Active {
+  background: white;
 }
 @media (min-width: 480px) {
   .Gallery {
     margin: 0 -51px;
+  }
+}
+@media (min-width: 768px) {
+  .Indicators {
+    left: 30px;
   }
 }
 @media (min-width: 1366px) {
