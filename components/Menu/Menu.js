@@ -21,7 +21,7 @@ export default function menu() {
   });
 
   return (
-    <>
+    <div onMouseLeave={() => setCategory(null)}>
       <div className={classes.MainMenu}>
         <Link href="/">
           <a>
@@ -53,6 +53,6 @@ export default function menu() {
       {categories && category ? (
         <Subcategories categories={categories[category].nodes} />
       ) : null}
-    </>
+    </div>
   );
 }

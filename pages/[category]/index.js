@@ -4,13 +4,14 @@ import Layout from "../../components/Layout/Layout";
 import Card from "../../components/Card/Card";
 
 // data
-import { getAllPosts } from "../../lib/api";
+import { getNews, getProjects, getAbouts } from "../../lib/api";
 
 // styles
 import styles from "../../styles/Home.module.css";
 import { useState, useEffect } from "react";
 
-export default function Home({ allPosts }) {
+export default function Home({ category, allPosts }) {
+  console.log(allPosts);
   const [loadingMore, setLoadingMore] = useState(false);
   const [posts, setPosts] = useState(allPosts.edges);
   const [hasNextPage, setHasNextPage] = useState(allPosts.pageInfo.hasNextPage);
@@ -18,6 +19,7 @@ export default function Home({ allPosts }) {
 
   // Adding and removing scroll handler
   useEffect(() => {
+    setPosts(allPosts.edges);
     window.addEventListener("scroll", onScrollHandler);
     return () => window.removeEventListener("scroll", onScrollHandler);
   });
@@ -33,7 +35,7 @@ export default function Home({ allPosts }) {
   };
 
   async function loadMorePosts() {
-    const newPosts = await getAllPosts(endCursor);
+    const newPosts = await getPosts(category, endCursor);
     setHasNextPage(newPosts.pageInfo.hasNextPage);
     setEndCursor(newPosts.pageInfo.endCursor);
     const allPosts = [...posts];
@@ -61,10 +63,24 @@ export default function Home({ allPosts }) {
   );
 }
 
-export async function getServerSideProps() {
-  const allPosts = await getAllPosts("");
+const getPosts = async (category, endCursor) => {
+  switch (category) {
+    case "news":
+      return await getNews(endCursor);
+    case "projects":
+      return await getProjects(endCursor);
+    case "about":
+      return await getAbouts(endCursor);
+    default:
+      return;
+  }
+};
+
+export async function getServerSideProps({ query: { category } }) {
+  const allPosts = await getPosts(category);
   return {
     props: {
+      category,
       allPosts,
     },
   };
