@@ -4,7 +4,7 @@ import Layout from "../components/Layout/Layout";
 import Card from "../components/Card/Card";
 
 // data
-import { getAllPosts } from "../lib/api";
+import { getPosts } from "../lib/api/listing";
 
 // styles
 import styles from "../styles/Home.module.css";
@@ -33,7 +33,7 @@ export default function Home({ allPosts }) {
   };
 
   async function loadMorePosts() {
-    const newPosts = await getAllPosts(endCursor);
+    const newPosts = await getPosts("all", endCursor);
     setHasNextPage(newPosts.pageInfo.hasNextPage);
     setEndCursor(newPosts.pageInfo.endCursor);
     const allPosts = [...posts];
@@ -62,7 +62,7 @@ export default function Home({ allPosts }) {
 }
 
 export async function getServerSideProps() {
-  const allPosts = await getAllPosts("");
+  const allPosts = await getPosts("all", "");
   return {
     props: {
       allPosts,

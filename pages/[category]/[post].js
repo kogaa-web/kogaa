@@ -7,7 +7,7 @@ import Layout from "../../components/Layout/Layout";
 import Gallery from "../../components/Gallery/Gallery";
 
 // data
-import { getAllPostsWithSlug, getPost } from "../../lib/api";
+import { getSlugs, getPost } from "../../lib/api/single";
 
 // styles
 import styles from "../../styles/Home.module.css";
@@ -48,7 +48,7 @@ export default function Post({ postData }) {
 
 // Get all possible paths
 export async function getServerSidePaths() {
-  const allPosts = await getAllPostsWithSlug();
+  const allPosts = await getSlugs();
   return {
     paths: allPosts.edges.map(({ node }) => `/${node.slug}`) || [],
     fallback: true,

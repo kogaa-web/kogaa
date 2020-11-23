@@ -4,7 +4,7 @@ import Layout from "../../components/Layout/Layout";
 import Card from "../../components/Card/Card";
 
 // data
-import { getNews, getProjects, getAbouts } from "../../lib/api";
+import { getPosts } from "../../lib/api/listing";
 
 // styles
 import styles from "../../styles/Home.module.css";
@@ -62,19 +62,6 @@ export default function Home({ category, allPosts }) {
     </div>
   );
 }
-
-const getPosts = async (category, endCursor) => {
-  switch (category) {
-    case "news":
-      return await getNews(endCursor);
-    case "projects":
-      return await getProjects(endCursor);
-    case "about":
-      return await getAbouts(endCursor);
-    default:
-      return;
-  }
-};
 
 export async function getServerSideProps({ query: { category } }) {
   const allPosts = await getPosts(category);

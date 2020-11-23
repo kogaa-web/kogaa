@@ -6,7 +6,7 @@ import Logo from "../../assets/kogaa-logo.svg";
 import Circle from "../../assets/circle.svg";
 import Square from "../../assets/square.svg";
 import Triangle from "../../assets/triangle.svg";
-import { fetchCategories } from "../../lib/api";
+import { fetchCategories } from "../../lib/api/listing";
 import Subcategories from "./Subcategories/Subcategories";
 
 export default function menu() {
