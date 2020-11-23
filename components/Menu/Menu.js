@@ -29,30 +29,21 @@ export default function menu() {
           </a>
         </Link>
         <Link href="/news">
-          <a
-            onMouseEnter={() => setCategory("newsCats")}
-            onMouseLeave={() => setCategory(null)}
-          >
+          <a onMouseEnter={() => setCategory("newsCats")}>
             <Circle
               className={category === "newsCats" ? classes.Active : null}
             />
           </a>
         </Link>
         <Link href="/projects">
-          <a
-            onMouseEnter={() => setCategory("projectsCats")}
-            onMouseLeave={() => setCategory(null)}
-          >
+          <a onMouseEnter={() => setCategory("projectsCats")}>
             <Square
               className={category === "projectsCats" ? classes.Active : null}
             />
           </a>
         </Link>
         <Link href="/about">
-          <a
-            onMouseEnter={() => setCategory("aboutCats")}
-            onMouseLeave={() => setCategory(null)}
-          >
+          <a onMouseEnter={() => setCategory("aboutCats")}>
             <Triangle
               className={category === "aboutCats" ? classes.Active : null}
             />
