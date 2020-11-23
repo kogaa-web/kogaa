@@ -7,23 +7,12 @@
   position: absolute;
 }
 .InactiveImage {
-  /* animation: fadeOut 0.6s ease forwards; */
   animation: none;
   z-index: 0;
 }
 .ActiveImage {
   z-index: 1;
-  animation: fadeIn 0.5s ease forwards;
-}
-@keyframes fadeOut {
-  99% {
-    display: block;
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    display: none;
-  }
+  animation: fadeIn 0.3s ease forwards;
 }
 @keyframes fadeIn {
   0% {
