@@ -1,9 +1,10 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import classes from "./Gallery.module.css";
 
 export default function gallery({ images }) {
-  const [index, setIndex] = useState(0);
   const [fullscreen, setFullscreen] = useState(false);
+  const [index, setIndex] = useState(0);
+  const indexRef = useRef(index);
 
   const escFunction = useCallback((event) => {
     switch (event.keyCode) {
@@ -22,21 +23,22 @@ export default function gallery({ images }) {
   }, []);
 
   useEffect(() => {
+    indexRef.current = index;
     document.addEventListener("keydown", escFunction, false);
     return () => {
       document.removeEventListener("keydown", escFunction, false);
     };
-  }, []);
+  }, [index]);
 
   const nextImage = () => {
-    if (index !== images.length - 1) {
-      setIndex(index + 1);
+    if (indexRef.current !== images.length - 1) {
+      setIndex(indexRef.current + 1);
     }
   };
 
   const previousImage = () => {
-    if (index !== 0) {
-      setIndex(index - 1);
+    if (indexRef.current !== 0) {
+      setIndex(indexRef.current - 1);
     }
   };
 
