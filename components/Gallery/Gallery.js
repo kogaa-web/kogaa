@@ -6,8 +6,18 @@ export default function gallery({ images }) {
   const [fullscreen, setFullscreen] = useState(false);
 
   const escFunction = useCallback((event) => {
-    if (event.keyCode === 27) {
-      setFullscreen(false);
+    switch (event.keyCode) {
+      case 27:
+        setFullscreen(false);
+        break;
+      case 39:
+        nextImage();
+        break;
+      case 37:
+        previousImage();
+        break;
+      default:
+        break;
     }
   }, []);
 
