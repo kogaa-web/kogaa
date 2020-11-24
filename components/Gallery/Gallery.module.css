@@ -40,6 +40,30 @@
 .Indicators .Active {
   background: white;
 }
+.Previous,
+.Fullscreen,
+.Next {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 33.333%;
+  background: none;
+  border: none;
+  outline: none;
+}
+.Previous {
+  left: 0;
+  cursor: w-resize;
+}
+.Fullscreen {
+  left: 33.333%;
+  cursor: nesw-resize;
+}
+.Next {
+  right: 0;
+  cursor: e-resize;
+}
 @media (min-width: 480px) {
   .Gallery {
     margin: 0 -51px;
