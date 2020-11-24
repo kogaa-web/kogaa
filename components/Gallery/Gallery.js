@@ -54,23 +54,27 @@ export default function gallery({ images }) {
     setFullscreen(false);
   };
 
+  const sliderImages = (
+    <>
+      {images.map((image, number) => {
+        return (
+          <img
+            key={image.sourceUrl}
+            src={image.sourceUrl}
+            alt=""
+            className={
+              number === index ? classes.ActiveImage : classes.InactiveImage
+            }
+          />
+        );
+      })}
+    </>
+  );
+
   return (
     <>
       <div className={classes.Gallery}>
-        <div className={classes.Images}>
-          {images.map((image, number) => {
-            return (
-              <img
-                key={image.sourceUrl}
-                src={image.sourceUrl}
-                alt=""
-                className={
-                  number === index ? classes.ActiveImage : classes.InactiveImage
-                }
-              />
-            );
-          })}
-        </div>
+        <div className={classes.Images}>{sliderImages}</div>
         <button className={classes.Previous} onClick={previousImage} />
         <button
           className={classes.FullscreenButton}
@@ -91,7 +95,9 @@ export default function gallery({ images }) {
       </div>
       {fullscreen ? (
         <div className={classes.Fullscreen}>
-          <div className={classes.FullscreenContent}></div>
+          <div className={classes.Images}>{sliderImages}</div>
+          <button className={classes.Previous} onClick={previousImage} />
+          <button className={classes.Next} onClick={nextImage} />
         </div>
       ) : null}
     </>
