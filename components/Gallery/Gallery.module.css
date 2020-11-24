@@ -41,7 +41,7 @@
   background: white;
 }
 .Previous,
-.Fullscreen,
+.FullscreenButton,
 .Next {
   position: absolute;
   top: 0;
@@ -56,13 +56,21 @@
   left: 0;
   cursor: w-resize;
 }
-.Fullscreen {
+.FullscreenButton {
   left: 33.333%;
   cursor: nesw-resize;
 }
 .Next {
   right: 0;
   cursor: e-resize;
+}
+.Fullscreen {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: white;
 }
 @media (min-width: 480px) {
   .Gallery {

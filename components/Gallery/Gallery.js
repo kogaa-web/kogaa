@@ -1,20 +1,33 @@
-import { useState } from "react";
+import { useState, useCallback, useEffect } from "react";
 import classes from "./Gallery.module.css";
 
 export default function gallery({ images }) {
   const [index, setIndex] = useState(0);
+  const [fullscreen, setFullscreen] = useState(false);
+
+  const escFunction = useCallback((event) => {
+    if (event.keyCode === 27) {
+      setFullscreen(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener("keydown", escFunction, false);
+    return () => {
+      document.removeEventListener("keydown", escFunction, false);
+    };
+  }, []);
 
   const nextImage = () => {
     if (index !== images.length - 1) {
       setIndex(index + 1);
     }
-    console.log(index);
   };
+
   const previousImage = () => {
     if (index !== 0) {
       setIndex(index - 1);
     }
-    console.log(index);
   };
 
   return (
@@ -34,7 +47,10 @@ export default function gallery({ images }) {
         })}
       </div>
       <button className={classes.Previous} onClick={previousImage} />
-      <button className={classes.Fullscreen} />
+      <button
+        className={classes.FullscreenButton}
+        onClick={() => setFullscreen(true)}
+      />
       <button className={classes.Next} onClick={nextImage} />
       <div className={classes.Indicators}>
         {images.map((image, number) => {
@@ -47,6 +63,7 @@ export default function gallery({ images }) {
           );
         })}
       </div>
+      {fullscreen ? <div className={classes.Fullscreen}></div> : null}
     </div>
   );
 }
