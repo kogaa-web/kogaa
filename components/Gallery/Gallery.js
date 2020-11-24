@@ -9,7 +9,7 @@ export default function gallery({ images }) {
   const escFunction = useCallback((event) => {
     switch (event.keyCode) {
       case 27:
-        setFullscreen(false);
+        disableFullscreen();
         break;
       case 39:
         nextImage();
@@ -42,40 +42,58 @@ export default function gallery({ images }) {
     }
   };
 
+  const enableFullscreen = () => {
+    document.documentElement.style.overflow = "hidden"; // firefox, chrome
+    document.body.scroll = "no"; // ie only
+    setFullscreen(true);
+  };
+
+  const disableFullscreen = () => {
+    document.documentElement.style.overflow = "auto"; // firefox, chrome
+    document.body.scroll = "yes"; // ie only
+    setFullscreen(false);
+  };
+
   return (
-    <div className={classes.Gallery}>
-      <div className={classes.Images}>
-        {images.map((image, number) => {
-          return (
-            <img
-              key={image.sourceUrl}
-              src={image.sourceUrl}
-              alt=""
-              className={
-                number === index ? classes.ActiveImage : classes.InactiveImage
-              }
-            />
-          );
-        })}
+    <>
+      <div className={classes.Gallery}>
+        <div className={classes.Images}>
+          {images.map((image, number) => {
+            return (
+              <img
+                key={image.sourceUrl}
+                src={image.sourceUrl}
+                alt=""
+                className={
+                  number === index ? classes.ActiveImage : classes.InactiveImage
+                }
+              />
+            );
+          })}
+        </div>
+        <button className={classes.Previous} onClick={previousImage} />
+        <button
+          className={classes.FullscreenButton}
+          onClick={enableFullscreen}
+        />
+        <button className={classes.Next} onClick={nextImage} />
+        <div className={classes.Indicators}>
+          {images.map((image, number) => {
+            return (
+              <button
+                key={image.sourceUrl}
+                onClick={() => setIndex(number)}
+                className={number === index ? classes.Active : null}
+              />
+            );
+          })}
+        </div>
       </div>
-      <button className={classes.Previous} onClick={previousImage} />
-      <button
-        className={classes.FullscreenButton}
-        onClick={() => setFullscreen(true)}
-      />
-      <button className={classes.Next} onClick={nextImage} />
-      <div className={classes.Indicators}>
-        {images.map((image, number) => {
-          return (
-            <button
-              key={image.sourceUrl}
-              onClick={() => setIndex(number)}
-              className={number === index ? classes.Active : null}
-            />
-          );
-        })}
-      </div>
-      {fullscreen ? <div className={classes.Fullscreen}></div> : null}
-    </div>
+      {fullscreen ? (
+        <div className={classes.Fullscreen}>
+          <div className={classes.FullscreenContent}></div>
+        </div>
+      ) : null}
+    </>
   );
 }

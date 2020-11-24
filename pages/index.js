@@ -43,7 +43,6 @@ export default function Home({ allPosts }) {
     setPosts(allPosts);
   }
 
-  //console.log(allPosts);
   return (
     <div className={styles.container}>
       <Head>
