@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect, useState } from "react";
 
 import { useRouter } from "next/router";
 import Head from "next/head";
@@ -7,13 +7,19 @@ import Layout from "../../components/Layout/Layout";
 import Gallery from "../../components/Gallery/Gallery";
 
 // data
-import { getSlugs, getPost } from "../../lib/api/single";
+import { getSlugs, getPost, getGallery } from "../../lib/api/single";
 
 // styles
 import styles from "../../styles/Home.module.css";
 import singleStyles from "../../styles/Single.module.css";
 
 export default function Post({ postData }) {
+  const [images, setImages] = useState(null);
+  useEffect(async () => {
+    const fetchedImages = await getGallery(postData.slug);
+    console.log(fetchedImages);
+    setImages(fetchedImages);
+  });
   const router = useRouter();
 
   if ((!router.isFallback && !postData?.slug) || !postData) {
@@ -28,9 +34,7 @@ export default function Post({ postData }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        {postData.gallery.gallery ? (
-          <Gallery images={postData.gallery.gallery} />
-        ) : null}
+        {images ? <Gallery images={images} /> : null}
         <h1>{postData.title}</h1>
         {postData.role ? (
           <p>
