@@ -6,21 +6,25 @@ export default function gallery({ images }) {
   const [index, setIndex] = useState(0);
   const indexRef = useRef(index);
 
-  let windowWidth = null;
-  if (typeof window !== "undefined") {
-    let windowWidth = window.innerHeight;
-    console.log(windowWidth);
-  }
-
-  let galleryImages = useWindowSize().width;
-  switch (windowWidth) {
-    case windowWidth < 320:
-      galleryImages = images.gallery320;
-      break;
-
-    default:
-      galleryImages = images.gallery4k;
-      break;
+  let galleryImages = null;
+  const windowWidth = useWindowSize().width;
+  console.log(windowWidth);
+  if (windowWidth <= 320) {
+    galleryImages = images.gallery320;
+  } else if (windowWidth <= 480) {
+    galleryImages = images.gallery480;
+  } else if (windowWidth <= 768) {
+    galleryImages = images.gallery768;
+  } else if (windowWidth <= 1366) {
+    galleryImages = images.gallery1366;
+  } else if (windowWidth <= 1440) {
+    galleryImages = images.gallery1440;
+  } else if (windowWidth <= 1920) {
+    galleryImages = images.gallery1920;
+  } else if (windowWidth <= 1366) {
+    galleryImages = images.gallery1920;
+  } else {
+    galleryImages = images.gallery4k;
   }
   console.log(galleryImages);
 
