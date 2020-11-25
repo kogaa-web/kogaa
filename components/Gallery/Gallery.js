@@ -7,6 +7,7 @@ export default function gallery({ images }) {
   const [fullscreen, setFullscreen] = useState(false);
   const [index, setIndex] = useState(0);
   const indexRef = useRef(index);
+  const ref = useRef(null);
 
   useEffect(() => {
     indexRef.current = index;
@@ -61,6 +62,7 @@ export default function gallery({ images }) {
       {images.map((image, number) => {
         return (
           <img
+            ref={ref}
             key={image.sourceUrl}
             src={image.sourceUrl}
             alt=""
@@ -109,9 +111,12 @@ export default function gallery({ images }) {
         }}
       >
         <div className={classes.Fullscreen}>
-          <div className={classes.Images}>{sliderImages}</div>
-          <button className={classes.Previous} onClick={previousImage} />
-          <button className={classes.Next} onClick={nextImage} />
+          <div className={classes.FullscreenContent}>
+            <div className={classes.Images}>{sliderImages}</div>
+            <button className={classes.Previous} onClick={previousImage} />
+            <button className={classes.Next} onClick={nextImage} />
+            <img src={images[0].sourceUrl} className={classes.Placeholder} />
+          </div>
         </div>
       </CSSTransition>
     </>
