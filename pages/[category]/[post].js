@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useWindowSize } from "../../lib/hooks";
 
 import { useRouter } from "next/router";
 import Head from "next/head";
@@ -14,19 +14,31 @@ import styles from "../../styles/Home.module.css";
 import singleStyles from "../../styles/Single.module.css";
 
 export default function Post({ postData, gallery }) {
-  // const [images, setImages] = useState(null);
-  // useEffect(async () => {
-  //   const fetchedImages = await getGallery(postData.slug);
-  //   console.log(fetchedData);
-  //   setImages(fetchedImages);
-  // });
-  const router = useRouter();
+  const windowWidth = useWindowSize().width;
+  let images = null;
+  if (windowWidth <= 320) {
+    images = gallery.gallery320;
+  } else if (windowWidth <= 480) {
+    images = gallery.gallery480;
+  } else if (windowWidth <= 768) {
+    images = gallery.gallery768;
+  } else if (windowWidth <= 1366) {
+    images = gallery.gallery1366;
+  } else if (windowWidth <= 1440) {
+    images = gallery.gallery1440;
+  } else if (windowWidth <= 1920) {
+    images = gallery.gallery1920;
+  } else if (windowWidth <= 1366) {
+    images = gallery.gallery1920;
+  } else if (windowWidth > 1366) {
+    images = gallery.gallery4k;
+  }
 
+  const router = useRouter();
   if ((!router.isFallback && !postData?.slug) || !postData) {
     return <p>post error</p>;
   }
 
-  //console.log(postData);
   return (
     <div className={styles.container}>
       <Head>
@@ -34,7 +46,7 @@ export default function Post({ postData, gallery }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        {gallery ? <Gallery images={gallery} /> : null}
+        {images ? <Gallery images={images} /> : null}
         <h1>{postData.title}</h1>
         {postData.role ? (
           <p>
@@ -62,6 +74,7 @@ export async function getServerSidePaths() {
 // Get data for current post by slug
 export async function getServerSideProps({ params }) {
   let [
+    data,
     gallery320,
     gallery480,
     gallery768,
@@ -70,6 +83,7 @@ export async function getServerSideProps({ params }) {
     gallery1920,
     gallery4k,
   ] = await Promise.all([
+    getPost(params.post),
     getGallery(params.post, "GALLERY_320"),
     getGallery(params.post, "GALLERY_480"),
     getGallery(params.post, "GALLERY_768"),
@@ -79,7 +93,6 @@ export async function getServerSideProps({ params }) {
     getGallery(params.post, "GALLERY_4K"),
   ]);
 
-  const data = await getPost(params.post);
   return {
     props: {
       postData: data,
