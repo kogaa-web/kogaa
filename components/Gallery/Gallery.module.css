@@ -99,6 +99,7 @@
   position: static;
 }
 .Fullscreen button {
+  padding: 0;
   z-index: 2;
   opacity: 0.5;
 }
@@ -118,9 +119,11 @@
   .Fullscreen {
     padding: 38px;
   }
-  .Fullscreen img {
-    max-height: calc(100vh - 76px);
-    max-width: calc(100vw - 76px);
+  .Fullscreen img,
+  .Fullscreen button,
+  .FullscreenContent {
+    max-height: calc(100vh - 61px);
+    max-width: calc(100vw - 61px);
   }
   .Container {
     margin: 0;
