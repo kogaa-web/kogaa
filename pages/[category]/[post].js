@@ -13,13 +13,14 @@ import { getSlugs, getPost, getGallery } from "../../lib/api/single";
 import styles from "../../styles/Home.module.css";
 import singleStyles from "../../styles/Single.module.css";
 
-export default function Post({ postData }) {
-  const [images, setImages] = useState(null);
-  useEffect(async () => {
-    const fetchedImages = await getGallery(postData.slug);
-    console.log(fetchedImages);
-    setImages(fetchedImages);
-  });
+export default function Post({ postData, gallery }) {
+  console.log(gallery);
+  // const [images, setImages] = useState(null);
+  // useEffect(async () => {
+  //   const fetchedImages = await getGallery(postData.slug);
+  //   console.log(fetchedData);
+  //   setImages(fetchedImages);
+  // });
   const router = useRouter();
 
   if ((!router.isFallback && !postData?.slug) || !postData) {
@@ -34,7 +35,7 @@ export default function Post({ postData }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        {images ? <Gallery images={images} /> : null}
+        {gallery ? <Gallery images={gallery} /> : null}
         <h1>{postData.title}</h1>
         {postData.role ? (
           <p>
@@ -61,11 +62,37 @@ export async function getServerSidePaths() {
 
 // Get data for current post by slug
 export async function getServerSideProps({ params }) {
-  console.log(params.post);
+  let [
+    gallery320,
+    gallery480,
+    gallery768,
+    gallery1366,
+    gallery1440,
+    gallery1920,
+    gallery4k,
+  ] = await Promise.all([
+    getGallery(params.post, "GALLERY_320"),
+    getGallery(params.post, "GALLERY_480"),
+    getGallery(params.post, "GALLERY_768"),
+    getGallery(params.post, "GALLERY_1366"),
+    getGallery(params.post, "GALLERY_1440"),
+    getGallery(params.post, "GALLERY_1920"),
+    getGallery(params.post, "GALLERY_4K"),
+  ]);
+
   const data = await getPost(params.post);
   return {
     props: {
       postData: data,
+      gallery: {
+        gallery320,
+        gallery480,
+        gallery768,
+        gallery1366,
+        gallery1440,
+        gallery1920,
+        gallery4k,
+      },
     },
   };
 }

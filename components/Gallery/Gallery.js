@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect, useRef } from "react";
 import classes from "./Gallery.module.css";
 
 export default function gallery({ images }) {
+  console.log(images);
   const [fullscreen, setFullscreen] = useState(false);
   const [index, setIndex] = useState(0);
   const indexRef = useRef(index);
@@ -31,7 +32,7 @@ export default function gallery({ images }) {
   }, [index]);
 
   const nextImage = () => {
-    if (indexRef.current !== images.length - 1) {
+    if (indexRef.current !== images.gallery1920.length - 1) {
       setIndex(indexRef.current + 1);
     }
   };
@@ -56,7 +57,7 @@ export default function gallery({ images }) {
 
   const sliderImages = (
     <>
-      {images.map((image, number) => {
+      {images.gallery1920.map((image, number) => {
         return (
           <img
             key={image.sourceUrl}
@@ -82,7 +83,7 @@ export default function gallery({ images }) {
         />
         <button className={classes.Next} onClick={nextImage} />
         <div className={classes.Indicators}>
-          {images.map((image, number) => {
+          {images.gallery1920.map((image, number) => {
             return (
               <button
                 key={image.sourceUrl}
