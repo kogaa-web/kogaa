@@ -14,7 +14,6 @@ import styles from "../../styles/Home.module.css";
 import singleStyles from "../../styles/Single.module.css";
 
 export default function Post({ postData, gallery }) {
-  console.log(gallery);
   // const [images, setImages] = useState(null);
   // useEffect(async () => {
   //   const fetchedImages = await getGallery(postData.slug);
@@ -27,7 +26,7 @@ export default function Post({ postData, gallery }) {
     return <p>post error</p>;
   }
 
-  console.log(postData);
+  //console.log(postData);
   return (
     <div className={styles.container}>
       <Head>

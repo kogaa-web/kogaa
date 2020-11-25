@@ -2,10 +2,35 @@ import { useState, useCallback, useEffect, useRef } from "react";
 import classes from "./Gallery.module.css";
 
 export default function gallery({ images }) {
-  console.log(images);
   const [fullscreen, setFullscreen] = useState(false);
   const [index, setIndex] = useState(0);
   const indexRef = useRef(index);
+
+  let windowWidth = null;
+  if (typeof window !== "undefined") {
+    let windowWidth = window.innerHeight;
+    console.log(windowWidth);
+  }
+
+  let galleryImages = useWindowSize().width;
+  switch (windowWidth) {
+    case windowWidth < 320:
+      galleryImages = images.gallery320;
+      break;
+
+    default:
+      galleryImages = images.gallery4k;
+      break;
+  }
+  console.log(galleryImages);
+
+  useEffect(() => {
+    indexRef.current = index;
+    document.addEventListener("keydown", escFunction, false);
+    return () => {
+      document.removeEventListener("keydown", escFunction, false);
+    };
+  }, [index]);
 
   const escFunction = useCallback((event) => {
     switch (event.keyCode) {
@@ -23,16 +48,8 @@ export default function gallery({ images }) {
     }
   }, []);
 
-  useEffect(() => {
-    indexRef.current = index;
-    document.addEventListener("keydown", escFunction, false);
-    return () => {
-      document.removeEventListener("keydown", escFunction, false);
-    };
-  }, [index]);
-
   const nextImage = () => {
-    if (indexRef.current !== images.gallery1920.length - 1) {
+    if (indexRef.current !== galleryImages.length - 1) {
       setIndex(indexRef.current + 1);
     }
   };
@@ -57,7 +74,7 @@ export default function gallery({ images }) {
 
   const sliderImages = (
     <>
-      {images.gallery1920.map((image, number) => {
+      {galleryImages.map((image, number) => {
         return (
           <img
             key={image.sourceUrl}
@@ -83,7 +100,7 @@ export default function gallery({ images }) {
         />
         <button className={classes.Next} onClick={nextImage} />
         <div className={classes.Indicators}>
-          {images.gallery1920.map((image, number) => {
+          {galleryImages.map((image, number) => {
             return (
               <button
                 key={image.sourceUrl}
@@ -103,4 +120,37 @@ export default function gallery({ images }) {
       ) : null}
     </>
   );
+}
+
+function useWindowSize() {
+  // Initialize state with undefined width/height so server and client renders match
+  // Learn more here: https://joshwcomeau.com/react/the-perils-of-rehydration/
+  const [windowSize, setWindowSize] = useState({
+    width: undefined,
+    height: undefined,
+  });
+
+  useEffect(() => {
+    // only execute all the code below in client side
+    if (typeof window !== "undefined") {
+      // Handler to call on window resize
+      function handleResize() {
+        // Set window width/height to state
+        setWindowSize({
+          width: window.innerWidth,
+          height: window.innerHeight,
+        });
+      }
+
+      // Add event listener
+      window.addEventListener("resize", handleResize);
+
+      // Call handler right away so state gets updated with initial window size
+      handleResize();
+
+      // Remove event listener on cleanup
+      return () => window.removeEventListener("resize", handleResize);
+    }
+  }, []); // Empty array ensures that effect is only run on mount
+  return windowSize;
 }
