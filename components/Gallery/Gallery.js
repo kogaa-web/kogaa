@@ -1,6 +1,8 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import classes from "./Gallery.module.css";
 
+import CSSTransition from "react-transition-group/CSSTransition";
+
 export default function gallery({ images }) {
   const [fullscreen, setFullscreen] = useState(false);
   const [index, setIndex] = useState(0);
@@ -93,13 +95,23 @@ export default function gallery({ images }) {
           })}
         </div>
       </div>
-      {fullscreen ? (
+      <CSSTransition
+        mountOnEnter
+        unmountOnExit
+        in={fullscreen}
+        timeout={300}
+        classNames={{
+          enter: classes.FullscreenClosed,
+          enterActive: classes.FullscreenOpen,
+          exitActive: classes.FullscreenClosed,
+        }}
+      >
         <div className={classes.Fullscreen}>
           <div className={classes.Images}>{sliderImages}</div>
           <button className={classes.Previous} onClick={previousImage} />
           <button className={classes.Next} onClick={nextImage} />
         </div>
-      ) : null}
+      </CSSTransition>
     </>
   );
 }

@@ -74,6 +74,17 @@
   width: 100%;
   height: 100%;
   z-index: 1;
+  transition: opacity 0.3s ease-out;
+}
+.Fullscreen,
+.Fullscreen * {
+  animation: none;
+}
+.FullscreenOpen {
+  opacity: 1;
+}
+.FullscreenClosed {
+  opacity: 0;
 }
 @media (min-width: 480px) {
   .Gallery {
