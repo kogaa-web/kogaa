@@ -75,24 +75,26 @@ export default function gallery({ images }) {
 
   return (
     <>
-      <div className={classes.Gallery}>
-        <div className={classes.Images}>{sliderImages}</div>
-        <button className={classes.Previous} onClick={previousImage} />
-        <button
-          className={classes.FullscreenButton}
-          onClick={enableFullscreen}
-        />
-        <button className={classes.Next} onClick={nextImage} />
-        <div className={classes.Indicators}>
-          {images.map((image, number) => {
-            return (
-              <button
-                key={image.sourceUrl}
-                onClick={() => setIndex(number)}
-                className={number === index ? classes.Active : null}
-              />
-            );
-          })}
+      <div className={classes.Container}>
+        <div className={classes.Gallery}>
+          <div className={classes.Images}>{sliderImages}</div>
+          <button className={classes.Previous} onClick={previousImage} />
+          <button
+            className={classes.FullscreenButton}
+            onClick={enableFullscreen}
+          />
+          <button className={classes.Next} onClick={nextImage} />
+          <div className={classes.Indicators}>
+            {images.map((image, number) => {
+              return (
+                <button
+                  key={image.sourceUrl}
+                  onClick={() => setIndex(number)}
+                  className={number === index ? classes.Active : null}
+                />
+              );
+            })}
+          </div>
         </div>
       </div>
       <CSSTransition

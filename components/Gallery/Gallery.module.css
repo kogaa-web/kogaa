@@ -1,7 +1,9 @@
-.Gallery {
+.Container {
   margin: 0 -26px;
+}
+.Gallery {
   position: relative;
-  padding-bottom: 62.4%;
+  padding-bottom: 62.5%;
 }
 .Images img {
   position: absolute;
@@ -87,17 +89,15 @@
   opacity: 0;
 }
 @media (min-width: 480px) {
-  .Gallery {
+  .Container {
     margin: 0 -51px;
   }
 }
 @media (min-width: 768px) {
+  .Container {
+    margin: 0;
+  }
   .Indicators {
     left: 30px;
-  }
-}
-@media (min-width: 1366px) {
-  .Gallery {
-    margin: 0;
   }
 }
