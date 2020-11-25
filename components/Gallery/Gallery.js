@@ -111,6 +111,7 @@ export default function gallery({ images }) {
         }}
       >
         <div className={classes.Fullscreen}>
+          <div onClick={disableFullscreen} className={classes.Backdrop} />
           <div className={classes.FullscreenContent}>
             <div className={classes.Images}>{sliderImages}</div>
             <button className={classes.Previous} onClick={previousImage} />
