@@ -52,7 +52,7 @@ export default function Home({ category, allPosts }) {
         <title>Blog articles page</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Layout>
+      <Layout category={category}>
         <div className={styles.Cards}>
           {posts.map(({ node }) => (
             <Card post={node} key={node.id} />

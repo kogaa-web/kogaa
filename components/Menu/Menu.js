@@ -9,20 +9,36 @@ import Triangle from "../../assets/triangle.svg";
 import { fetchCategories } from "../../lib/api/listing";
 import Subcategories from "./Subcategories/Subcategories";
 
-export default function menu() {
+const Menu = (props) => {
   const [categories, setCategories] = useState(null);
   const [category, setCategory] = useState(null);
 
   useEffect(async () => {
-    if (!categories) {
-      const subcats = await fetchCategories();
-      setCategories(subcats);
+    defaultCategory();
+    const subcats = await fetchCategories();
+    setCategories(subcats);
+  }, []);
+
+  const defaultCategory = () => {
+    switch (props.category) {
+      case "news":
+        setCategory("newsCats");
+        break;
+      case "projects":
+        setCategory("projectsCats");
+        break;
+      case "about":
+        setCategory("aboutCats");
+        break;
+      default:
+        setCategory(null);
+        break;
     }
-  });
+  };
 
   return (
     <div className={classes.Menu}>
-      <div onMouseLeave={() => setCategory(null)}>
+      <div onMouseLeave={defaultCategory}>
         <div className={classes.MainMenu}>
           <Link href="/">
             <a>
@@ -57,4 +73,6 @@ export default function menu() {
       </div>
     </div>
   );
-}
+};
+
+export default Menu;
