@@ -10,28 +10,34 @@ export default function gallery({ images }) {
   const indexRef = useRef(index);
   const ref = useRef(null);
 
+  // Handling swipe
   const swipeHandlers = useSwipeable({
     onSwipedLeft: () => nextImage(),
     onSwipedRight: () => previousImage(),
+    onSwipedDown: () => disableFullscreen(),
   });
 
+  // Handling keyboard
   useEffect(() => {
     indexRef.current = index;
-    document.addEventListener("keydown", escFunction, false);
+    document.addEventListener("keydown", keyPressHandler, false);
     return () => {
-      document.removeEventListener("keydown", escFunction, false);
+      document.removeEventListener("keydown", keyPressHandler, false);
     };
   }, [index]);
 
-  const escFunction = useCallback((event) => {
+  const keyPressHandler = useCallback((event) => {
     switch (event.keyCode) {
       case 27:
+        // Esc
         disableFullscreen();
         break;
       case 39:
+        // Right arrow
         nextImage();
         break;
       case 37:
+        // Left arrow
         previousImage();
         break;
       default:
