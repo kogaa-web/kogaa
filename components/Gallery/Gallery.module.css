@@ -14,7 +14,7 @@
 }
 .ActiveImage {
   z-index: 1;
-  animation: fadeIn 0.3s ease forwards;
+  animation: fadeIn 0.3s ease forwards !important;
 }
 @keyframes fadeIn {
   0% {
