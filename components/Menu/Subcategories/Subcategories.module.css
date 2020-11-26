@@ -1,9 +1,19 @@
 .Subcategories {
+  padding: 14px 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 .Subcategories a {
+  font-size: 14px;
   color: #ef4123;
+  padding: 3px 6px 2px 6px;
+  transition: all 0.3s ease-out;
+}
+
+.Subcategories a:hover {
+  text-decoration: none;
+  color: white;
+  background: #ef4123;
 }

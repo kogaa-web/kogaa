@@ -1,3 +1,7 @@
+.Menu {
+  height: 176px;
+}
+
 .MainMenu {
   display: flex;
   border-bottom: 1px solid #ef4123;
@@ -5,13 +9,24 @@
   padding: 30px 0 19px 0;
 }
 
+@media (min-width: 196px) {
+  .Menu {
+    height: 196px;
+  }
+}
 @media (min-width: 768px) {
+  .Menu {
+    height: 216px;
+  }
   .MainMenu {
     padding-top: 50px;
   }
 }
 
 @media (min-width: 1366px) {
+  .Menu {
+    height: 251px;
+  }
   .MainMenu {
     padding-top: 60px;
   }

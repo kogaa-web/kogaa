@@ -21,38 +21,40 @@ export default function menu() {
   });
 
   return (
-    <div onMouseLeave={() => setCategory(null)}>
-      <div className={classes.MainMenu}>
-        <Link href="/">
-          <a>
-            <Logo />
-          </a>
-        </Link>
-        <Link href="/news">
-          <a onMouseEnter={() => setCategory("newsCats")}>
-            <Circle
-              className={category === "newsCats" ? classes.Active : null}
-            />
-          </a>
-        </Link>
-        <Link href="/projects">
-          <a onMouseEnter={() => setCategory("projectsCats")}>
-            <Square
-              className={category === "projectsCats" ? classes.Active : null}
-            />
-          </a>
-        </Link>
-        <Link href="/about">
-          <a onMouseEnter={() => setCategory("aboutCats")}>
-            <Triangle
-              className={category === "aboutCats" ? classes.Active : null}
-            />
-          </a>
-        </Link>
+    <div className={classes.Menu}>
+      <div onMouseLeave={() => setCategory(null)}>
+        <div className={classes.MainMenu}>
+          <Link href="/">
+            <a>
+              <Logo />
+            </a>
+          </Link>
+          <Link href="/news">
+            <a onMouseEnter={() => setCategory("newsCats")}>
+              <Circle
+                className={category === "newsCats" ? classes.Active : null}
+              />
+            </a>
+          </Link>
+          <Link href="/projects">
+            <a onMouseEnter={() => setCategory("projectsCats")}>
+              <Square
+                className={category === "projectsCats" ? classes.Active : null}
+              />
+            </a>
+          </Link>
+          <Link href="/about">
+            <a onMouseEnter={() => setCategory("aboutCats")}>
+              <Triangle
+                className={category === "aboutCats" ? classes.Active : null}
+              />
+            </a>
+          </Link>
+        </div>
+        {categories && category ? (
+          <Subcategories categories={categories[category].nodes} />
+        ) : null}
       </div>
-      {categories && category ? (
-        <Subcategories categories={categories[category].nodes} />
-      ) : null}
     </div>
   );
 }
