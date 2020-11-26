@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect, useRef } from "react";
+import { useSwipeable } from "react-swipeable";
 import classes from "./Gallery.module.css";
 
 import CSSTransition from "react-transition-group/CSSTransition";
@@ -8,6 +9,11 @@ export default function gallery({ images }) {
   const [index, setIndex] = useState(0);
   const indexRef = useRef(index);
   const ref = useRef(null);
+
+  const swipeHandlers = useSwipeable({
+    onSwipedLeft: () => nextImage(),
+    onSwipedRight: () => previousImage(),
+  });
 
   useEffect(() => {
     indexRef.current = index;
@@ -78,7 +84,7 @@ export default function gallery({ images }) {
   return (
     <>
       <div className={classes.Container}>
-        <div className={classes.Gallery}>
+        <div className={classes.Gallery} {...swipeHandlers}>
           <div className={classes.Images}>{sliderImages}</div>
           <button className={classes.Previous} onClick={previousImage} />
           <button
@@ -112,7 +118,7 @@ export default function gallery({ images }) {
       >
         <div className={classes.Fullscreen}>
           <div onClick={disableFullscreen} className={classes.Backdrop} />
-          <div className={classes.FullscreenContent}>
+          <div className={classes.FullscreenContent} {...swipeHandlers}>
             <div className={classes.Images}>{sliderImages}</div>
             <button className={classes.Previous} onClick={previousImage} />
             <button className={classes.Next} onClick={nextImage} />
