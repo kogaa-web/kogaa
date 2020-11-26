@@ -17,6 +17,15 @@ export default function gallery({ images }) {
     onSwipedDown: () => disableFullscreen(),
   });
 
+  const fullscreenSwipeHandlers = useSwipeable({
+    onSwipedLeft: () => nextImage(),
+    onSwipedRight: () => previousImage(),
+  });
+
+  const disableFullscreenSwipe = useSwipeable({
+    onSwipedDown: () => disableFullscreen(),
+  });
+
   // Handling keyboard
   useEffect(() => {
     indexRef.current = index;
@@ -46,12 +55,14 @@ export default function gallery({ images }) {
   }, []);
 
   const nextImage = () => {
+    console.log("next");
     if (indexRef.current !== images.length - 1) {
       setIndex(indexRef.current + 1);
     }
   };
 
   const previousImage = () => {
+    console.log("previous");
     if (indexRef.current !== 0) {
       setIndex(indexRef.current - 1);
     }
@@ -89,8 +100,8 @@ export default function gallery({ images }) {
 
   return (
     <>
-      <div className={classes.Container}>
-        <div className={classes.Gallery} {...swipeHandlers}>
+      <div className={classes.Container} {...swipeHandlers}>
+        <div className={classes.Gallery}>
           <div className={classes.Images}>{sliderImages}</div>
           <button className={classes.Previous} onClick={previousImage} />
           <button
@@ -122,9 +133,12 @@ export default function gallery({ images }) {
           exitActive: classes.FullscreenClosed,
         }}
       >
-        <div className={classes.Fullscreen}>
+        <div className={classes.Fullscreen} {...disableFullscreenSwipe}>
           <div onClick={disableFullscreen} className={classes.Backdrop} />
-          <div className={classes.FullscreenContent} {...swipeHandlers}>
+          <div
+            className={classes.FullscreenContent}
+            {...fullscreenSwipeHandlers}
+          >
             <div className={classes.Images}>{sliderImages}</div>
             <button className={classes.Previous} onClick={previousImage} />
             <button className={classes.Next} onClick={nextImage} />
