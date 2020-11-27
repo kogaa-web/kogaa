@@ -8,12 +8,14 @@ import Square from "../../assets/square.svg";
 import Triangle from "../../assets/triangle.svg";
 import Back from "../../assets/back.svg";
 import Subcategories from "./Subcategories/Subcategories";
+import { formatDate } from "../../lib/util";
 
 const Menu = ({
   currentCategory,
   subcategories,
   postSubcategories,
   postCategory,
+  date,
 }) => {
   const [category, setCategory] = useState(null);
 
@@ -72,7 +74,7 @@ const Menu = ({
         {subcategories && category ? (
           <Subcategories categories={subcategories[category].nodes} />
         ) : null}
-        {postSubcategories ? (
+        {postSubcategories && !category ? (
           <div className={classes.PostSubcategories}>
             <Back />
             {postSubcategories.map((category, index) => {
@@ -86,6 +88,9 @@ const Menu = ({
               );
             })}
           </div>
+        ) : null}
+        {date && !category ? (
+          <div className={classes.Date}>{formatDate(date)}</div>
         ) : null}
       </div>
     </div>

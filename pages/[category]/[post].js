@@ -54,6 +54,7 @@ export default function Post({ postData, gallery, subcategories }) {
         subcategories={subcategories}
         postSubcategories={postSubcategories}
         postCategory={postData.contentType.node.name}
+        date={postData.date}
       >
         {images ? <Gallery images={images} /> : null}
         <h1>{postData.title}</h1>

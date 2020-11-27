@@ -7,8 +7,31 @@
   border-bottom: 1px solid #ef4123;
   justify-content: space-between;
   padding: 30px 0 19px 0;
+  margin-bottom: 14px;
 }
 
+.PostSubcategories,
+.PostSubcategories a {
+  color: #ef4123;
+  font-size: 14px;
+}
+
+.PostSubcategories {
+  display: flex;
+  align-items: center;
+  padding-top: 3px;
+  float: left;
+}
+
+.PostSubcategories a {
+  margin: 0 8px;
+}
+.Date {
+  float: right;
+  font-size: 12px;
+  display: none;
+  padding-top: 6px;
+}
 @media (min-width: 196px) {
   .Menu {
     min-height: 196px;
@@ -20,6 +43,9 @@
   }
   .MainMenu {
     padding-top: 50px;
+  }
+  .Date {
+    display: block;
   }
 }
 
