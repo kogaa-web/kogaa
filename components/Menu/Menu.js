@@ -12,12 +12,12 @@ import Subcategories from "./Subcategories/Subcategories";
 const Menu = (props) => {
   const [categories, setCategories] = useState(null);
   const [category, setCategory] = useState(null);
-  console.log(category);
+
   useEffect(async () => {
     defaultCategory();
     const subcats = await fetchCategories();
     setCategories(subcats);
-  }, []);
+  }, [props.category]);
 
   const defaultCategory = () => {
     switch (props.category) {
