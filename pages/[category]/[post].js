@@ -59,7 +59,7 @@ export default function Post({ postData, gallery, subcategories }) {
       >
         {images ? <Gallery images={images} /> : null}
         <h1>{postData.title}</h1>
-        {postData.table ? <Table data={postData.table.table} /> : null}
+        {postData.table.table ? <Table data={postData.table.table} /> : null}
         {postData.role ? (
           <p>
             <strong>{postData.role.role}</strong>
