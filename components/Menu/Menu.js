@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, Fragment } from "react";
 import Link from "next/link";
 
 import classes from "./Menu.module.css";
@@ -6,21 +6,23 @@ import Logo from "../../assets/kogaa-logo.svg";
 import Circle from "../../assets/circle.svg";
 import Square from "../../assets/square.svg";
 import Triangle from "../../assets/triangle.svg";
-import { fetchCategories } from "../../lib/api/listing";
+import Back from "../../assets/back.svg";
 import Subcategories from "./Subcategories/Subcategories";
 
-const Menu = (props) => {
-  //const [categories, setCategories] = useState(null);
+const Menu = ({
+  currentCategory,
+  subcategories,
+  postSubcategories,
+  postCategory,
+}) => {
   const [category, setCategory] = useState(null);
 
   useEffect(async () => {
     defaultCategory();
-    // const subcats = await fetchCategories();
-    // setCategories(subcats);
-  }, [props.category]);
+  }, [currentCategory]);
 
   const defaultCategory = () => {
-    switch (props.category) {
+    switch (currentCategory) {
       case "news":
         setCategory("newsCats");
         break;
@@ -67,8 +69,23 @@ const Menu = (props) => {
             </a>
           </Link>
         </div>
-        {props.subcategories && category ? (
-          <Subcategories categories={props.subcategories[category].nodes} />
+        {subcategories && category ? (
+          <Subcategories categories={subcategories[category].nodes} />
+        ) : null}
+        {postSubcategories ? (
+          <div className={classes.PostSubcategories}>
+            <Back />
+            {postSubcategories.map((category, index) => {
+              return (
+                <Fragment key={category.name}>
+                  <Link href={`/${postCategory}/${category.name}`}>
+                    <a>{category.name}</a>
+                  </Link>
+                  {postSubcategories[index + 1] && "|"}
+                </Fragment>
+              );
+            })}
+          </div>
         ) : null}
       </div>
     </div>

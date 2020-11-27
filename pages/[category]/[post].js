@@ -9,12 +9,16 @@ import Gallery from "../../components/Gallery/Gallery";
 // data
 import { getSlugs, getPost, getGallery } from "../../lib/api/single";
 import { fetchCategories } from "../../lib/api/listing";
+import { getCategories } from "../../lib/util";
 
 // styles
 import styles from "../../styles/Home.module.css";
 import singleStyles from "../../styles/Single.module.css";
 
 export default function Post({ postData, gallery, subcategories }) {
+  const postSubcategories = getCategories(postData);
+  console.log(postData);
+
   const windowWidth = useWindowSize().width;
   let images = null;
   if (windowWidth <= 320) {
@@ -46,7 +50,11 @@ export default function Post({ postData, gallery, subcategories }) {
         <title>{postData.title}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Layout subcategories={subcategories}>
+      <Layout
+        subcategories={subcategories}
+        postSubcategories={postSubcategories}
+        postCategory={postData.contentType.node.name}
+      >
         {images ? <Gallery images={images} /> : null}
         <h1>{postData.title}</h1>
         {postData.role ? (

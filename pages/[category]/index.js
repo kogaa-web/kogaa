@@ -46,14 +46,13 @@ export default function Home({ category, subcategories, allPosts }) {
     setPosts(allPosts);
   }
 
-  //console.log(allPosts);
   return (
     <div className={styles.container}>
       <Head>
         <title>Blog articles page</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Layout category={category} subcategories={subcategories}>
+      <Layout currentCategory={category} subcategories={subcategories}>
         <div className={styles.Cards}>
           {posts.map(({ node }) => (
             <Card post={node} key={node.id} />
@@ -72,6 +71,7 @@ export async function getServerSideProps({ query: { category } }) {
 
   return {
     props: {
+      category,
       allPosts,
       subcategories,
     },
