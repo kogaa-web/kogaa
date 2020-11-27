@@ -5,12 +5,13 @@ import Card from "../../components/Card/Card";
 
 // data
 import { getPosts } from "../../lib/api/listing";
+import { fetchCategories } from "../../lib/api/listing";
 
 // styles
 import styles from "../../styles/Home.module.css";
 import { useState, useEffect } from "react";
 
-export default function Home({ category, allPosts }) {
+export default function Home({ category, subcategories, allPosts }) {
   console.log(allPosts);
   const [loadingMore, setLoadingMore] = useState(false);
   const [posts, setPosts] = useState(allPosts.edges);
@@ -52,7 +53,7 @@ export default function Home({ category, allPosts }) {
         <title>Blog articles page</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Layout category={category}>
+      <Layout category={category} subcategories={subcategories}>
         <div className={styles.Cards}>
           {posts.map(({ node }) => (
             <Card post={node} key={node.id} />
@@ -64,11 +65,15 @@ export default function Home({ category, allPosts }) {
 }
 
 export async function getServerSideProps({ query: { category } }) {
-  const allPosts = await getPosts(category);
+  let [allPosts, subcategories] = await Promise.all([
+    getPosts(category),
+    fetchCategories(),
+  ]);
+
   return {
     props: {
-      category,
       allPosts,
+      subcategories,
     },
   };
 }

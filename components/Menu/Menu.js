@@ -10,13 +10,13 @@ import { fetchCategories } from "../../lib/api/listing";
 import Subcategories from "./Subcategories/Subcategories";
 
 const Menu = (props) => {
-  const [categories, setCategories] = useState(null);
+  //const [categories, setCategories] = useState(null);
   const [category, setCategory] = useState(null);
 
   useEffect(async () => {
     defaultCategory();
-    const subcats = await fetchCategories();
-    setCategories(subcats);
+    // const subcats = await fetchCategories();
+    // setCategories(subcats);
   }, [props.category]);
 
   const defaultCategory = () => {
@@ -67,8 +67,8 @@ const Menu = (props) => {
             </a>
           </Link>
         </div>
-        {categories && category ? (
-          <Subcategories categories={categories[category].nodes} />
+        {props.subcategories && category ? (
+          <Subcategories categories={props.subcategories[category].nodes} />
         ) : null}
       </div>
     </div>

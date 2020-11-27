@@ -8,12 +8,13 @@ import Gallery from "../../components/Gallery/Gallery";
 
 // data
 import { getSlugs, getPost, getGallery } from "../../lib/api/single";
+import { fetchCategories } from "../../lib/api/listing";
 
 // styles
 import styles from "../../styles/Home.module.css";
 import singleStyles from "../../styles/Single.module.css";
 
-export default function Post({ postData, gallery }) {
+export default function Post({ postData, gallery, subcategories }) {
   const windowWidth = useWindowSize().width;
   let images = null;
   if (windowWidth <= 320) {
@@ -45,7 +46,7 @@ export default function Post({ postData, gallery }) {
         <title>{postData.title}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Layout>
+      <Layout subcategories={subcategories}>
         {images ? <Gallery images={images} /> : null}
         <h1>{postData.title}</h1>
         {postData.role ? (
@@ -75,6 +76,7 @@ export async function getServerSidePaths() {
 export async function getServerSideProps({ params }) {
   let [
     data,
+    subcategories,
     gallery320,
     gallery480,
     gallery768,
@@ -84,6 +86,7 @@ export async function getServerSideProps({ params }) {
     gallery4k,
   ] = await Promise.all([
     getPost(params.post),
+    fetchCategories(),
     getGallery(params.post, "GALLERY_320"),
     getGallery(params.post, "GALLERY_480"),
     getGallery(params.post, "GALLERY_768"),
@@ -96,6 +99,7 @@ export async function getServerSideProps({ params }) {
   return {
     props: {
       postData: data,
+      subcategories,
       gallery: {
         gallery320,
         gallery480,

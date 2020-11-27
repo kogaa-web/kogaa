@@ -4,13 +4,13 @@ import Layout from "../components/Layout/Layout";
 import Card from "../components/Card/Card";
 
 // data
-import { getPosts } from "../lib/api/listing";
+import { getPosts, fetchCategories } from "../lib/api/listing";
 
 // styles
 import styles from "../styles/Home.module.css";
 import { useState, useEffect } from "react";
 
-export default function Home({ allPosts }) {
+export default function Home({ allPosts, subcategories }) {
   const [loadingMore, setLoadingMore] = useState(false);
   const [posts, setPosts] = useState(allPosts.edges);
   const [hasNextPage, setHasNextPage] = useState(allPosts.pageInfo.hasNextPage);
@@ -49,7 +49,7 @@ export default function Home({ allPosts }) {
         <title>Blog articles page</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Layout>
+      <Layout subcategories={subcategories}>
         <div className={styles.Cards}>
           {posts.map(({ node }) => (
             <Card post={node} key={node.id} />
@@ -61,10 +61,15 @@ export default function Home({ allPosts }) {
 }
 
 export async function getServerSideProps() {
-  const allPosts = await getPosts("all", "");
+  let [allPosts, subcategories] = await Promise.all([
+    getPosts("all"),
+    fetchCategories(),
+  ]);
+
   return {
     props: {
       allPosts,
+      subcategories,
     },
   };
 }
