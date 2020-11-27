@@ -5,6 +5,7 @@ import Head from "next/head";
 
 import Layout from "../../components/Layout/Layout";
 import Gallery from "../../components/Gallery/Gallery";
+import Table from "../../components/Table/Table";
 
 // data
 import { getSlugs, getPost, getGallery } from "../../lib/api/single";
@@ -58,6 +59,7 @@ export default function Post({ postData, gallery, subcategories }) {
       >
         {images ? <Gallery images={images} /> : null}
         <h1>{postData.title}</h1>
+        {postData.table ? <Table data={postData.table.table} /> : null}
         {postData.role ? (
           <p>
             <strong>{postData.role.role}</strong>

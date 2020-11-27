@@ -1,0 +1,10 @@
+.Table tr td:last-child {
+  font-weight: bold;
+}
+.Table {
+  width: 100%;
+}
+.Table td {
+  width: 50%;
+  vertical-align: top;
+}
