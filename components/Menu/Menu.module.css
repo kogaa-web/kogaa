@@ -16,8 +16,13 @@
   font-size: 14px;
 }
 
+.PostSubcategories svg {
+  margin-right: auto;
+}
+
 .PostSubcategories {
   display: flex;
+  width: 100%;
   align-items: center;
   padding-top: 3px;
   float: left;
@@ -38,6 +43,9 @@
   }
 }
 @media (min-width: 768px) {
+  .PostSubcategories {
+    width: auto;
+  }
   .Menu {
     min-height: 216px;
   }

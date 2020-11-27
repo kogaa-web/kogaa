@@ -54,7 +54,9 @@ export default function card({ post }) {
               {categories.map((category, index) => {
                 return (
                   <Fragment key={category.name}>
-                    <Link href={`/${category.name}`}>
+                    <Link
+                      href={`/${post.contentType.node.name}/${category.name}`}
+                    >
                       <a>{category.name}</a>
                     </Link>
                     {categories[index + 1] && "|"}
