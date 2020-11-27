@@ -1,11 +1,13 @@
 .Subcategories {
   padding: 14px 0;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
 }
 
 .Subcategories a {
+  margin-bottom: 1em;
   font-size: 14px;
   color: #ef4123;
   padding: 3px 6px 2px 6px;
