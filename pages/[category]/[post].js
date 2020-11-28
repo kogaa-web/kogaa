@@ -5,10 +5,7 @@ import Category from "../../containers/Category/Category";
 import { getSlugs, getPost, getGallery } from "../../lib/api/single";
 import { fetchCategories, getNewsBySubcategory } from "../../lib/api/listing";
 
-// styles
-import styles from "../../styles/Home.module.css";
-
-export default function Post(props) {
+export default function Page(props) {
   if (props.type == "post") {
     return <Single {...props} />;
   } else {

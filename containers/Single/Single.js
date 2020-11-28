@@ -9,7 +9,7 @@ import Layout from "../../components/Layout/Layout";
 import Gallery from "../../components/Gallery/Gallery";
 import Table from "../../components/Table/Table";
 
-import styles from "../../styles/Home.module.css";
+import styles from "../Category/Category.module.css";
 import singleStyles from "./Single.module.css";
 
 export default function Single({ postData, gallery, subcategories }) {

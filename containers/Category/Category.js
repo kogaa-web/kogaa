@@ -5,10 +5,9 @@ import Card from "../../components/Card/Card";
 
 // data
 import { getPosts } from "../../lib/api/listing";
-import { fetchCategories } from "../../lib/api/listing";
 
 // styles
-import styles from "../../styles/Home.module.css";
+import styles from "./Category.module.css";
 import { useState, useEffect } from "react";
 
 export default function Category({ category, subcategories, allPosts }) {
