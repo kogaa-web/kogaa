@@ -3,7 +3,7 @@ import Category from "../../containers/Category/Category";
 
 // data
 import { getSlugs, getPost, getGallery } from "../../lib/api/single";
-import { fetchCategories, getNewsBySubcategory } from "../../lib/api/listing";
+import { fetchCategories, getPostsBySubcategory } from "../../lib/api/listing";
 
 export default function Page(props) {
   if (props.type == "post") {
@@ -85,8 +85,11 @@ export async function getServerSideProps({ params }) {
       },
     };
   } else {
-    const allPosts = await getNewsBySubcategory(params.post);
-
+    const allPosts = await getPostsBySubcategory(
+      params.category,
+      params.post,
+      ""
+    );
     return {
       props: {
         type: pageType,
