@@ -20,29 +20,25 @@ const Menu = ({
   const [category, setCategory] = useState(null);
 
   useEffect(async () => {
-    defaultCategory();
+    () => setCategory(currentCategory);
   }, [currentCategory]);
 
-  const defaultCategory = () => {
-    switch (currentCategory) {
-      case "news":
-        setCategory("newsCats");
-        break;
-      case "projects":
-        setCategory("projectsCats");
-        break;
-      case "about":
-        setCategory("aboutCats");
-        break;
-      default:
-        setCategory(null);
-        break;
-    }
-  };
+  let categoryIndex = null;
+  switch (category) {
+    case "news":
+      categoryIndex = "newsCats";
+      break;
+    case "projects":
+      categoryIndex = "projectsCats";
+      break;
+    default:
+      categoryIndex = "aboutCats";
+      break;
+  }
 
   return (
     <div className={classes.Menu}>
-      <div onMouseLeave={defaultCategory}>
+      <div onMouseLeave={() => setCategory(currentCategory)}>
         <div className={classes.MainMenu}>
           <Link href="/">
             <a>
@@ -50,30 +46,33 @@ const Menu = ({
             </a>
           </Link>
           <Link href="/news">
-            <a onMouseEnter={() => setCategory("newsCats")}>
-              <Circle
-                className={category === "newsCats" ? classes.Active : null}
-              />
+            <a onMouseEnter={() => setCategory("news")}>
+              <Circle className={category === "news" ? classes.Active : null} />
             </a>
           </Link>
           <Link href="/projects">
-            <a onMouseEnter={() => setCategory("projectsCats")}>
+            <a onMouseEnter={() => setCategory("projects")}>
               <Square
-                className={category === "projectsCats" ? classes.Active : null}
+                className={category === "projects" ? classes.Active : null}
               />
             </a>
           </Link>
           <Link href="/about">
-            <a onMouseEnter={() => setCategory("aboutCats")}>
+            <a onMouseEnter={() => setCategory("about")}>
               <Triangle
-                className={category === "aboutCats" ? classes.Active : null}
+                className={category === "about" ? classes.Active : null}
               />
             </a>
           </Link>
         </div>
+
         {subcategories && category ? (
-          <Subcategories categories={subcategories[category].nodes} />
+          <Subcategories
+            category={category}
+            categories={subcategories[categoryIndex].nodes}
+          />
         ) : null}
+
         {postSubcategories && !category ? (
           <div className={classes.PostSubcategories}>
             <Back />
