@@ -11,7 +11,6 @@ import styles from "./Category.module.css";
 import { useState, useEffect } from "react";
 
 export default function Category({ category, subcategories, allPosts }) {
-  console.log(allPosts);
   const [loadingMore, setLoadingMore] = useState(false);
   const [posts, setPosts] = useState(allPosts.edges);
   const [hasNextPage, setHasNextPage] = useState(allPosts.pageInfo.hasNextPage);

@@ -67,7 +67,6 @@ export async function getServerSideProps({ params }) {
       getGallery(params.post, "GALLERY_1920"),
       getGallery(params.post, "GALLERY_4K"),
     ]);
-
     return {
       props: {
         type: pageType,
@@ -93,7 +92,7 @@ export async function getServerSideProps({ params }) {
     return {
       props: {
         type: pageType,
-        category: params.post,
+        category: params.category,
         allPosts,
         subcategories,
       },
