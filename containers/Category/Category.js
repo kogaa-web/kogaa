@@ -70,7 +70,7 @@ const Category = ({
         <FlipMove
           enterAnimation="fade"
           leaveAnimation="fade"
-          duration={300}
+          duration={3000}
           className={styles.Cards}
         >
           {posts.map(({ node }) => (
