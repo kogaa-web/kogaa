@@ -28,7 +28,6 @@ const Category = ({
   const [endCursor, setEndCursor] = useState(allPosts.pageInfo.endCursor);
 
   useEffect(() => {
-    console.log("reduxPosts:", reduxPosts);
     setPosts(allPosts.edges);
     setReduxPosts(allPosts.edges);
   }, [router.query]);
