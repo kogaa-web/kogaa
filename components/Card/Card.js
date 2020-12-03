@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { useState, useRef, useEffect, Fragment } from "react";
+import { useState, useRef, useEffect, Fragment, forwardRef } from "react";
 
 import classes from "./Card.module.css";
 import globalClasses from "../../styles/Global.module.css";
 import { formatDate, getCategories } from "../../lib/util";
 
-export default function card({ post }) {
+const Card = forwardRef(({ post }, ref) => {
   const [loaded, setLoaded] = useState(false);
   const image = useRef();
 
@@ -32,7 +32,7 @@ export default function card({ post }) {
   }
 
   return (
-    <div className={cardClasses.join(" ")}>
+    <div ref={ref} className={cardClasses.join(" ")}>
       {post.featuredImage ? (
         <Link href={`/${post.contentType.node.name}/${post.slug}`}>
           <a>
@@ -77,4 +77,5 @@ export default function card({ post }) {
       ) : null}
     </div>
   );
-}
+});
+export default Card;

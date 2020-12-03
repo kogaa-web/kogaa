@@ -1,4 +1,5 @@
 .Card {
+  animation: none;
   width: 100%;
 }
 .Card img {

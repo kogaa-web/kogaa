@@ -1,5 +1,9 @@
 import Head from "next/head";
+import { connect } from "react-redux";
+import { useRouter } from "next/router";
+import FlipMove from "react-flip-move";
 
+import * as actions from "../../redux/actions";
 import Layout from "../../components/Layout/Layout";
 import Card from "../../components/Card/Card";
 
@@ -10,15 +14,27 @@ import { getPosts } from "../../lib/api/listing";
 import styles from "./Category.module.css";
 import { useState, useEffect } from "react";
 
-export default function Category({ category, subcategories, allPosts }) {
+const Category = ({
+  category,
+  subcategories,
+  allPosts,
+  reduxPosts,
+  setReduxPosts,
+}) => {
+  const router = useRouter();
   const [loadingMore, setLoadingMore] = useState(false);
-  const [posts, setPosts] = useState(allPosts.edges);
+  const [posts, setPosts] = useState(reduxPosts ? reduxPosts : allPosts.edges);
   const [hasNextPage, setHasNextPage] = useState(allPosts.pageInfo.hasNextPage);
   const [endCursor, setEndCursor] = useState(allPosts.pageInfo.endCursor);
 
+  useEffect(() => {
+    console.log("reduxPosts:", reduxPosts);
+    setPosts(allPosts.edges);
+    setReduxPosts(allPosts.edges);
+  }, [router.query]);
+
   // Adding and removing scroll handler
   useEffect(() => {
-    setPosts(allPosts.edges);
     window.addEventListener("scroll", onScrollHandler);
     return () => window.removeEventListener("scroll", onScrollHandler);
   });
@@ -51,12 +67,27 @@ export default function Category({ category, subcategories, allPosts }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout currentCategory={category} subcategories={subcategories}>
-        <div className={styles.Cards}>
+        <FlipMove
+          enterAnimation="fade"
+          leaveAnimation="fade"
+          duration={300}
+          className={styles.Cards}
+        >
           {posts.map(({ node }) => (
             <Card post={node} key={node.id} />
           ))}
-        </div>
+        </FlipMove>
       </Layout>
     </div>
   );
-}
+};
+
+const mapStateToProps = (state) => ({
+  reduxPosts: state.posts,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  setReduxPosts: (posts) => dispatch(actions.setReduxPosts(posts)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Category);
