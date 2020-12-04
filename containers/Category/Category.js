@@ -1,4 +1,3 @@
-import Head from "next/head";
 import { connect } from "react-redux";
 import { useRouter } from "next/router";
 import FlipMove from "react-flip-move";
@@ -61,10 +60,6 @@ const Category = ({
 
   return (
     <div className={styles.container}>
-      <Head>
-        <title>Blog articles page</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
       <Layout currentCategory={category} subcategories={subcategories}>
         <FlipMove
           enterAnimation="fade"

@@ -3,7 +3,7 @@ import { useWindowSize } from "../../lib/hooks";
 import { useRouter } from "next/router";
 import Head from "next/head";
 
-import { getCategories } from "../../lib/util";
+import { getCategories, capitalize } from "../../lib/util";
 
 import Layout from "../../components/Layout/Layout";
 import Gallery from "../../components/Gallery/Gallery";
@@ -44,8 +44,9 @@ export default function Single({ postData, gallery, subcategories }) {
   return (
     <div className={styles.container}>
       <Head>
-        <title>{postData.title}</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>{`KOGAA - ${capitalize(postData.contentType.node.name)} - ${
+          postData.title
+        }`}</title>
       </Head>
       <Layout
         subcategories={subcategories}

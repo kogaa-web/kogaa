@@ -1,15 +1,28 @@
+import Head from "next/head";
+
 import Single from "../../containers/Single/Single";
 import Category from "../../containers/Category/Category";
+import { capitalize } from "../../lib/util";
 
 // data
 import { getSlugs, getPost, getGallery } from "../../lib/api/single";
 import { fetchCategories, getPostsBySubcategory } from "../../lib/api/listing";
 
 export default function Page(props) {
+  console.log(props);
   if (props.type == "post") {
     return <Single {...props} />;
   } else {
-    return <Category {...props} />;
+    return (
+      <>
+        <Head>
+          <title>{`KOGAA - ${capitalize(props.category)} - ${capitalize(
+            props.subcategory
+          )}`}</title>
+        </Head>
+        <Category {...props} />
+      </>
+    );
   }
 }
 
@@ -93,6 +106,7 @@ export async function getServerSideProps({ params }) {
       props: {
         type: pageType,
         category: params.category,
+        subcategory: params.post,
         allPosts,
         subcategories,
       },

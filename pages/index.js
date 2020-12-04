@@ -1,9 +1,18 @@
+import Head from "next/head";
+
 import Category from "../containers/Category/Category";
 
 // data
 import { getPosts, fetchCategories } from "../lib/api/listing";
 
-const Page = (props) => <Category {...props} />;
+const Page = (props) => (
+  <>
+    <Head>
+      <title>KOGAA</title>
+    </Head>
+    <Category {...props} />
+  </>
+);
 export default Page;
 
 export async function getServerSideProps() {
