@@ -9,16 +9,13 @@ import { getSlugs, getPost, getGallery } from "../../lib/api/single";
 import { fetchCategories, getPostsBySubcategory } from "../../lib/api/listing";
 
 export default function Page(props) {
-  console.log(props);
   if (props.type == "post") {
     return <Single {...props} />;
   } else {
     return (
       <>
         <Head>
-          <title>{`KOGAA - ${capitalize(props.category)} - ${capitalize(
-            props.subcategory
-          )}`}</title>
+          <title>{`KOGAA - ${capitalize(props.category)}`}</title>
         </Head>
         <Category {...props} />
       </>
@@ -106,7 +103,6 @@ export async function getServerSideProps({ params }) {
       props: {
         type: pageType,
         category: params.category,
-        subcategory: params.post,
         allPosts,
         subcategories,
       },
