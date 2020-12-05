@@ -16,9 +16,9 @@ const Table = ({ data }) => {
   return (
     <table className={classes.Table}>
       <tbody>
-        {tableData.map((element) => {
+        {tableData.map((element, index) => {
           return (
-            <tr key={element.index + element.value}>
+            <tr key={element.index + element.value + index}>
               <td>{element.index}</td>
               <td>{element.value}</td>
             </tr>
