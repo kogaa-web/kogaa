@@ -1,4 +1,4 @@
-.Links {
+.Social {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -18,16 +18,23 @@
 .Footer a {
   margin-bottom: 16px;
 }
-
-.CopyrightDesktop {
+.CopyrightMobile {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+.CopyrightDesktop,
+.EmailDesktop {
   display: none;
 }
-
 @media (min-width: 480px) {
   .CopyrightDesktop {
     display: block;
     width: 100%;
     text-align: center;
+  }
+  .EmailDesktop {
+    display: block;
   }
 
   .CopyrightMobile {
