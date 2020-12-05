@@ -1,3 +1,6 @@
+.Columns {
+  margin-bottom: 67px;
+}
 .Columns a {
   color: black;
   text-decoration: underline;
@@ -19,6 +22,11 @@
   color: white;
   background: #ef4123;
 }
+@media (min-width: 768px) {
+  .Columns {
+    margin-bottom: 88px;
+  }
+}
 @media (min-width: 1024px) {
   .Columns {
     display: flex;
@@ -31,5 +39,10 @@
   }
   .RightColumn {
     padding-left: 32.5px;
+  }
+}
+@media (min-width: 1366px) {
+  .Columns {
+    margin-bottom: 118px;
   }
 }

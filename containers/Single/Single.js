@@ -14,7 +14,6 @@ import singleStyles from "./Single.module.css";
 
 export default function Single({ postData, gallery, subcategories }) {
   const postSubcategories = getCategories(postData);
-  console.log(postData);
 
   const windowWidth = useWindowSize().width;
   let images = null;
