@@ -55,7 +55,9 @@ export default function Single({ postData, gallery, subcategories }) {
       >
         {images ? <Gallery images={images} /> : null}
         <h1>{postData.title}</h1>
-        {postData.table.table ? <Table data={postData.table.table} /> : null}
+        {postData.table.table && postData.table.insert ? (
+          <Table data={postData.table.table} />
+        ) : null}
         {postData.role ? (
           <p>
             <strong>{postData.role.role}</strong>
@@ -75,13 +77,15 @@ export default function Single({ postData, gallery, subcategories }) {
             }}
           />
         </div>
-        {postData.button.buttonLink ? (
+        {postData.button.insertButton &&
+        postData.button.buttonLink &&
+        postData.button.buttonText ? (
           <a
             className={singleStyles.Button}
             href={postData.button.buttonLink}
             target="_blank"
           >
-            media package
+            {postData.button.buttonText}
           </a>
         ) : (
           <Line />
