@@ -2,6 +2,23 @@
   color: black;
   text-decoration: underline;
 }
+.Button {
+  color: #ef4123;
+  display: block;
+  width: fit-content;
+  padding: 6px 10px;
+  margin: 0 auto;
+  transition: all 0.1s ease-in;
+}
+.Button:focus,
+.Button:active,
+.Button:hover {
+  text-decoration: none;
+}
+.Button:hover {
+  color: white;
+  background: #ef4123;
+}
 @media (min-width: 1024px) {
   .Columns {
     display: flex;

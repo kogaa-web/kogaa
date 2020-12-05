@@ -1,0 +1,9 @@
+.Line {
+  width: 65px;
+}
+@media (min-width: 1366px) {
+  .Line {
+    border: none;
+    border-bottom: 1px solid black;
+  }
+}

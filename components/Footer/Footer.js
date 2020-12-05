@@ -2,7 +2,6 @@ import classes from "./Footer.module.css";
 
 const footer = () => (
   <footer className={classes.Footer}>
-    <hr />
     <div className={classes.Links}>
       <a href="#">Instagram</a>
       <a href="#">Facebook</a>

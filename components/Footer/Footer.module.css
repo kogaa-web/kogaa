@@ -1,14 +1,11 @@
-.Footer hr {
-  width: 65px;
-  margin-bottom: 80px;
-}
-
 .Links {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
 }
-
+.Footer {
+  margin-top: 80px;
+}
 .Footer p,
 .Footer a {
   font-weight: 300;
@@ -38,9 +35,7 @@
   }
 }
 @media (min-width: 1366px) {
-  .Footer hr {
-    border: none;
-    border-bottom: 1px solid black;
-    margin-bottom: 120px;
+  .Footer {
+    margin-top: 120px;
   }
 }

@@ -1,8 +1,8 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { useSwipeable } from "react-swipeable";
-import classes from "./Gallery.module.css";
-
 import CSSTransition from "react-transition-group/CSSTransition";
+
+import classes from "./Gallery.module.css";
 
 export default function gallery({ images }) {
   const [fullscreen, setFullscreen] = useState(false);

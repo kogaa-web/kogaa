@@ -1,17 +1,16 @@
-import { connect } from "react-redux";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { connect } from "react-redux";
 import FlipMove from "react-flip-move";
 
+import { getPosts } from "../../lib/api/listing";
 import * as actions from "../../redux/actions";
+
 import Layout from "../../components/Layout/Layout";
 import Card from "../../components/Card/Card";
+import Line from "../../components/Line/Line";
 
-// data
-import { getPosts } from "../../lib/api/listing";
-
-// styles
 import styles from "./Category.module.css";
-import { useState, useEffect } from "react";
 
 const Category = ({
   category,
@@ -71,6 +70,7 @@ const Category = ({
             <Card post={node} key={node.id} />
           ))}
         </FlipMove>
+        <Line />
       </Layout>
     </div>
   );

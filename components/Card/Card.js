@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { useState, useRef, useEffect, Fragment, forwardRef } from "react";
 
+import { formatDate, getCategories } from "../../lib/util";
+
 import classes from "./Card.module.css";
 import globalClasses from "../../styles/Global.module.css";
-import { formatDate, getCategories } from "../../lib/util";
 
 const Card = forwardRef(({ post }, ref) => {
   const [loaded, setLoaded] = useState(false);

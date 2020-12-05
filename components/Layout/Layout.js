@@ -1,7 +1,9 @@
 import Head from "next/head";
-import classes from "./Layout.module.css";
+
 import Footer from "../Footer/Footer";
 import Menu from "../Menu/Menu";
+
+import classes from "./Layout.module.css";
 
 const layout = (props) => (
   <div className={classes.Layout}>

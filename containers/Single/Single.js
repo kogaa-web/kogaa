@@ -1,13 +1,13 @@
-import { useWindowSize } from "../../lib/hooks";
-
 import { useRouter } from "next/router";
 import Head from "next/head";
 
 import { getCategories, capitalize } from "../../lib/util";
+import { useWindowSize } from "../../lib/hooks";
 
 import Layout from "../../components/Layout/Layout";
 import Gallery from "../../components/Gallery/Gallery";
 import Table from "../../components/Table/Table";
+import Line from "../../components/Line/Line";
 
 import styles from "../Category/Category.module.css";
 import singleStyles from "./Single.module.css";
@@ -76,6 +76,17 @@ export default function Single({ postData, gallery, subcategories }) {
             }}
           />
         </div>
+        {postData.button.buttonLink ? (
+          <a
+            className={singleStyles.Button}
+            href={postData.button.buttonLink}
+            target="_blank"
+          >
+            media package
+          </a>
+        ) : (
+          <Line />
+        )}
       </Layout>
     </div>
   );
