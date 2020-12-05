@@ -62,10 +62,20 @@ export default function Single({ postData, gallery, subcategories }) {
             <strong>{postData.role.role}</strong>
           </p>
         ) : null}
-        <div
-          className={singleStyles.Content}
-          dangerouslySetInnerHTML={{ __html: postData.content }}
-        ></div>
+        <div className={singleStyles.Columns}>
+          <div
+            className={singleStyles.LeftColumn}
+            dangerouslySetInnerHTML={{
+              __html: postData.columns.columns.leftColumn,
+            }}
+          />
+          <div
+            className={singleStyles.RightColumn}
+            dangerouslySetInnerHTML={{
+              __html: postData.columns.columns.rightColumn,
+            }}
+          />
+        </div>
       </Layout>
     </div>
   );

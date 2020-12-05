@@ -1,9 +1,18 @@
+.Columns a {
+  color: black;
+  text-decoration: underline;
+}
 @media (min-width: 1024px) {
-  .Content {
-    column-count: 2;
-    column-gap: 65px;
+  .Columns {
+    display: flex;
   }
-  .Content > *:first-child {
-    margin-top: 0;
+  .Columns div {
+    width: 50%;
+  }
+  .LeftColumn {
+    padding-right: 32.5px;
+  }
+  .RightColumn {
+    padding-left: 32.5px;
   }
 }
