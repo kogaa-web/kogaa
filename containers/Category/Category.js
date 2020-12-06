@@ -62,19 +62,17 @@ const Category = ({
   return (
     <div className={styles.container}>
       <Layout currentCategory={category} subcategories={subcategories}>
-        <motion.div layoutId="cards" {...fadeIn}>
-          <FlipMove
-            enterAnimation="fade"
-            leaveAnimation="fade"
-            duration={300}
-            className={styles.Cards}
-          >
-            {posts.map(({ node }) => (
-              <Card post={node} key={node.id} />
-            ))}
-          </FlipMove>
-          <Line />
-        </motion.div>
+        <FlipMove
+          enterAnimation="fade"
+          leaveAnimation="fade"
+          duration={300}
+          className={styles.Cards}
+        >
+          {posts.map(({ node }) => (
+            <Card post={node} key={node.id} />
+          ))}
+        </FlipMove>
+        <Line />
       </Layout>
     </div>
   );
