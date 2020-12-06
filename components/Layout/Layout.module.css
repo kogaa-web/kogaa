@@ -5,7 +5,27 @@
 }
 @media (min-width: 480px) {
   .Layout {
-    padding: 0 51px;
+    padding: 0 50px;
+  }
+}
+@media (min-width: 590px) {
+  .Layout {
+    padding: 0 81px;
+  }
+}
+@media (min-width: 640px) {
+  .Layout {
+    padding: 0 39px;
+  }
+}
+@media (min-width: 768px) {
+  .Layout {
+    padding: 0 52px;
+  }
+}
+@media (min-width: 1024px) {
+  .Layout {
+    padding: 0 82px;
   }
 }
 @media (min-width: 1366px) {
