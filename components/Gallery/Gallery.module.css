@@ -1,6 +1,9 @@
 .Container {
   margin: 0 -26px;
 }
+.Container * {
+  animation: fadeIn 0.3s ease-out forwards;
+}
 .Gallery {
   position: relative;
   padding-bottom: 62.5%;

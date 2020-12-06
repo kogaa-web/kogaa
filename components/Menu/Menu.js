@@ -1,14 +1,18 @@
 import { useEffect, useState, Fragment } from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
-import classes from "./Menu.module.css";
+import { formatDate } from "../../lib/util";
+import { fadeIn } from "../../lib/animations";
+
+import Subcategories from "./Subcategories/Subcategories";
 import Logo from "../../assets/kogaa-logo.svg";
 import Circle from "../../assets/circle.svg";
 import Square from "../../assets/square.svg";
 import Triangle from "../../assets/triangle.svg";
 import Back from "../../assets/back.svg";
-import Subcategories from "./Subcategories/Subcategories";
-import { formatDate } from "../../lib/util";
+
+import classes from "./Menu.module.css";
 
 const Menu = ({
   currentCategory,
@@ -37,7 +41,7 @@ const Menu = ({
   }
 
   return (
-    <div className={classes.Menu}>
+    <motion.div className={classes.Menu} layoutId="menu" {...fadeIn}>
       <div onMouseLeave={() => setCategory(currentCategory)}>
         <div className={classes.MainMenu}>
           <Link href="/">
@@ -92,7 +96,7 @@ const Menu = ({
           <div className={classes.Date}>{formatDate(date)}</div>
         ) : null}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

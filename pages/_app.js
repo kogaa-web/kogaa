@@ -1,9 +1,12 @@
 import React from "react";
 import Router from "next/router";
+import { AnimateSharedLayout } from "framer-motion";
+
 import NProgress from "nprogress"; //nprogress module
 import "nprogress/nprogress.css"; //styles of nprogress
-import App from "next/app";
+
 import { wrapper } from "../redux/store";
+import App from "next/app";
 import "../styles/globals.css";
 
 Router.events.on("routeChangeStart", () => NProgress.start());
@@ -26,8 +29,11 @@ class MyApp extends App {
 
   render() {
     const { Component, pageProps } = this.props;
-
-    return <Component {...pageProps} />;
+    return (
+      <AnimateSharedLayout>
+        <Component {...pageProps} />
+      </AnimateSharedLayout>
+    );
   }
 }
 

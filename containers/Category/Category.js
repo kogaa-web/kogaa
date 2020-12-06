@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { connect } from "react-redux";
 import FlipMove from "react-flip-move";
+import { motion } from "framer-motion";
 
 import { getPosts } from "../../lib/api/listing";
+import { fadeIn } from "../../lib/animations";
 import * as actions from "../../redux/actions";
 
 import Layout from "../../components/Layout/Layout";
@@ -60,17 +62,19 @@ const Category = ({
   return (
     <div className={styles.container}>
       <Layout currentCategory={category} subcategories={subcategories}>
-        <FlipMove
-          enterAnimation="fade"
-          leaveAnimation="fade"
-          duration={300}
-          className={styles.Cards}
-        >
-          {posts.map(({ node }) => (
-            <Card post={node} key={node.id} />
-          ))}
-        </FlipMove>
-        <Line />
+        <motion.div layoutId="cards" {...fadeIn}>
+          <FlipMove
+            enterAnimation="fade"
+            leaveAnimation="fade"
+            duration={300}
+            className={styles.Cards}
+          >
+            {posts.map(({ node }) => (
+              <Card post={node} key={node.id} />
+            ))}
+          </FlipMove>
+          <Line />
+        </motion.div>
       </Layout>
     </div>
   );

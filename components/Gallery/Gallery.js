@@ -1,6 +1,9 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { useSwipeable } from "react-swipeable";
 import CSSTransition from "react-transition-group/CSSTransition";
+import { motion } from "framer-motion";
+
+import { fadeIn } from "../../lib/animations";
 
 import classes from "./Gallery.module.css";
 

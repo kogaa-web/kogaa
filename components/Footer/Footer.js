@@ -1,7 +1,9 @@
+import { motion } from "framer-motion";
+import { fadeIn } from "../../lib/animations";
 import classes from "./Footer.module.css";
 
 const footer = () => (
-  <footer className={classes.Footer}>
+  <motion.footer className={classes.Footer} {...fadeIn}>
     <div className={classes.Social}>
       <a href="#">Instagram</a>
       <a href="#">Facebook</a>
@@ -15,7 +17,7 @@ const footer = () => (
       </div>
       <p className={classes.CopyrightDesktop}>© 2020 KOGAA Studio</p>
     </div>
-  </footer>
+  </motion.footer>
 );
 
 export default footer;

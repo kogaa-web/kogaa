@@ -1,8 +1,10 @@
 import { useRouter } from "next/router";
+import { motion } from "framer-motion";
 import Head from "next/head";
 
 import { getCategories, capitalize } from "../../lib/util";
 import { useWindowSize } from "../../lib/hooks";
+import { fadeIn } from "../../lib/animations";
 
 import Layout from "../../components/Layout/Layout";
 import Gallery from "../../components/Gallery/Gallery";
@@ -54,42 +56,44 @@ export default function Single({ postData, gallery, subcategories }) {
         date={postData.date}
       >
         {images ? <Gallery images={images} /> : null}
-        <h1>{postData.title}</h1>
-        {postData.table.table && postData.table.insert ? (
-          <Table data={postData.table.table} />
-        ) : null}
-        {postData.role ? (
-          <p>
-            <strong>{postData.role.role}</strong>
-          </p>
-        ) : null}
-        <div className={singleStyles.Columns}>
-          <div
-            className={singleStyles.LeftColumn}
-            dangerouslySetInnerHTML={{
-              __html: postData.columns.columns.leftColumn,
-            }}
-          />
-          <div
-            className={singleStyles.RightColumn}
-            dangerouslySetInnerHTML={{
-              __html: postData.columns.columns.rightColumn,
-            }}
-          />
-        </div>
-        {postData.button.insertButton &&
-        postData.button.buttonLink &&
-        postData.button.buttonText ? (
-          <a
-            className={singleStyles.Button}
-            href={postData.button.buttonLink}
-            target="_blank"
-          >
-            {postData.button.buttonText}
-          </a>
-        ) : (
-          <Line />
-        )}
+        <motion.div {...fadeIn}>
+          <h1>{postData.title}</h1>
+          {postData.table.table && postData.table.insert ? (
+            <Table data={postData.table.table} />
+          ) : null}
+          {postData.role ? (
+            <p>
+              <strong>{postData.role.role}</strong>
+            </p>
+          ) : null}
+          <div className={singleStyles.Columns}>
+            <div
+              className={singleStyles.LeftColumn}
+              dangerouslySetInnerHTML={{
+                __html: postData.columns.columns.leftColumn,
+              }}
+            />
+            <div
+              className={singleStyles.RightColumn}
+              dangerouslySetInnerHTML={{
+                __html: postData.columns.columns.rightColumn,
+              }}
+            />
+          </div>
+          {postData.button.insertButton &&
+          postData.button.buttonLink &&
+          postData.button.buttonText ? (
+            <a
+              className={singleStyles.Button}
+              href={postData.button.buttonLink}
+              target="_blank"
+            >
+              {postData.button.buttonText}
+            </a>
+          ) : (
+            <Line />
+          )}
+        </motion.div>
       </Layout>
     </div>
   );
