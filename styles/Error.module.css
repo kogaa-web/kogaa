@@ -1,0 +1,54 @@
+.Error {
+  text-align: center;
+}
+.Error p {
+  color: #ef4123;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 19px;
+}
+.Error a {
+  font-size: 14px;
+  color: #ef4123;
+  display: block;
+  width: fit-content;
+  padding: 6px 10px;
+  margin: 0 auto;
+  transition: all 0.1s ease-in;
+}
+.Error a:focus,
+.Error a:active,
+.Error a:hover {
+  text-decoration: none;
+}
+.Error a:hover {
+  color: white;
+  background: #ef4123;
+}
+@media (min-width: 480px) {
+  .Error p {
+    font-size: 19px;
+  }
+  .Error svg {
+    margin: 45px 0 21px 0;
+  }
+}
+@media (min-width: 768px) {
+  .Error svg {
+    margin: 45px 0 46px 0;
+  }
+}
+@media (min-width: 1024px) {
+  .Error p {
+    font-size: 34px;
+    line-height: 35px;
+  }
+  .Error svg {
+    margin: 74px 0 21px 0;
+  }
+}
+@media (min-width: 1366px) {
+  .Error svg {
+    margin: 122px 0 91px 0;
+  }
+}
