@@ -6,7 +6,7 @@ import Error from "../../containers/Error/Error";
 import { capitalize } from "../../lib/util";
 
 // data
-import { getSlugs, getPost, getGallery } from "../../lib/api/single";
+import { getPost, getGallery } from "../../lib/api/single";
 import { fetchCategories, getPostsBySubcategory } from "../../lib/api/listing";
 
 export default function Page(props) {
@@ -26,15 +26,6 @@ export default function Page(props) {
       return <Error />;
   }
 }
-
-// Get all possible paths
-// export async function getServerSidePaths() {
-//   const allPosts = await getSlugs();
-//   return {
-//     paths: allPosts.edges.map(({ node }) => `/${node.slug}`) || [],
-//     fallback: true,
-//   };
-// }
 
 // Get data for current post by slug
 export async function getServerSideProps({ params }) {
