@@ -2,6 +2,7 @@ import Head from "next/head";
 
 import Single from "../../containers/Single/Single";
 import Category from "../../containers/Category/Category";
+import Error from "../../containers/Error/Error";
 import { capitalize } from "../../lib/util";
 
 // data
@@ -9,17 +10,20 @@ import { getSlugs, getPost, getGallery } from "../../lib/api/single";
 import { fetchCategories, getPostsBySubcategory } from "../../lib/api/listing";
 
 export default function Page(props) {
-  if (props.type == "post") {
-    return <Single {...props} />;
-  } else {
-    return (
-      <>
-        <Head>
-          <title>{`KOGAA - ${capitalize(props.category)}`}</title>
-        </Head>
-        <Category {...props} />
-      </>
-    );
+  switch (props.type) {
+    case "post":
+      return <Single {...props} />;
+    case "category":
+      return (
+        <>
+          <Head>
+            <title>{`KOGAA - ${capitalize(props.category)}`}</title>
+          </Head>
+          <Category {...props} />
+        </>
+      );
+    default:
+      return <Error />;
   }
 }
 
@@ -58,8 +62,16 @@ export async function getServerSideProps({ params }) {
   });
 
   if (pageType == "post") {
+    const data = await getPost(params.post);
+    console.log(data);
+    if (!data) {
+      return {
+        props: {
+          type: "error",
+        },
+      };
+    }
     let [
-      data,
       gallery320,
       gallery480,
       gallery768,
@@ -68,7 +80,6 @@ export async function getServerSideProps({ params }) {
       gallery1920,
       gallery4k,
     ] = await Promise.all([
-      getPost(params.post),
       getGallery(params.post, "GALLERY_320"),
       getGallery(params.post, "GALLERY_480"),
       getGallery(params.post, "GALLERY_768"),
@@ -93,7 +104,7 @@ export async function getServerSideProps({ params }) {
         },
       },
     };
-  } else {
+  } else if (pageType == "category") {
     const allPosts = await getPostsBySubcategory(
       params.category,
       params.post,

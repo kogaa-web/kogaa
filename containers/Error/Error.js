@@ -1,12 +1,12 @@
 import Head from "next/head";
 import Link from "next/link";
 
-import Layout from "../components/Layout/Layout";
-import ErrorImage from "../assets/404.svg";
+import Layout from "../../components/Layout/Layout";
+import ErrorImage from "../../assets/404.svg";
 
-import classes from "../styles/Error.module.css";
+import classes from "./Error.module.css";
 
-export default function ErrorPage() {
+export default function Error() {
   return (
     <Layout>
       <Head>
