@@ -13,7 +13,7 @@
   display: block;
   width: fit-content;
   padding: 6px 10px;
-  margin: 0 auto;
+  margin: 65px auto 0 auto;
   transition: all 0.1s ease-in;
 }
 .Error a:focus,
@@ -46,9 +46,15 @@
   .Error svg {
     margin: 74px 0 21px 0;
   }
+  .Error a {
+    margin: 96px auto 0 auto;
+  }
 }
 @media (min-width: 1366px) {
   .Error svg {
     margin: 122px 0 91px 0;
+  }
+  .Error a {
+    margin: 108px auto 0 auto;
   }
 }

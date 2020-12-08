@@ -8,7 +8,7 @@ import classes from "./Error.module.css";
 
 export default function Error() {
   return (
-    <Layout>
+    <Layout error postSubcategories={[{ name: "error 404" }]}>
       <Head>
         <title>KOGAA - Page not found</title>
       </Head>

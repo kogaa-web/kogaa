@@ -20,6 +20,7 @@ const Menu = ({
   postSubcategories,
   postCategory,
   date,
+  error,
 }) => {
   const [category, setCategory] = useState(null);
 
@@ -39,7 +40,7 @@ const Menu = ({
       categoryIndex = "aboutCats";
       break;
   }
-
+  console.log(postSubcategories);
   return (
     <motion.div className={classes.Menu} layoutId="menu" {...fadeIn}>
       <div onMouseLeave={() => setCategory(currentCategory)}>
@@ -80,16 +81,20 @@ const Menu = ({
         {postSubcategories && !category ? (
           <div className={classes.PostSubcategories}>
             <Back />
-            {postSubcategories.map((category, index) => {
-              return (
-                <Fragment key={category.name}>
-                  <Link href={`/${postCategory}/${category.name}`}>
-                    <a>{category.name}</a>
-                  </Link>
-                  {postSubcategories[index + 1] && "|"}
-                </Fragment>
-              );
-            })}
+            {error ? (
+              <p>error 404</p>
+            ) : (
+              postSubcategories.map((category, index) => {
+                return (
+                  <Fragment key={category.name}>
+                    <Link href={`/${postCategory}/${category.name}`}>
+                      <a>{category.name}</a>
+                    </Link>
+                    {postSubcategories[index + 1] && "|"}
+                  </Fragment>
+                );
+              })
+            )}
           </div>
         ) : null}
         {date && !category ? (

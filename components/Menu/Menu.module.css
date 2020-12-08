@@ -28,7 +28,8 @@
   float: left;
 }
 
-.PostSubcategories a {
+.PostSubcategories a,
+.PostSubcategories p {
   margin: 0 8px;
 }
 .Date {
