@@ -1,8 +1,8 @@
 .Card {
   width: 100%;
 }
-.Card img {
-  margin-bottom: 6px;
+.Info {
+  margin-top: 6px;
 }
 .Card a {
   color: inherit;
@@ -14,7 +14,24 @@
   border-radius: 100%;
 }
 .Triangle img {
+  width: 100%;
+  height: 100%;
   clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+.TriangleContainer {
+  width: 100%;
+  position: relative;
+}
+.TriangleContainer:after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
+.TriangleContent {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding-top: 13.4%;
 }
 .Date,
 .Categories a {

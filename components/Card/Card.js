@@ -32,24 +32,46 @@ const Card = forwardRef(({ post }, ref) => {
     setLoaded(true);
   }
 
+  let cardImage = null;
+  if (post.featuredImage) {
+    cardImage = (
+      <Link href={`/${post.contentType.node.name}/${post.slug}`}>
+        <a>
+          <img
+            ref={image}
+            src={post.featuredImage.node.sourceUrl}
+            alt={post.title}
+            onLoad={() => setLoaded(true)}
+          />
+        </a>
+      </Link>
+    );
+    if (post.contentType.node.name === "about") {
+      cardImage = (
+        <div className={classes.TriangleContainer}>
+          <div className={classes.TriangleContent}>
+            <Link href={`/${post.contentType.node.name}/${post.slug}`}>
+              <a>
+                <img
+                  ref={image}
+                  src={post.featuredImage.node.sourceUrl}
+                  alt={post.title}
+                  onLoad={() => setLoaded(true)}
+                />
+              </a>
+            </Link>
+          </div>
+        </div>
+      );
+    }
+  }
+
   return (
     <div ref={ref} className={cardClasses.join(" ")}>
-      {post.featuredImage ? (
-        <Link href={`/${post.contentType.node.name}/${post.slug}`}>
-          <a>
-            <img
-              ref={image}
-              src={post.featuredImage.node.sourceUrl}
-              alt={post.title}
-              onLoad={() => setLoaded(true)}
-            />
-          </a>
-        </Link>
-      ) : null}
-
+      {cardImage}
       {loaded ? (
         <>
-          <div className={globalClasses.Flex}>
+          <div className={[globalClasses.Flex, classes.Info].join(" ")}>
             <p className={classes.Date}>{formatDate(post.date)}</p>
             <div className={classes.Categories}>
               {categories.map((category, index) => {
