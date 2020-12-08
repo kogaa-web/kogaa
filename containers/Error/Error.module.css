@@ -1,6 +1,9 @@
 .Error {
   text-align: center;
 }
+.Top {
+  margin-top: 0;
+}
 .Error p {
   color: #ef4123;
   font-weight: bold;

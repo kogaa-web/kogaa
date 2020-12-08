@@ -40,9 +40,13 @@ const Menu = ({
       categoryIndex = "aboutCats";
       break;
   }
-  console.log(postSubcategories);
+
   return (
-    <motion.div className={classes.Menu} layoutId="menu" {...fadeIn}>
+    <motion.div
+      className={error ? [classes.Menu, classes.Error].join(" ") : classes.Menu}
+      layoutId="menu"
+      {...fadeIn}
+    >
       <div onMouseLeave={() => setCategory(currentCategory)}>
         <div className={classes.MainMenu}>
           <Link href="/">
@@ -82,7 +86,9 @@ const Menu = ({
           <div className={classes.PostSubcategories}>
             <Back />
             {error ? (
-              <p>error 404</p>
+              <Link href="/">
+                <a>error 404</a>
+              </Link>
             ) : (
               postSubcategories.map((category, index) => {
                 return (

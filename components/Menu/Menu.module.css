@@ -1,7 +1,9 @@
 .Menu {
-  min-height: 176px;
+  min-height: 196px;
 }
-
+.Error {
+  min-height: 161px;
+}
 .MainMenu {
   display: flex;
   border-bottom: 1px solid #ef4123;
@@ -9,17 +11,14 @@
   padding: 30px 0 19px 0;
   margin-bottom: 14px;
 }
-
 .PostSubcategories,
 .PostSubcategories a {
   color: #ef4123;
   font-size: 14px;
 }
-
 .PostSubcategories svg {
   margin-right: auto;
 }
-
 .PostSubcategories {
   display: flex;
   width: 100%;
@@ -28,8 +27,7 @@
   float: left;
 }
 
-.PostSubcategories a,
-.PostSubcategories p {
+.PostSubcategories a {
   margin: 0 8px;
 }
 .Date {
@@ -37,11 +35,6 @@
   font-size: 12px;
   display: none;
   padding-top: 6px;
-}
-@media (min-width: 196px) {
-  .Menu {
-    min-height: 196px;
-  }
 }
 @media (min-width: 768px) {
   .PostSubcategories {

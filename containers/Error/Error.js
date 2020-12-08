@@ -13,7 +13,7 @@ export default function Error() {
         <title>KOGAA - Page not found</title>
       </Head>
       <div className={classes.Error}>
-        <p>
+        <p className={classes.Top}>
           Congratulations!
           <br />
           You unlocked a hidden chamber!
