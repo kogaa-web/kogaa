@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { getPosts } from "../../lib/api/listing";
 import { fadeIn } from "../../lib/animations";
 import * as actions from "../../redux/actions";
+import { useWindowSize } from "../../lib/hooks";
 
 import Layout from "../../components/Layout/Layout";
 import Card from "../../components/Card/Card";
@@ -26,7 +27,25 @@ const Category = ({
   const [posts, setPosts] = useState(reduxPosts ? reduxPosts : allPosts.edges);
   const [hasNextPage, setHasNextPage] = useState(allPosts.pageInfo.hasNextPage);
   const [endCursor, setEndCursor] = useState(allPosts.pageInfo.endCursor);
+  const [numberOfPosts, setNumberOfPosts] = useState(10);
+  const [rendered, setRendered] = useState(false);
 
+  const windowWidth = useWindowSize().width;
+  console.log(windowWidth);
+  if (windowWidth && !rendered) {
+    console.log("windowWidth", windowWidth);
+    let count = numberOfPosts;
+    if (windowWidth >= 768 && windowWidth <= 1024) {
+      count = 16;
+    } else if (windowWidth >= 1366) {
+      count = 15;
+    }
+    setNumberOfPosts(count);
+    setPosts((currentPosts) => currentPosts.slice(0, count));
+    setRendered(true);
+  }
+
+  console.log("posts", posts);
   useEffect(() => {
     setPosts(allPosts.edges);
     setReduxPosts(allPosts.edges);
@@ -49,7 +68,11 @@ const Category = ({
   };
 
   async function loadMorePosts() {
-    const newPosts = await getPosts(category, endCursor);
+    console.log("category", category);
+    console.log("endCursor", endCursor);
+    console.log("numberOfPosts", numberOfPosts);
+    const newPosts = await getPosts(category, endCursor, numberOfPosts);
+    console.log("newPosts:", newPosts);
     setHasNextPage(newPosts.pageInfo.hasNextPage);
     setEndCursor(newPosts.pageInfo.endCursor);
     const allPosts = [...posts];

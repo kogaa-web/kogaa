@@ -72,14 +72,14 @@ export default function gallery({ images }) {
   };
 
   const enableFullscreen = () => {
-    document.documentElement.style.overflow = "hidden"; // firefox, chrome
-    document.body.scroll = "no"; // ie only
+    document.documentElement.style.overflow = "hidden";
+    document.body.scroll = "no";
     setFullscreen(true);
   };
 
   const disableFullscreen = () => {
-    document.documentElement.style.overflow = "auto"; // firefox, chrome
-    document.body.scroll = "yes"; // ie only
+    document.documentElement.style.overflow = "auto";
+    document.body.scroll = "yes";
     setFullscreen(false);
   };
 
