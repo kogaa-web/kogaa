@@ -28,7 +28,7 @@ const Category = ({
   const [hasNextPage, setHasNextPage] = useState(allPosts.pageInfo.hasNextPage);
   const [endCursor, setEndCursor] = useState(allPosts.pageInfo.endCursor);
   const [numberOfPosts, setNumberOfPosts] = useState(10);
-  const [rendered, setRendered] = useState(false);
+  const [rendered, setRendered] = useState(reduxPosts ? true : false);
 
   const windowWidth = useWindowSize().width;
   console.log(windowWidth);
@@ -85,16 +85,19 @@ const Category = ({
   return (
     <div className={styles.container}>
       <Layout currentCategory={category} subcategories={subcategories}>
-        <FlipMove
-          enterAnimation="fade"
-          leaveAnimation="fade"
-          duration={300}
-          className={styles.Cards}
-        >
-          {posts.map(({ node }) => (
-            <Card post={node} key={node.id} />
-          ))}
-        </FlipMove>
+        {rendered ? (
+          <FlipMove
+            enterAnimation="fade"
+            leaveAnimation="fade"
+            duration={300}
+            className={styles.Cards}
+          >
+            {posts.map(({ node }) => (
+              <Card post={node} key={node.id} />
+            ))}
+          </FlipMove>
+        ) : null}
+
         <Line />
       </Layout>
     </div>
