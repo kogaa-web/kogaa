@@ -1,10 +1,13 @@
+import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
 import Head from "next/head";
+import { connect } from "react-redux";
 
 import { getCategories, capitalize } from "../../lib/util";
 import { useWindowSize } from "../../lib/hooks";
 import { fadeIn } from "../../lib/animations";
+import * as actions from "../../redux/actions";
 
 import Layout from "../../components/Layout/Layout";
 import Gallery from "../../components/Gallery/Gallery";
@@ -14,7 +17,11 @@ import Line from "../../components/Line/Line";
 import styles from "../Category/Category.module.css";
 import singleStyles from "./Single.module.css";
 
-export default function Single({ postData, gallery, subcategories }) {
+const Single = ({ postData, gallery, subcategories, setReduxPosts }) => {
+  useEffect(() => {
+    setReduxPosts(null);
+  }, []);
+
   const postSubcategories = getCategories(postData);
 
   const windowWidth = useWindowSize().width;
@@ -97,4 +104,10 @@ export default function Single({ postData, gallery, subcategories }) {
       </Layout>
     </div>
   );
-}
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  setReduxPosts: (posts) => dispatch(actions.setReduxPosts(posts)),
+});
+
+export default connect(null, mapDispatchToProps)(Single);

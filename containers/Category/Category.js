@@ -34,6 +34,7 @@ const Category = ({
   const [endCursor, setEndCursor] = useState(null);
   const [numberOfPosts, setNumberOfPosts] = useState(10);
   const [rendered, setRendered] = useState(false);
+  const [firstTimeRendered, setFirstTimeRendered] = useState(false);
 
   const windowWidth = useWindowSize().width;
   if (windowWidth && !rendered) {
@@ -80,9 +81,18 @@ const Category = ({
   console.log("posts", posts);
   // Sets posts on page change
   useEffect(() => {
+    if (!reduxPosts) {
+      setFirstTimeRendered(true);
+    }
     setPosts(allPosts.edges);
     setReduxPosts(allPosts.edges);
   }, [router.query]);
+
+  useEffect(() => {
+    if (!reduxPosts) {
+      setFirstTimeRendered(true);
+    }
+  }, []);
 
   // Adding and removing scroll handler
   useEffect(() => {
@@ -134,7 +144,11 @@ const Category = ({
             enterAnimation="fade"
             leaveAnimation="fade"
             duration={300}
-            className={styles.Cards}
+            className={
+              firstTimeRendered
+                ? [styles.Cards, styles.FadeIn].join(" ")
+                : styles.Cards
+            }
           >
             {posts.map(({ node }) => (
               <Card post={node} key={node.id} />
