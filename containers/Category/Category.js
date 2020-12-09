@@ -2,14 +2,12 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { connect } from "react-redux";
 import FlipMove from "react-flip-move";
-import { motion } from "framer-motion";
 
 import { getPosts, getPostsBySubcategory } from "../../lib/api/listing";
 import {
   getSupportPosts,
   getSupportPostsBySubcategory,
 } from "../../lib/api/support";
-import { fadeIn } from "../../lib/animations";
 import * as actions from "../../redux/actions";
 import { useWindowSize } from "../../lib/hooks";
 
