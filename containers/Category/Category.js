@@ -35,14 +35,24 @@ const Category = ({
   if (windowWidth && !rendered) {
     console.log("windowWidth", windowWidth);
     let count = numberOfPosts;
-    if (windowWidth >= 768 && windowWidth <= 1024) {
+    if (windowWidth >= 640 && windowWidth < 1366) {
       count = 16;
     } else if (windowWidth >= 1366) {
       count = 15;
     }
+
+    loadSupportQuery(count);
+
     setNumberOfPosts(count);
     setPosts((currentPosts) => currentPosts.slice(0, count));
     setRendered(true);
+  }
+
+  async function loadSupportQuery(count) {
+    const supportQuery = await getPosts(category, null, count);
+    console.log("supportQuery", supportQuery);
+    console.log(supportQuery.pageInfo.endCursor);
+    setEndCursor(supportQuery.pageInfo.endCursor);
   }
 
   console.log("posts", posts);
