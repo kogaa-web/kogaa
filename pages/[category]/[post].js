@@ -105,6 +105,7 @@ export async function getServerSideProps({ params }) {
       props: {
         type: pageType,
         category: params.category,
+        subcategory: params.post,
         allPosts,
         subcategories,
       },

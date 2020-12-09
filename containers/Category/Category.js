@@ -4,7 +4,11 @@ import { connect } from "react-redux";
 import FlipMove from "react-flip-move";
 import { motion } from "framer-motion";
 
-import { getPosts } from "../../lib/api/listing";
+import { getPosts, getPostsBySubcategory } from "../../lib/api/listing";
+import {
+  getSupportPosts,
+  getSupportPostsBySubcategory,
+} from "../../lib/api/support";
 import { fadeIn } from "../../lib/animations";
 import * as actions from "../../redux/actions";
 import { useWindowSize } from "../../lib/hooks";
@@ -21,19 +25,19 @@ const Category = ({
   allPosts,
   reduxPosts,
   setReduxPosts,
+  subcategory,
 }) => {
   const router = useRouter();
   const [loadingMore, setLoadingMore] = useState(false);
   const [posts, setPosts] = useState(reduxPosts ? reduxPosts : allPosts.edges);
-  const [hasNextPage, setHasNextPage] = useState(allPosts.pageInfo.hasNextPage);
-  const [endCursor, setEndCursor] = useState(allPosts.pageInfo.endCursor);
+  const [hasNextPage, setHasNextPage] = useState(null);
+  const [endCursor, setEndCursor] = useState(null);
   const [numberOfPosts, setNumberOfPosts] = useState(10);
-  const [rendered, setRendered] = useState(reduxPosts ? true : false);
+  const [rendered, setRendered] = useState(false);
 
   const windowWidth = useWindowSize().width;
-  console.log(windowWidth);
   if (windowWidth && !rendered) {
-    console.log("windowWidth", windowWidth);
+    // Change number of posts accrding to screen size
     let count = numberOfPosts;
     if (windowWidth >= 640 && windowWidth < 1366) {
       count = 16;
@@ -41,21 +45,40 @@ const Category = ({
       count = 15;
     }
 
-    loadSupportQuery(count);
+    if (count != 16) {
+      // Remove unnecessary posts
+      setPosts((currentPosts) => currentPosts.slice(0, count));
+      // Run query to fetch corect endCursor
+      loadSupportQuery(count);
+    } else {
+      // Set original endCursor
+      setHasNextPage(allPosts.pageInfo.hasNextPage);
+      setEndCursor(allPosts.pageInfo.endCursor);
+    }
 
     setNumberOfPosts(count);
-    setPosts((currentPosts) => currentPosts.slice(0, count));
     setRendered(true);
   }
 
   async function loadSupportQuery(count) {
-    const supportQuery = await getPosts(category, null, count);
-    console.log("supportQuery", supportQuery);
-    console.log(supportQuery.pageInfo.endCursor);
-    setEndCursor(supportQuery.pageInfo.endCursor);
+    // Fetches only pageInfo object
+    let supportQuery = null;
+    if (subcategory) {
+      supportQuery = await getSupportPostsBySubcategory(
+        category,
+        subcategory,
+        null,
+        count
+      );
+    } else {
+      supportQuery = await getSupportPosts(category, null, count);
+    }
+    setHasNextPage(supportQuery.hasNextPage);
+    setEndCursor(supportQuery.endCursor);
   }
 
   console.log("posts", posts);
+  // Sets posts on page change
   useEffect(() => {
     setPosts(allPosts.edges);
     setReduxPosts(allPosts.edges);
@@ -71,18 +94,29 @@ const Category = ({
   const onScrollHandler = () => {
     const siteHeight = document.body.scrollHeight;
     const scrollPosition = window.scrollY + window.innerHeight * 2;
-    if (scrollPosition >= siteHeight && !loadingMore && hasNextPage) {
+    if (
+      scrollPosition >= siteHeight &&
+      !loadingMore &&
+      hasNextPage &&
+      endCursor
+    ) {
       setLoadingMore(true);
       loadMorePosts();
     }
   };
 
   async function loadMorePosts() {
-    console.log("category", category);
-    console.log("endCursor", endCursor);
-    console.log("numberOfPosts", numberOfPosts);
-    const newPosts = await getPosts(category, endCursor, numberOfPosts);
-    console.log("newPosts:", newPosts);
+    let newPosts = null;
+    if (subcategory) {
+      newPosts = await getPostsBySubcategory(
+        category,
+        subcategory,
+        endCursor,
+        numberOfPosts
+      );
+    } else {
+      newPosts = await getPosts(category, endCursor, numberOfPosts);
+    }
     setHasNextPage(newPosts.pageInfo.hasNextPage);
     setEndCursor(newPosts.pageInfo.endCursor);
     const allPosts = [...posts];
@@ -95,7 +129,7 @@ const Category = ({
   return (
     <div className={styles.container}>
       <Layout currentCategory={category} subcategories={subcategories}>
-        {rendered ? (
+        {rendered || reduxPosts ? (
           <FlipMove
             enterAnimation="fade"
             leaveAnimation="fade"
