@@ -22,10 +22,11 @@ const Menu = ({
   date,
   error,
 }) => {
+  console.log("currentCategory", currentCategory);
   const [category, setCategory] = useState(null);
 
   useEffect(async () => {
-    () => setCategory(currentCategory);
+    setCategory(currentCategory);
   }, [currentCategory]);
 
   let categoryIndex = null;
