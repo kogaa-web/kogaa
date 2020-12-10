@@ -23,3 +23,9 @@
 .nprogress-custom-parent #nprogress .bar {
   position: absolute;
 }
+
+@media (min-height: 1200px) {
+  #nprogress .bar {
+    height: 4px;
+  }
+}
