@@ -94,7 +94,7 @@ const Menu = ({
         ) : null}
 
         {postSubcategories && !category ? (
-          <div className={classes.PostSubcategories}>
+          <motion.div className={classes.PostSubcategories} {...fadeIn}>
             <Back />
             {error ? (
               <Link href="/">
@@ -112,10 +112,12 @@ const Menu = ({
                 );
               })
             )}
-          </div>
+          </motion.div>
         ) : null}
         {date && !category ? (
-          <div className={classes.Date}>{formatDate(date)}</div>
+          <motion.div {...fadeIn} className={classes.Date}>
+            {formatDate(date)}
+          </motion.div>
         ) : null}
       </div>
     </motion.div>
