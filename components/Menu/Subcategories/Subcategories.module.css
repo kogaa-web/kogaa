@@ -12,6 +12,7 @@
   color: #ef4123;
   padding: 3px 6px 2px 6px;
   transition: all 0.3s ease-out;
+  cursor: pointer;
 }
 
 .Subcategories a:hover {
