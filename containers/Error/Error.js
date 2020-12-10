@@ -5,6 +5,7 @@ import Layout from "../../components/Layout/Layout";
 import ErrorImage from "../../assets/404.svg";
 
 import classes from "./Error.module.css";
+import globalClasses from "../../styles/Global.module.css";
 
 export default function Error() {
   return (
@@ -12,7 +13,7 @@ export default function Error() {
       <Head>
         <title>KOGAA - Page not found</title>
       </Head>
-      <div className={classes.Error}>
+      <div className={`${classes.Error} ${globalClasses.FadeIn}`}>
         <p className={classes.Top}>
           Congratulations!
           <br />

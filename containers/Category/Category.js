@@ -16,6 +16,7 @@ import Card from "../../components/Card/Card";
 import Line from "../../components/Line/Line";
 
 import styles from "./Category.module.css";
+import globalStyles from "../../styles/Global.module.css";
 
 const Category = ({
   category,
@@ -144,7 +145,7 @@ const Category = ({
             duration={300}
             className={
               firstTimeRendered
-                ? [styles.Cards, styles.FadeIn].join(" ")
+                ? [styles.Cards, globalStyles.FadeIn].join(" ")
                 : styles.Cards
             }
           >
