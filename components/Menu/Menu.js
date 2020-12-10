@@ -24,6 +24,7 @@ const Menu = ({
 }) => {
   console.log("currentCategory", currentCategory);
   const [category, setCategory] = useState(null);
+  const [selected, setSelected] = useState(false);
 
   useEffect(async () => {
     setCategory(currentCategory);
@@ -48,7 +49,9 @@ const Menu = ({
       layoutId="menu"
       {...fadeIn}
     >
-      <div onMouseLeave={() => setCategory(currentCategory)}>
+      <div
+        onMouseLeave={() => (selected ? null : setCategory(currentCategory))}
+      >
         <div className={classes.MainMenu}>
           <Link href="/">
             <a>
@@ -64,6 +67,7 @@ const Menu = ({
             <a onMouseEnter={() => setCategory("projects")}>
               <Square
                 className={category === "projects" ? classes.Active : null}
+                onClick={() => setSelected(true)}
               />
             </a>
           </Link>
@@ -71,6 +75,7 @@ const Menu = ({
             <a onMouseEnter={() => setCategory("about")}>
               <Triangle
                 className={category === "about" ? classes.Active : null}
+                onClick={() => setSelected(true)}
               />
             </a>
           </Link>
@@ -80,6 +85,7 @@ const Menu = ({
           <Subcategories
             category={category}
             categories={subcategories[categoryIndex].nodes}
+            onClick={() => setSelected(true)}
           />
         ) : null}
 
