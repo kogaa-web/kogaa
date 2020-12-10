@@ -23,6 +23,11 @@ const Page = (props) => {
 export default Page;
 
 export async function getServerSideProps({ query: { category } }) {
+  const possiblePaths = ["news", "projects", "about", null];
+  if (!possiblePaths.includes(category)) {
+    return { props: { error: true } };
+  }
+
   let [allPosts, subcategories] = await Promise.all([
     getPosts(category),
     fetchCategories(),
