@@ -1,5 +1,6 @@
 import { useEffect, useState, Fragment } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { motion } from "framer-motion";
 
 import { formatDate } from "../../lib/util";
@@ -23,8 +24,15 @@ const Menu = ({
   error,
 }) => {
   console.log("currentCategory", currentCategory);
-  const [category, setCategory] = useState(null);
-  const [selected, setSelected] = useState(false);
+  const [category, setCategory] = useState(currentCategory);
+  const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
+  if (router.events) {
+    router.events.on("routeChangeStart", () => setLoading(true));
+    router.events.on("routeChangeComplete", () => setLoading(false));
+    router.events.on("routeChangeError", () => setLoading(false));
+  }
 
   useEffect(async () => {
     setCategory(currentCategory);
@@ -49,9 +57,7 @@ const Menu = ({
       layoutId="menu"
       {...fadeIn}
     >
-      <div
-        onMouseLeave={() => (selected ? null : setCategory(currentCategory))}
-      >
+      <div onMouseLeave={() => (loading ? null : setCategory(currentCategory))}>
         <div className={classes.MainMenu}>
           <Link href="/">
             <a>
@@ -67,7 +73,6 @@ const Menu = ({
             <a onMouseEnter={() => setCategory("projects")}>
               <Square
                 className={category === "projects" ? classes.Active : null}
-                onClick={() => setSelected(true)}
               />
             </a>
           </Link>
@@ -75,7 +80,6 @@ const Menu = ({
             <a onMouseEnter={() => setCategory("about")}>
               <Triangle
                 className={category === "about" ? classes.Active : null}
-                onClick={() => setSelected(true)}
               />
             </a>
           </Link>
