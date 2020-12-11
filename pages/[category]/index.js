@@ -10,7 +10,7 @@ import { getPosts } from "../../lib/api/listing";
 import { fetchCategories } from "../../lib/api/listing";
 const Page = (props) => {
   return props.error ? (
-    <Error />
+    <Error subcategories={props.subcategories} />
   ) : (
     <>
       <Head>
@@ -25,20 +25,14 @@ export default Page;
 export async function getServerSideProps({ query: { category } }) {
   const possiblePaths = ["news", "projects", "about", null];
   if (!possiblePaths.includes(category)) {
-    return { props: { error: true } };
+    const errorSubcategories = await fetchCategories();
+    return { props: { error: true, subcategories: errorSubcategories } };
   }
 
   let [allPosts, subcategories] = await Promise.all([
     getPosts(category),
     fetchCategories(),
   ]);
-  if (!allPosts) {
-    return {
-      props: {
-        error: true,
-      },
-    };
-  }
   return {
     props: {
       category,

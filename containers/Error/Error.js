@@ -7,9 +7,13 @@ import ErrorImage from "../../assets/404.svg";
 import classes from "./Error.module.css";
 import globalClasses from "../../styles/Global.module.css";
 
-export default function Error() {
+export default function Error({ subcategories }) {
   return (
-    <Layout error postSubcategories={[{ name: "error 404" }]}>
+    <Layout
+      error
+      subcategories={subcategories}
+      postSubcategories={[{ name: "error 404" }]}
+    >
       <Head>
         <title>KOGAA - Page not found</title>
       </Head>

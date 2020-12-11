@@ -23,7 +23,7 @@ export default function Page(props) {
         </>
       );
     default:
-      return <Error />;
+      return <Error subcategories={props.subcategories} />;
   }
 }
 
@@ -59,6 +59,7 @@ export async function getServerSideProps({ params }) {
       return {
         props: {
           type: "error",
+          subcategories,
         },
       };
     }

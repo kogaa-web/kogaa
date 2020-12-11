@@ -53,7 +53,7 @@ const Menu = ({
 
   return (
     <motion.div
-      className={error ? [classes.Menu, classes.Error].join(" ") : classes.Menu}
+      className={error ? `${classes.Menu} ${classes.Error}` : classes.Menu}
       layoutId="menu"
       {...fadeIn}
     >
