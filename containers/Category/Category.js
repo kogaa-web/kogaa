@@ -142,7 +142,7 @@ const Category = ({
           <FlipMove
             enterAnimation="fade"
             leaveAnimation="fade"
-            duration={300}
+            duration={400}
             className={
               firstTimeRendered
                 ? [styles.Cards, globalStyles.FadeIn].join(" ")

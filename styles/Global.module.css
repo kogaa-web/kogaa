@@ -3,7 +3,7 @@
   align-items: center;
 }
 .FadeIn {
-  animation: fadeIn 0.3s ease-out forwards;
+  animation: fadeIn 0.4s ease-out forwards;
 }
 @keyframes fadeIn {
   0% {
