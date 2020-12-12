@@ -15,7 +15,7 @@ const Page = (props) => (
 );
 export default Page;
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   let [allPosts, subcategories] = await Promise.all([
     getPosts("all"),
     fetchCategories(),
