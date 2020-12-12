@@ -5,9 +5,15 @@ import classes from "./Footer.module.css";
 const footer = () => (
   <motion.footer className={classes.Footer} {...fadeIn}>
     <div className={classes.Social}>
-      <a href="#">Instagram</a>
-      <a href="#">Facebook</a>
-      <a href="#">Linkedin</a>
+      <a href="https://www.instagram.com/kogaa_studio" target="_blank">
+        Instagram
+      </a>
+      <a href="https://www.facebook.com/kogaa.studio" target="_blank">
+        Facebook
+      </a>
+      <a href="https://www.linkedin.com/company/kogaa/" target="_blank">
+        Linkedin
+      </a>
       <a className={classes.EmailDesktop} href="mailto:office@kogaa.eu">
         office@kogaa.eu
       </a>
