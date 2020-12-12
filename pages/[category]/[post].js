@@ -27,8 +27,34 @@ export default function Page(props) {
   }
 }
 
+export async function getStaticPaths() {
+  const paths = [];
+  const categories = await fetchCategories();
+  for (const category in categories) {
+    console.log("category", category);
+    categories[category].nodes.map((element) => {
+      let paramsCategory = null;
+      switch (category) {
+        case "newsCats":
+          paramsCategory = "news";
+          break;
+        case "projectsCats":
+          paramsCategory = "projects";
+        default:
+          paramsCategory = "about";
+          break;
+      }
+      paths.push({ params: { category: paramsCategory, post: element.name } });
+    });
+  }
+  return {
+    paths: paths,
+    fallback: true,
+  };
+}
+
 // Get data for current post by slug
-export async function getServerSideProps({ params }) {
+export async function getStaticProps({ params }) {
   const subcategories = await fetchCategories();
 
   let currentSubcategories = null;
@@ -54,7 +80,6 @@ export async function getServerSideProps({ params }) {
 
   if (pageType == "post") {
     const data = await getPost(params.post);
-    console.log(data);
     if (!data) {
       return {
         props: {

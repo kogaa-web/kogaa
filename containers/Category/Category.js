@@ -26,6 +26,7 @@ const Category = ({
   setReduxPosts,
   subcategory,
 }) => {
+  console.log("subcategories", subcategories);
   const router = useRouter();
   const [loadingMore, setLoadingMore] = useState(false);
   const [posts, setPosts] = useState(reduxPosts ? reduxPosts : allPosts.edges);
@@ -39,9 +40,9 @@ const Category = ({
   if (windowWidth && !rendered) {
     // Change number of posts accrding to screen size
     let count = numberOfPosts;
-    if (windowWidth >= 640 && windowWidth < 1366) {
+    if (windowWidth >= 640 && windowWidth < 1200) {
       count = 16;
-    } else if (windowWidth >= 1366) {
+    } else if (windowWidth >= 1200) {
       count = 15;
     }
 
