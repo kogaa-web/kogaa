@@ -22,20 +22,27 @@ const Page = (props) => {
 };
 export default Page;
 
-export async function getServerSideProps({ query: { category } }) {
+export async function getStaticPaths() {
+  return {
+    paths: ["/news", "/projects", "/about"],
+    fallback: false,
+  };
+}
+
+export async function getStaticProps({ params }) {
   const possiblePaths = ["news", "projects", "about", null];
-  if (!possiblePaths.includes(category)) {
+  if (!possiblePaths.includes(params.category)) {
     const errorSubcategories = await fetchCategories();
     return { props: { error: true, subcategories: errorSubcategories } };
   }
 
   let [allPosts, subcategories] = await Promise.all([
-    getPosts(category),
+    getPosts(params.category),
     fetchCategories(),
   ]);
   return {
     props: {
-      category,
+      category: params.category,
       allPosts,
       subcategories,
     },
