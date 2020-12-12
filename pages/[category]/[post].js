@@ -8,6 +8,7 @@ import { capitalize } from "../../lib/util";
 // data
 import { getPost, getGallery } from "../../lib/api/single";
 import { fetchCategories, getPostsBySubcategory } from "../../lib/api/listing";
+import { getSlugs } from "../../lib/api/support";
 
 export default function Page(props) {
   switch (props.type) {
@@ -29,9 +30,9 @@ export default function Page(props) {
 
 export async function getStaticPaths() {
   const paths = [];
+  // Get all possible subcategories paths
   const categories = await fetchCategories();
   for (const category in categories) {
-    console.log("category", category);
     categories[category].nodes.map((element) => {
       let paramsCategory = null;
       switch (category) {
@@ -47,6 +48,16 @@ export async function getStaticPaths() {
       paths.push({ params: { category: paramsCategory, post: element.name } });
     });
   }
+  // Get all possible posts paths
+  const posts = await getSlugs();
+  posts.map((post) => {
+    paths.push({
+      params: {
+        category: post.node.contentType.node.name,
+        post: post.node.slug,
+      },
+    });
+  });
   return {
     paths: paths,
     fallback: true,
