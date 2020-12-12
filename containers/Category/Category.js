@@ -26,7 +26,6 @@ const Category = ({
   setReduxPosts,
   subcategory,
 }) => {
-  console.log("subcategories", subcategories);
   const router = useRouter();
   const [loadingMore, setLoadingMore] = useState(false);
   const [posts, setPosts] = useState(reduxPosts ? reduxPosts : allPosts.edges);
@@ -78,7 +77,6 @@ const Category = ({
     setEndCursor(supportQuery.endCursor);
   }
 
-  console.log("posts", posts);
   // Sets posts on page change
   useEffect(() => {
     if (!reduxPosts) {
@@ -150,9 +148,9 @@ const Category = ({
                 : styles.Cards
             }
           >
-            {posts.map(({ node }) => (
-              <Card post={node} key={node.id} />
-            ))}
+            {posts.map(({ node }) =>
+              node.featuredImage ? <Card post={node} key={node.id} /> : null
+            )}
           </FlipMove>
         ) : null}
 

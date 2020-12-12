@@ -27,11 +27,6 @@ const Card = forwardRef(({ post }, ref) => {
     }
   }, []);
 
-  // Handling case when there is no featured image
-  if (!post.featuredImage) {
-    setLoaded(true);
-  }
-
   let cardImage = null;
   if (post.featuredImage) {
     cardImage = (
