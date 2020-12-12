@@ -6,6 +6,7 @@
 .Footer {
   margin-top: 80px;
   padding-bottom: 28px;
+  flex-shrink: 0;
 }
 .Footer p,
 .Footer a {

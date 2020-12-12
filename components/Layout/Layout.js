@@ -30,9 +30,10 @@ const layout = (props) => (
       <meta name="msapplication-TileColor" content="#EF4123" />
       <meta name="theme-color" content="#FFFFFF" />
     </Head>
-
-    <Menu {...props} />
-    {props.children}
+    <div className={classes.Content}>
+      <Menu {...props} />
+      {props.children}
+    </div>
     <Footer />
   </div>
 );

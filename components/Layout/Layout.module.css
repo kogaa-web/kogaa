@@ -2,6 +2,12 @@
   max-width: 1250px;
   margin: 0 auto;
   padding: 0 26px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.Content {
+  flex: 1 0 auto;
 }
 @media (min-width: 480px) {
   .Layout {
