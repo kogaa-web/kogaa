@@ -49,6 +49,15 @@ const Single = ({ postData, gallery, subcategories, setReduxPosts }) => {
     return <p>post error</p>;
   }
 
+  let showButton = false;
+  if (
+    postData.button.insertButton &&
+    postData.button.buttonLink &&
+    postData.button.buttonText
+  ) {
+    showButton = true;
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -61,6 +70,7 @@ const Single = ({ postData, gallery, subcategories, setReduxPosts }) => {
         postSubcategories={postSubcategories}
         postCategory={postData.contentType.node.name}
         date={postData.date}
+        hideLine={showButton}
       >
         {images ? <Gallery images={images} /> : null}
         <motion.div {...fadeIn}>
@@ -87,9 +97,7 @@ const Single = ({ postData, gallery, subcategories, setReduxPosts }) => {
               }}
             />
           </div>
-          {postData.button.insertButton &&
-          postData.button.buttonLink &&
-          postData.button.buttonText ? (
+          {showButton ? (
             <a
               className={singleStyles.Button}
               href={postData.button.buttonLink}
@@ -97,9 +105,7 @@ const Single = ({ postData, gallery, subcategories, setReduxPosts }) => {
             >
               {postData.button.buttonText}
             </a>
-          ) : (
-            <Line />
-          )}
+          ) : null}
         </motion.div>
       </Layout>
     </div>

@@ -1,9 +1,13 @@
 import { motion } from "framer-motion";
 import { fadeIn } from "../../lib/animations";
+
+import Line from "../../components/Line/Line";
+
 import classes from "./Footer.module.css";
 
-const footer = () => (
+const footer = ({ hideLine }) => (
   <motion.footer className={classes.Footer} {...fadeIn}>
+    {!hideLine ? <Line /> : null}
     <div className={classes.Social}>
       <a href="https://www.instagram.com/kogaa_studio" target="_blank">
         Instagram

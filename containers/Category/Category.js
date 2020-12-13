@@ -153,8 +153,6 @@ const Category = ({
             )}
           </FlipMove>
         ) : null}
-
-        <Line />
       </Layout>
     </div>
   );

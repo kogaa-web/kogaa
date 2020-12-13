@@ -34,7 +34,7 @@ const layout = (props) => (
       <Menu {...props} />
       {props.children}
     </div>
-    <Footer />
+    <Footer hideLine={props.hideLine} />
   </div>
 );
 
