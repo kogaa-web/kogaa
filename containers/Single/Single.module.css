@@ -5,6 +5,9 @@
   color: black;
   text-decoration: underline;
 }
+.Columns a:hover {
+  color: #ef4123;
+}
 .Button {
   color: #ef4123;
   display: block;
