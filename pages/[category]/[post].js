@@ -12,9 +12,11 @@ import { getSlugs } from "../../lib/api/support";
 
 export default function Page(props) {
   switch (props.type) {
+    case "error":
+      return <Error subcategories={props.subcategories} />;
     case "post":
       return <Single {...props} />;
-    case "category":
+    default:
       return (
         <>
           <Head>
@@ -23,8 +25,6 @@ export default function Page(props) {
           <Category {...props} />
         </>
       );
-    default:
-      return <Error subcategories={props.subcategories} />;
   }
 }
 

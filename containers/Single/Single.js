@@ -12,7 +12,6 @@ import * as actions from "../../redux/actions";
 import Layout from "../../components/Layout/Layout";
 import Gallery from "../../components/Gallery/Gallery";
 import Table from "../../components/Table/Table";
-import Line from "../../components/Line/Line";
 
 import styles from "../Category/Category.module.css";
 import singleStyles from "./Single.module.css";
