@@ -23,8 +23,10 @@ export default function Page(props) {
           <Category {...props} />
         </>
       );
-    default:
+    case "error":
       return <Error subcategories={props.subcategories} />;
+    default:
+      return null;
   }
 }
 
