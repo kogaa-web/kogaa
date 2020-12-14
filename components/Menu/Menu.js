@@ -23,7 +23,6 @@ const Menu = ({
   date,
   error,
 }) => {
-  console.log("currentCategory", currentCategory);
   const [category, setCategory] = useState(currentCategory);
   const [loading, setLoading] = useState(false);
 

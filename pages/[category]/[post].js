@@ -23,10 +23,8 @@ export default function Page(props) {
           <Category {...props} />
         </>
       );
-    case "error":
-      return <Error subcategories={props.subcategories} />;
     default:
-      return null;
+      return <Error subcategories={props.subcategories} />;
   }
 }
 
@@ -50,7 +48,7 @@ export async function getStaticPaths() {
       paths.push({ params: { category: paramsCategory, post: element.name } });
     });
   }
-  // Get all possible posts paths
+  // Get all possible post paths
   const posts = await getSlugs();
   posts.map((post) => {
     paths.push({
@@ -60,6 +58,7 @@ export async function getStaticPaths() {
       },
     });
   });
+  // Set all possible paths
   return {
     paths: paths,
     fallback: false,

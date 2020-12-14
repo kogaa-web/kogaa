@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { useRouter } from "next/router";
 import { motion } from "framer-motion";
 import Head from "next/head";
 import { connect } from "react-redux";
@@ -41,11 +40,6 @@ const Single = ({ postData, gallery, subcategories, setReduxPosts }) => {
     images = gallery.gallery1920;
   } else if (windowWidth > 1366) {
     images = gallery.gallery4k;
-  }
-
-  const router = useRouter();
-  if ((!router.isFallback && !postData?.slug) || !postData) {
-    return <p>post error</p>;
   }
 
   let showButton = false;

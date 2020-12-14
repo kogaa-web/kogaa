@@ -1,9 +1,8 @@
 import Head from "next/head";
 
-import Category from "../containers/Category/Category";
-
-// data
 import { getPosts, fetchCategories } from "../lib/api/listing";
+
+import Category from "../containers/Category/Category";
 
 const Page = (props) => (
   <>

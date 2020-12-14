@@ -55,14 +55,12 @@ export default function gallery({ images }) {
   }, []);
 
   const nextImage = () => {
-    console.log("next");
     if (indexRef.current !== images.length - 1) {
       setIndex(indexRef.current + 1);
     }
   };
 
   const previousImage = () => {
-    console.log("previous");
     if (indexRef.current !== 0) {
       setIndex(indexRef.current - 1);
     }
