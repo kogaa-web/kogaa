@@ -13,6 +13,7 @@ export default function Error({ subcategories }) {
       error
       subcategories={subcategories}
       postSubcategories={[{ name: "error 404" }]}
+      hideLine={true}
     >
       <Head>
         <title>KOGAA - Page not found</title>
