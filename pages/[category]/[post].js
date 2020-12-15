@@ -41,6 +41,7 @@ export async function getStaticPaths() {
           break;
         case "projectsCats":
           paramsCategory = "projects";
+          break;
         default:
           paramsCategory = "about";
           break;
