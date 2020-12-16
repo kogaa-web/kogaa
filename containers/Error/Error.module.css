@@ -55,12 +55,3 @@
     margin: 96px auto 0 auto;
   }
 }
-@media (min-width: 1366px) {
-  .Error svg {
-    margin: 122px 0 91px 0;
-    max-width: 1000px;
-  }
-  .Error a {
-    margin: 108px auto 0 auto;
-  }
-}

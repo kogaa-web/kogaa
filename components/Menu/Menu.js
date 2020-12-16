@@ -97,7 +97,7 @@ const Menu = ({
             <Back />
             {error ? (
               <Link href="/">
-                <a>error 404</a>
+                <a>home</a>
               </Link>
             ) : (
               postSubcategories.map((category, index) => {
