@@ -57,12 +57,16 @@ export default function gallery({ images }) {
   const nextImage = () => {
     if (indexRef.current !== images.length - 1) {
       setIndex(indexRef.current + 1);
+    } else {
+      setIndex(0);
     }
   };
 
   const previousImage = () => {
     if (indexRef.current !== 0) {
       setIndex(indexRef.current - 1);
+    } else {
+      setIndex(images.length - 1);
     }
   };
 

@@ -25,7 +25,7 @@ const footer = ({ hideLine }) => (
         <a href="mailto:office@kogaa.eu">office@kogaa.eu</a>
         <p>© 2020 KOGAA</p>
       </div>
-      <p className={classes.CopyrightDesktop}>© 2020 KOGAA Studio</p>
+      <p className={classes.CopyrightDesktop}>© 2020 KOGAA studio</p>
     </div>
   </motion.footer>
 );
