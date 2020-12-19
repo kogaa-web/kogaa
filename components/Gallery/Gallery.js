@@ -12,16 +12,8 @@ export default function gallery({ images }) {
   const indexRef = useRef(index);
   const ref = useRef(null);
   const controls = [];
-  const initials = [];
   images.map((element, elementIndex) => {
     controls.push(useAnimation());
-    if (elementIndex == 0 && index == 0) {
-      initials.push(null);
-    } else if (elementIndex < index) {
-      initials.push({ x: "-100%", transition: { duration: 0.5 } });
-    } else {
-      initials.push({ x: "100%", transition: { duration: 0.5 } });
-    }
   });
 
   // Handling swipe
