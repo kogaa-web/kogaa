@@ -60,75 +60,46 @@ export default function gallery({ images }) {
     }
   }, []);
 
-  const nextImage = () => {
-    controls[indexRef.current].start({
+  const nextImage = async () => {
+    const currentImage = indexRef.current;
+    let nextImage = currentImage + 1;
+    if (nextImage == images.length) {
+      nextImage = 0;
+    }
+    setIndex(nextImage);
+    await controls[nextImage].start({
+      x: "100%",
+      transition: { duration: 0 },
+    });
+    controls[currentImage].start({
       x: "-100%",
       transition: { duration: 0.5 },
     });
-    if (indexRef.current !== images.length - 1) {
-      setIndex(indexRef.current + 1);
-      controls[indexRef.current + 1].start({
-        x: 0,
-        transition: { duration: 0.5 },
-      });
-      if (indexRef.current + 2 < images.length) {
-        controls[indexRef.current + 2].start({
-          x: "100%",
-          transition: { duration: 0 },
-        });
-      } else {
-        controls[0].start({
-          x: "100%",
-          transition: { duration: 0 },
-        });
-      }
-    } else {
-      setIndex(0);
-      controls[0].start({
-        x: 0,
-        transition: { duration: 0.5 },
-      });
-      controls[1].start({
-        x: "100%",
-        transition: { duration: 0 },
-      });
-    }
+    await controls[nextImage].start({
+      x: 0,
+      transition: { duration: 0.5 },
+    });
   };
 
-  const previousImage = () => {
-    controls[indexRef.current].start({
+  const previousImage = async () => {
+    const currentImage = indexRef.current;
+    let previousImage = currentImage - 1;
+    if (previousImage < 0) {
+      previousImage = images.length - 1;
+    }
+    setIndex(previousImage);
+    await controls[previousImage].start({
+      x: "-100%",
+      transition: { duration: 0 },
+    });
+    controls[currentImage].start({
       x: "100%",
       transition: { duration: 0.5 },
     });
-    if (indexRef.current !== 0) {
-      setIndex(indexRef.current - 1);
-      controls[indexRef.current - 1].start({
-        x: 0,
-        transition: { duration: 0.5 },
-      });
-
-      if (indexRef.current - 2 >= 0) {
-        controls[indexRef.current - 2].start({
-          x: "-100%",
-          transition: { duration: 0 },
-        });
-      } else {
-        controls[images.length - 1].start({
-          x: "-100%",
-          transition: { duration: 0 },
-        });
-      }
-    } else {
-      setIndex(images.length - 1);
-      controls[images.length - 1].start({
-        x: 0,
-        transition: { duration: 0.5 },
-      });
-      controls[images.length - 2].start({
-        x: "-100%",
-        transition: { duration: 0 },
-      });
-    }
+    await controls[previousImage].start({
+      x: 0,
+      transition: { duration: 0.5 },
+    });
   };
 
   const enableFullscreen = () => {
