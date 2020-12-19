@@ -1,14 +1,28 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { useSwipeable } from "react-swipeable";
 import CSSTransition from "react-transition-group/CSSTransition";
+import { motion, useAnimation } from "framer-motion";
 
 import classes from "./Gallery.module.css";
 
 export default function gallery({ images }) {
   const [fullscreen, setFullscreen] = useState(false);
   const [index, setIndex] = useState(0);
+
   const indexRef = useRef(index);
   const ref = useRef(null);
+  const controls = [];
+  const initials = [];
+  images.map((element, elementIndex) => {
+    controls.push(useAnimation());
+    if (elementIndex == 0 && index == 0) {
+      initials.push(null);
+    } else if (elementIndex < index) {
+      initials.push({ x: "-100%", transition: { duration: 0.5 } });
+    } else {
+      initials.push({ x: "100%", transition: { duration: 0.5 } });
+    }
+  });
 
   // Handling swipe
   const swipeHandlers = useSwipeable({
@@ -55,18 +69,73 @@ export default function gallery({ images }) {
   }, []);
 
   const nextImage = () => {
+    controls[indexRef.current].start({
+      x: "-100%",
+      transition: { duration: 0.5 },
+    });
     if (indexRef.current !== images.length - 1) {
       setIndex(indexRef.current + 1);
+      controls[indexRef.current + 1].start({
+        x: 0,
+        transition: { duration: 0.5 },
+      });
+      if (indexRef.current + 2 < images.length) {
+        controls[indexRef.current + 2].start({
+          x: "100%",
+          transition: { duration: 0 },
+        });
+      } else {
+        controls[0].start({
+          x: "100%",
+          transition: { duration: 0 },
+        });
+      }
     } else {
       setIndex(0);
+      controls[0].start({
+        x: 0,
+        transition: { duration: 0.5 },
+      });
+      controls[1].start({
+        x: "100%",
+        transition: { duration: 0 },
+      });
     }
   };
 
   const previousImage = () => {
+    controls[indexRef.current].start({
+      x: "100%",
+      transition: { duration: 0.5 },
+    });
     if (indexRef.current !== 0) {
       setIndex(indexRef.current - 1);
+      controls[indexRef.current - 1].start({
+        x: 0,
+        transition: { duration: 0.5 },
+      });
+
+      if (indexRef.current - 2 >= 0) {
+        controls[indexRef.current - 2].start({
+          x: "-100%",
+          transition: { duration: 0 },
+        });
+      } else {
+        controls[images.length - 1].start({
+          x: "-100%",
+          transition: { duration: 0 },
+        });
+      }
     } else {
       setIndex(images.length - 1);
+      controls[images.length - 1].start({
+        x: 0,
+        transition: { duration: 0.5 },
+      });
+      controls[images.length - 2].start({
+        x: "-100%",
+        transition: { duration: 0 },
+      });
     }
   };
 
@@ -86,7 +155,9 @@ export default function gallery({ images }) {
     <>
       {images.map((image, number) => {
         return (
-          <img
+          <motion.img
+            initial={number != 0 ? { x: "100%" } : null}
+            animate={controls[number]}
             ref={ref}
             key={image.sourceUrl}
             src={image.sourceUrl}
