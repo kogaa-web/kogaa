@@ -6,7 +6,7 @@ import { motion, useAnimation } from "framer-motion";
 import classes from "./Gallery.module.css";
 
 export default function gallery({ images }) {
-  const animationSpeed = 0.3;
+  const animationSpeed = 0.4;
   const [fullscreen, setFullscreen] = useState(false);
   const [index, setIndex] = useState(0);
   const indexRef = useRef(index);
