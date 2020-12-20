@@ -32,6 +32,7 @@
   position: absolute;
   left: 26px;
   bottom: 30px;
+  cursor: pointer !important;
 }
 .Indicators button {
   border: none;
@@ -42,7 +43,7 @@
   height: 8px;
   background: rgba(255, 255, 255, 0.5);
   outline: none;
-  cursor: pointer;
+  cursor: pointer !important;
 }
 .Indicators .Active {
   background: white;

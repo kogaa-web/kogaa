@@ -6,9 +6,9 @@ import { motion, useAnimation } from "framer-motion";
 import classes from "./Gallery.module.css";
 
 export default function gallery({ images }) {
+  const animationSpeed = 0.3;
   const [fullscreen, setFullscreen] = useState(false);
   const [index, setIndex] = useState(0);
-
   const indexRef = useRef(index);
   const ref = useRef(null);
   const controls = [];
@@ -73,11 +73,11 @@ export default function gallery({ images }) {
     });
     controls[currentImage].start({
       x: "-100%",
-      transition: { duration: 0.5 },
+      transition: { duration: animationSpeed },
     });
-    await controls[nextImage].start({
+    controls[nextImage].start({
       x: 0,
-      transition: { duration: 0.5 },
+      transition: { duration: animationSpeed },
     });
   };
 
@@ -94,11 +94,39 @@ export default function gallery({ images }) {
     });
     controls[currentImage].start({
       x: "100%",
-      transition: { duration: 0.5 },
+      transition: { duration: animationSpeed },
     });
-    await controls[previousImage].start({
+    controls[previousImage].start({
       x: 0,
-      transition: { duration: 0.5 },
+      transition: { duration: animationSpeed },
+    });
+  };
+
+  const indicatorClick = async (number) => {
+    const currentImage = indexRef.current;
+    setIndex(number);
+    if (number < currentImage) {
+      await controls[number].start({
+        x: "-100%",
+        transition: { duration: 0 },
+      });
+      controls[currentImage].start({
+        x: "100%",
+        transition: { duration: animationSpeed },
+      });
+    } else {
+      await controls[number].start({
+        x: "100%",
+        transition: { duration: 0 },
+      });
+      controls[currentImage].start({
+        x: "-100%",
+        transition: { duration: animationSpeed },
+      });
+    }
+    controls[number].start({
+      x: 0,
+      transition: { duration: animationSpeed },
     });
   };
 
@@ -150,7 +178,7 @@ export default function gallery({ images }) {
               return (
                 <button
                   key={image.sourceUrl}
-                  onClick={() => setIndex(number)}
+                  onClick={() => indicatorClick(number)}
                   className={number === index ? classes.Active : null}
                 />
               );
