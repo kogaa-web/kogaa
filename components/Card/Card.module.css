@@ -9,6 +9,7 @@
 }
 .Card h2 {
   margin: 14px 0 13px 0;
+  line-height: 30px;
 }
 .Circle img {
   border-radius: 100%;
