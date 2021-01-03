@@ -12,7 +12,7 @@ export default function gallery({ images }) {
   const indexRef = useRef(index);
   const ref = useRef(null);
   const controls = [];
-  images.map((element, elementIndex) => {
+  images.map(() => {
     controls.push(useAnimation());
   });
 
@@ -61,6 +61,9 @@ export default function gallery({ images }) {
   }, []);
 
   const nextImage = async () => {
+    if (images.length <= 1) {
+      return;
+    }
     const currentImage = indexRef.current;
     let nextImage = currentImage + 1;
     if (nextImage == images.length) {
@@ -82,6 +85,9 @@ export default function gallery({ images }) {
   };
 
   const previousImage = async () => {
+    if (images.length <= 1) {
+      return;
+    }
     const currentImage = indexRef.current;
     let previousImage = currentImage - 1;
     if (previousImage < 0) {
@@ -167,23 +173,30 @@ export default function gallery({ images }) {
       <div className={classes.Container} {...swipeHandlers}>
         <div className={classes.Gallery}>
           <div className={classes.Images}>{sliderImages}</div>
-          <button className={classes.Previous} onClick={previousImage} />
+          {images.length > 1 ? (
+            <button className={classes.Previous} onClick={previousImage} />
+          ) : null}
           <button
             className={classes.FullscreenButton}
             onClick={enableFullscreen}
+            style={images.length <= 1 ? { width: "100%", left: 0 } : null}
           />
-          <button className={classes.Next} onClick={nextImage} />
-          <div className={classes.Indicators}>
-            {images.map((image, number) => {
-              return (
-                <button
-                  key={image.sourceUrl}
-                  onClick={() => indicatorClick(number)}
-                  className={number === index ? classes.Active : null}
-                />
-              );
-            })}
-          </div>
+          {images.length > 1 ? (
+            <button className={classes.Next} onClick={nextImage} />
+          ) : null}
+          {images.length > 1 ? (
+            <div className={classes.Indicators}>
+              {images.map((image, number) => {
+                return (
+                  <button
+                    key={image.sourceUrl}
+                    onClick={() => indicatorClick(number)}
+                    className={number === index ? classes.Active : null}
+                  />
+                );
+              })}
+            </div>
+          ) : null}
         </div>
       </div>
       <CSSTransition
@@ -204,8 +217,12 @@ export default function gallery({ images }) {
             {...fullscreenSwipeHandlers}
           >
             <div className={classes.Images}>{sliderImages}</div>
-            <button className={classes.Previous} onClick={previousImage} />
-            <button className={classes.Next} onClick={nextImage} />
+            {images.length > 1 ? (
+              <button className={classes.Previous} onClick={previousImage} />
+            ) : null}
+            {images.length > 1 ? (
+              <button className={classes.Next} onClick={nextImage} />
+            ) : null}
             <img src={images[0].sourceUrl} className={classes.Placeholder} />
           </div>
         </div>
