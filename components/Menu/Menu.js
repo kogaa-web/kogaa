@@ -17,6 +17,7 @@ import classes from "./Menu.module.css";
 
 const Menu = ({
   currentCategory,
+  currentSubcategory,
   subcategories,
   postSubcategories,
   postCategory,
@@ -88,6 +89,7 @@ const Menu = ({
           <Subcategories
             category={category}
             categories={subcategories[categoryIndex].nodes}
+            currentSubcategory={currentSubcategory}
             onClick={() => setSelected(true)}
           />
         ) : null}

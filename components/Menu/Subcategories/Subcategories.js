@@ -5,12 +5,16 @@ import { fadeIn } from "../../../lib/animations";
 
 import classes from "./Subcategories.module.css";
 
-const Subcategories = ({ category, categories }) => (
+const Subcategories = ({ category, categories, currentSubcategory }) => (
   <div className={classes.Subcategories}>
     {categories.map((item) => {
       return (
         <Link href={`/${category}/${item.name}`} key={item.name}>
-          <motion.a {...fadeIn} layoutId={item.name + "menuitem"}>
+          <motion.a
+            {...fadeIn}
+            layoutId={item.name + "menuitem"}
+            className={currentSubcategory === item.name ? classes.Active : null}
+          >
             {item.name}
           </motion.a>
         </Link>

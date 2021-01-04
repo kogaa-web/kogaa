@@ -137,7 +137,11 @@ const Category = ({
 
   return (
     <div className={styles.container}>
-      <Layout currentCategory={category} subcategories={subcategories}>
+      <Layout
+        currentCategory={category}
+        subcategories={subcategories}
+        currentSubcategory={subcategory}
+      >
         {rendered || reduxPosts ? (
           <FlipMove
             enterAnimation="fade"

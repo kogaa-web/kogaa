@@ -15,8 +15,9 @@
   cursor: pointer;
 }
 
-.Subcategories a:hover {
+.Subcategories a:hover,
+.Active {
   text-decoration: none;
-  color: white;
+  color: white !important;
   background: #ef4123;
 }
