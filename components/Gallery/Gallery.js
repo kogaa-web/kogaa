@@ -153,7 +153,7 @@ export default function gallery({ images }) {
       {images.map((image, number) => {
         return (
           <motion.img
-            initial={number != 0 ? { x: "100%" } : null}
+            initial={number != index ? { x: "100%" } : null}
             animate={controls[number]}
             ref={ref}
             key={image.sourceUrl}
