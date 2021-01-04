@@ -132,6 +132,7 @@ const Category = ({
       allPosts.push(post);
     });
     setPosts(allPosts);
+    setLoadingMore(false);
   }
 
   return (
