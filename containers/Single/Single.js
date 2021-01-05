@@ -51,6 +51,16 @@ const Single = ({ postData, gallery, subcategories, setReduxPosts }) => {
     showButton = true;
   }
 
+  // Open all links in a new tab
+  let leftColumn = postData.columns.columns.leftColumn;
+  let rightColumn = postData.columns.columns.rightColumn;
+  if (leftColumn) {
+    leftColumn = leftColumn.replace("<a ", '<a target="_blank" ');
+  }
+  if (rightColumn) {
+    rightColumn = rightColumn.replace("<a ", '<a target="_blank" ');
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -80,13 +90,13 @@ const Single = ({ postData, gallery, subcategories, setReduxPosts }) => {
             <div
               className={singleStyles.LeftColumn}
               dangerouslySetInnerHTML={{
-                __html: postData.columns.columns.leftColumn,
+                __html: leftColumn,
               }}
             />
             <div
               className={singleStyles.RightColumn}
               dangerouslySetInnerHTML={{
-                __html: postData.columns.columns.rightColumn,
+                __html: rightColumn,
               }}
             />
           </div>
