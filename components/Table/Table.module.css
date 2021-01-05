@@ -5,6 +5,7 @@
 .Table td {
   width: 50%;
   vertical-align: top;
+  line-height: 18px;
 }
 .Table td:first-child {
   padding-right: 12.5px;
