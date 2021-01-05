@@ -104,7 +104,7 @@ const Menu = ({
 
         {postSubcategories && !currentCategory ? (
           <motion.div className={classes.PostSubcategories} {...fadeIn}>
-            <Back />
+            <Back onClick={() => router.back()} style={{ cursor: "pointer" }} />
             {error ? (
               <Link href="/">
                 <a>home</a>
