@@ -35,8 +35,16 @@ const Menu = ({
   }
 
   useEffect(async () => {
-    setCategory(currentCategory);
+    if (currentCategory) {
+      setCategory(currentCategory);
+    }
   }, [currentCategory]);
+
+  useEffect(async () => {
+    if (postCategory) {
+      setCategory(postCategory);
+    }
+  }, [postCategory]);
 
   let categoryIndex = null;
   switch (category) {
@@ -85,7 +93,7 @@ const Menu = ({
           </Link>
         </div>
 
-        {subcategories && category ? (
+        {subcategories && currentCategory ? (
           <Subcategories
             category={category}
             categories={subcategories[categoryIndex].nodes}
@@ -94,7 +102,7 @@ const Menu = ({
           />
         ) : null}
 
-        {postSubcategories && !category ? (
+        {postSubcategories && !currentCategory ? (
           <motion.div className={classes.PostSubcategories} {...fadeIn}>
             <Back />
             {error ? (
