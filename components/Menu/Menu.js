@@ -118,7 +118,7 @@ const Menu = ({
           </Link>
         </div>
 
-        {subcategories && currentCategory ? (
+        {subcategories && category && !postSubcategories ? (
           <Subcategories
             category={category}
             categories={subcategories[categoryIndex].nodes}
@@ -148,7 +148,7 @@ const Menu = ({
             )}
           </motion.div>
         ) : null}
-        {date && !category ? (
+        {date && !currentCategory ? (
           <motion.div {...fadeIn} className={classes.Date}>
             {formatDate(date)}
           </motion.div>
