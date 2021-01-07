@@ -7,6 +7,7 @@ import classes from "./Gallery.module.css";
 
 export default function gallery({ images }) {
   const animationSpeed = 0.4;
+  const [fullscreen, setFullscreen] = useState(false);
   const [index, setIndex] = useState(0);
   const indexRef = useRef(index);
   const ref = useRef(null);
@@ -19,6 +20,15 @@ export default function gallery({ images }) {
   const swipeHandlers = useSwipeable({
     onSwipedLeft: () => nextImage(),
     onSwipedRight: () => previousImage(),
+    onSwipedDown: () => disableFullscreen(),
+  });
+
+  const fullscreenSwipeHandlers = useSwipeable({
+    onSwipedLeft: () => nextImage(),
+    onSwipedRight: () => previousImage(),
+  });
+
+  const disableFullscreenSwipe = useSwipeable({
     onSwipedDown: () => disableFullscreen(),
   });
 
@@ -126,6 +136,18 @@ export default function gallery({ images }) {
     });
   };
 
+  const enableFullscreen = () => {
+    document.documentElement.style.overflow = "hidden";
+    document.body.scroll = "no";
+    setFullscreen(true);
+  };
+
+  const disableFullscreen = () => {
+    document.documentElement.style.overflow = "auto";
+    document.body.scroll = "yes";
+    setFullscreen(false);
+  };
+
   const sliderImages = (
     <>
       {images.map((image, number) => {
@@ -154,6 +176,11 @@ export default function gallery({ images }) {
           {images.length > 1 ? (
             <button className={classes.Previous} onClick={previousImage} />
           ) : null}
+          <button
+            className={classes.FullscreenButton}
+            onClick={enableFullscreen}
+            style={images.length <= 1 ? { width: "100%", left: 0 } : null}
+          />
           {images.length > 1 ? (
             <button className={classes.Next} onClick={nextImage} />
           ) : null}
@@ -172,6 +199,34 @@ export default function gallery({ images }) {
           ) : null}
         </div>
       </div>
+      <CSSTransition
+        mountOnEnter
+        unmountOnExit
+        in={fullscreen}
+        timeout={300}
+        classNames={{
+          enter: classes.FullscreenClosed,
+          enterActive: classes.FullscreenOpen,
+          exitActive: classes.FullscreenClosed,
+        }}
+      >
+        <div className={classes.Fullscreen} {...disableFullscreenSwipe}>
+          <div onClick={disableFullscreen} className={classes.Backdrop} />
+          <div
+            className={classes.FullscreenContent}
+            {...fullscreenSwipeHandlers}
+          >
+            <div className={classes.Images}>{sliderImages}</div>
+            {images.length > 1 ? (
+              <button className={classes.Previous} onClick={previousImage} />
+            ) : null}
+            {images.length > 1 ? (
+              <button className={classes.Next} onClick={nextImage} />
+            ) : null}
+            <img src={images[0].sourceUrl} className={classes.Placeholder} />
+          </div>
+        </div>
+      </CSSTransition>
     </>
   );
 }

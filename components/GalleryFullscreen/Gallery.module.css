@@ -49,12 +49,13 @@
   background: white;
 }
 .Previous,
+.FullscreenButton,
 .Next {
   position: absolute;
   top: 0;
   bottom: 0;
   height: 100%;
-  width: 50%;
+  width: 33.333%;
   background: none;
   border: none;
   outline: none;
@@ -63,9 +64,58 @@
   left: 0;
   cursor: url("/cursors/prev.svg"), auto;
 }
+.FullscreenButton {
+  left: 33.333%;
+  cursor: url("/cursors/fullscreen.svg"), auto;
+}
 .Next {
   right: 0;
   cursor: url("/cursors/next.svg"), auto;
+}
+.Fullscreen {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: white;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  transition: opacity 0.3s ease-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.Fullscreen,
+.Fullscreen * {
+  animation: none;
+}
+.FullscreenOpen {
+  opacity: 1;
+}
+.FullscreenClosed {
+  opacity: 0;
+}
+.FullscreenContent {
+  position: relative;
+  overflow: hidden;
+}
+.Placeholder {
+  opacity: 0;
+  position: static;
+}
+.Fullscreen button {
+  padding: 0;
+  z-index: 2;
+  opacity: 0.5;
+}
+.Backdrop {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 @media (min-width: 480px) {
   .Container {
@@ -76,6 +126,15 @@
   }
 }
 @media (min-width: 768px) {
+  .Fullscreen {
+    padding: 38px;
+  }
+  .Fullscreen img,
+  .Fullscreen button,
+  .FullscreenContent {
+    max-height: calc(100vh - 61px);
+    max-width: calc(100vw - 61px);
+  }
   .Container {
     margin: 0;
   }
