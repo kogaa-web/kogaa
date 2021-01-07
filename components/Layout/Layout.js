@@ -29,6 +29,19 @@ const layout = (props) => (
       <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#EF4123" />
       <meta name="msapplication-TileColor" content="#EF4123" />
       <meta name="theme-color" content="#FFFFFF" />
+      <script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=G-LM24JH3WGJ"
+      ></script>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+      window.dataLayer = window.dataLayer || []; function gtag()
+      {dataLayer.push(arguments)}
+      gtag(‘js’, new Date()); gtag(‘config’, ‘G-LM24JH3WGJ’);
+        `,
+        }}
+      />
     </Head>
     <div className={classes.Content}>
       <Menu {...props} />
