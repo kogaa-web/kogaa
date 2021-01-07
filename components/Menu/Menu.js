@@ -59,13 +59,38 @@ const Menu = ({
       break;
   }
 
+  const iOS = () => {
+    return (
+      [
+        "iPad Simulator",
+        "iPhone Simulator",
+        "iPod Simulator",
+        "iPad",
+        "iPhone",
+        "iPod",
+      ].includes(navigator.platform) ||
+      // iPad on iOS 13 detection
+      (navigator.userAgent.includes("Mac") && "ontouchend" in document)
+    );
+  };
+
+  const setCategoryOnHover = (category) => {
+    if (!iOS()) {
+      setCategory(category);
+    }
+  };
+
   return (
     <motion.div
       className={error ? `${classes.Menu} ${classes.Error}` : classes.Menu}
       layoutId="menu"
       {...fadeIn}
     >
-      <div onMouseLeave={() => (loading ? null : setCategory(currentCategory))}>
+      <div
+        onMouseLeave={() =>
+          loading ? null : setCategoryOnHover(currentCategory)
+        }
+      >
         <div className={classes.MainMenu}>
           <Link href="/">
             <a>
@@ -73,19 +98,19 @@ const Menu = ({
             </a>
           </Link>
           <Link href="/news">
-            <a onMouseEnter={() => setCategory("news")}>
+            <a onMouseEnter={() => setCategoryOnHover("news")}>
               <Circle className={category === "news" ? classes.Active : null} />
             </a>
           </Link>
           <Link href="/projects">
-            <a onMouseEnter={() => setCategory("projects")}>
+            <a onMouseEnter={() => setCategoryOnHover("projects")}>
               <Square
                 className={category === "projects" ? classes.Active : null}
               />
             </a>
           </Link>
           <Link href="/about">
-            <a onMouseEnter={() => setCategory("about")}>
+            <a onMouseEnter={() => setCategoryOnHover("about")}>
               <Triangle
                 className={category === "about" ? classes.Active : null}
               />
