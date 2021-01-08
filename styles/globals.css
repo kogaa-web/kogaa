@@ -36,7 +36,11 @@ h1 {
 img {
   max-width: 100%;
 }
-
+@media (min-width: 768px) {
+  h1 {
+    margin: 30px 0 17px 0;
+  }
+}
 @keyframes fadeIn {
   0% {
     opacity: 0;
