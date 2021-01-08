@@ -13,7 +13,6 @@ import { useWindowSize } from "../../lib/hooks";
 
 import Layout from "../../components/Layout/Layout";
 import Card from "../../components/Card/Card";
-import Line from "../../components/Line/Line";
 
 import styles from "./Category.module.css";
 import globalStyles from "../../styles/Global.module.css";
@@ -37,14 +36,13 @@ const Category = ({
 
   const windowWidth = useWindowSize().width;
   if (windowWidth && !rendered) {
-    // Change number of posts accrding to screen size
+    // Change number of posts according to screen size
     let count = numberOfPosts;
     if (windowWidth >= 640 && windowWidth < 1200) {
       count = 16;
     } else if (windowWidth >= 1200) {
       count = 15;
     }
-
     if (count != 16) {
       // Remove unnecessary posts
       setPosts((currentPosts) => currentPosts.slice(0, count));
