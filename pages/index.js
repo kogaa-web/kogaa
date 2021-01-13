@@ -9,8 +9,8 @@ const Page = (props) => (
     <Head>
       <title>KOGAA</title>
     </Head>
-    {/* <Category {...props} /> */}
-    <div
+    <Category {...props} />
+    {/* <div
       style={{
         width: "100%",
         display: "flex",
@@ -21,7 +21,7 @@ const Page = (props) => (
       <h1 style={{ color: "#ef4123", textAlign: "center" }}>
         KOGAA page is under construction
       </h1>
-    </div>
+    </div> */}
   </>
 );
 export default Page;
