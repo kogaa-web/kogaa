@@ -9,7 +9,19 @@ const Page = (props) => (
     <Head>
       <title>KOGAA</title>
     </Head>
-    <Category {...props} />
+    {/* <Category {...props} /> */}
+    <div
+      style={{
+        width: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <h1 style={{ color: "#ef4123", textAlign: "center" }}>
+        KOGAA page is under construction
+      </h1>
+    </div>
   </>
 );
 export default Page;
