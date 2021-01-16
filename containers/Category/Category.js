@@ -35,6 +35,28 @@ const Category = ({
   const [firstTimeRendered, setFirstTimeRendered] = useState(false);
 
   const windowWidth = useWindowSize().width;
+
+  // Sets posts on page change
+  useEffect(() => {
+    if (!reduxPosts) {
+      setFirstTimeRendered(true);
+    }
+    setPosts(allPosts.edges);
+    setReduxPosts(allPosts.edges);
+  }, [router.query]);
+
+  useEffect(() => {
+    if (!reduxPosts) {
+      setFirstTimeRendered(true);
+    }
+  }, []);
+
+  // Adding and removing scroll handler
+  useEffect(() => {
+    window.addEventListener("scroll", onScrollHandler);
+    return () => window.removeEventListener("scroll", onScrollHandler);
+  });
+
   if (windowWidth && !rendered) {
     // Change number of posts according to screen size
     let count = numberOfPosts;
@@ -74,27 +96,6 @@ const Category = ({
     setHasNextPage(supportQuery.hasNextPage);
     setEndCursor(supportQuery.endCursor);
   }
-
-  // Sets posts on page change
-  useEffect(() => {
-    if (!reduxPosts) {
-      setFirstTimeRendered(true);
-    }
-    setPosts(allPosts.edges);
-    setReduxPosts(allPosts.edges);
-  }, [router.query]);
-
-  useEffect(() => {
-    if (!reduxPosts) {
-      setFirstTimeRendered(true);
-    }
-  }, []);
-
-  // Adding and removing scroll handler
-  useEffect(() => {
-    window.addEventListener("scroll", onScrollHandler);
-    return () => window.removeEventListener("scroll", onScrollHandler);
-  });
 
   // Detecting scroll to bottom of the page
   const onScrollHandler = () => {
