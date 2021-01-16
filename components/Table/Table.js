@@ -1,13 +1,14 @@
 import classes from "./Table.module.css";
 
 const Table = ({ data }) => {
+  console.log(data);
   const tableData = data
     .map((entry, index, array) => {
       return index % 2 === 1
         ? null
         : {
-            value: array[index + 1],
-            index: entry,
+            value: array[index + 1].replace("&amp;", "&"),
+            index: entry.replace("&amp;", "&"),
           };
     })
     .filter((entry) => {
