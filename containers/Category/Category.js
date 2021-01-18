@@ -142,10 +142,10 @@ const Category = ({
         currentSubcategory={subcategory}
       >
         {rendered || reduxPosts ? (
-          <FlipMove
-            enterAnimation="fade"
-            leaveAnimation="fade"
-            duration={400}
+          <div
+            // enterAnimation="fade"
+            // leaveAnimation="fade"
+            // duration={400}
             className={
               firstTimeRendered
                 ? [styles.Cards, globalStyles.FadeIn].join(" ")
@@ -155,7 +155,7 @@ const Category = ({
             {posts.map(({ node }) =>
               node.featuredImage ? <Card post={node} key={node.id} /> : null
             )}
-          </FlipMove>
+          </div>
         ) : null}
       </Layout>
     </div>
