@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
+import { Component } from "react";
+import { withRouter } from "next/router";
 import { connect } from "react-redux";
 import FlipMove from "react-flip-move";
 
@@ -17,154 +17,189 @@ import Card from "../../components/Card/Card";
 import styles from "./Category.module.css";
 import globalStyles from "../../styles/Global.module.css";
 
-const Category = ({
-  category,
-  subcategories,
-  allPosts,
-  reduxPosts,
-  setReduxPosts,
-  subcategory,
-}) => {
-  const router = useRouter();
-  const [loadingMore, setLoadingMore] = useState(false);
-  const [posts, setPosts] = useState(reduxPosts ? reduxPosts : allPosts.edges);
-  const [hasNextPage, setHasNextPage] = useState(null);
-  const [endCursor, setEndCursor] = useState(null);
-  const [numberOfPosts, setNumberOfPosts] = useState(10);
-  const [rendered, setRendered] = useState(false);
-  const [firstTimeRendered, setFirstTimeRendered] = useState(false);
+class Category extends Component {
+  //const router = useRouter();
 
-  const windowWidth = useWindowSize().width;
+  state = {
+    loadingMore: false,
+    posts: this.props.reduxPosts
+      ? this.props.reduxPosts
+      : this.props.allPosts.edges,
+    hasNextPage: null,
+    endCursor: null,
+    numberOfPosts: 10,
+    rendered: false,
+    firstTimeRendered: false,
+  };
 
-  // Sets posts on page change
-  useEffect(() => {
-    if (!reduxPosts) {
-      setFirstTimeRendered(true);
+  //const windowWidth = useWindowSize().width;
+
+  componentDidMount() {
+    if (!this.props.reduxPosts) {
+      this.setState({
+        firstTimeRendered: true,
+      });
     }
-    setPosts(allPosts.edges);
-    setReduxPosts(allPosts.edges);
-    calculateNumberOfPosts();
-  }, [router.query]);
+    // if (!this.state.rendered) {
+    //   this.calculateNumberOfPosts();
+    // }
+    window.addEventListener("scroll", this.onScrollHandler, false);
+  }
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.onScrollHandler, false);
+  }
 
-  useEffect(() => {
-    if (!reduxPosts) {
-      setFirstTimeRendered(true);
+  componentDidUpdate(prevProps) {
+    // Sets posts on page change
+    if (this.props.router.query != prevProps.router.query) {
+      if (!this.props.reduxPosts) {
+        this.setState({
+          firstTimeRendered: true,
+        });
+      }
+      this.setState({
+        posts: this.props.allPosts.edges,
+        reduxPosts: this.props.allPosts.edges,
+      });
+      this.calculateNumberOfPosts();
     }
-  }, []);
+  }
 
-  // Adding and removing scroll handler
-  useEffect(() => {
-    window.addEventListener("scroll", onScrollHandler);
-    return () => window.removeEventListener("scroll", onScrollHandler);
-  });
-
-  const calculateNumberOfPosts = () => {
+  calculateNumberOfPosts = () => {
     // Change number of posts according to screen size
-    let count = numberOfPosts;
-    if (windowWidth >= 640 && windowWidth < 1200) {
-      count = 16;
-    } else if (windowWidth >= 1200) {
-      count = 15;
+    let count = this.state.numberOfPosts;
+    if (process.browser) {
+      if (window.width >= 640 && window.width < 1200) {
+        count = 16;
+      } else if (window.width >= 1200) {
+        count = 15;
+      }
     }
     if (count != 16) {
       // Remove unnecessary posts
-      setPosts((currentPosts) => currentPosts.slice(0, count));
+      this.setState((prevState) => ({
+        posts: prevState.posts.slice(0, count),
+      }));
       // Run query to fetch corect endCursor
-      loadSupportQuery(count);
+      this.loadSupportQuery(count);
     } else {
       // Set original endCursor
-      setHasNextPage(allPosts.pageInfo.hasNextPage);
-      setEndCursor(allPosts.pageInfo.endCursor);
+      this.setState({
+        hasNextPage: this.props.allPosts.pageInfo.hasNextPage,
+        endCursor: this.props.allPosts.pageInfo.endCursor,
+      });
     }
-
-    setNumberOfPosts(count);
-    setRendered(true);
+    this.setState({
+      numberOfPosts: count,
+      rendered: true,
+    });
   };
 
-  async function loadSupportQuery(count) {
+  loadSupportQuery = async (count) => {
+    console.log("fetching support query");
     // Fetches only pageInfo object
     let supportQuery = null;
-    if (subcategory) {
+    if (this.props.subcategory) {
       supportQuery = await getSupportPostsBySubcategory(
-        category,
-        subcategory,
+        this.props.category,
+        this.props.subcategory,
         null,
         count
       );
     } else {
-      supportQuery = await getSupportPosts(category, null, count);
+      supportQuery = await getSupportPosts(this.props.category, null, count);
     }
-    setHasNextPage(supportQuery.hasNextPage);
-    setEndCursor(supportQuery.endCursor);
-  }
+    this.setState({
+      hasNextPage: supportQuery.hasNextPage,
+      endCursor: supportQuery.endCursor,
+    });
+    // setHasNextPage(supportQuery.hasNextPage);
+    // setEndCursor(supportQuery.endCursor);
+  };
 
   // Detecting scroll to bottom of the page
-  const onScrollHandler = () => {
+  onScrollHandler = () => {
     const siteHeight = document.body.scrollHeight;
     const scrollPosition = window.scrollY + window.innerHeight * 2;
     if (
       scrollPosition >= siteHeight &&
-      !loadingMore &&
-      hasNextPage &&
-      endCursor
+      !this.state.loadingMore &&
+      this.state.hasNextPage &&
+      this.state.endCursor
     ) {
-      setLoadingMore(true);
-      loadMorePosts();
+      this.setState({
+        loadingMore: true,
+      });
+      this.loadMorePosts();
     }
   };
 
-  async function loadMorePosts() {
+  loadMorePosts = async () => {
     let newPosts = null;
-    if (subcategory) {
+    if (this.props.subcategory) {
       newPosts = await getPostsBySubcategory(
-        category,
-        subcategory,
-        endCursor,
-        numberOfPosts
+        this.props.category,
+        this.props.subcategory,
+        this.state.endCursor,
+        this.state.numberOfPosts
       );
     } else {
-      newPosts = await getPosts(category, endCursor, numberOfPosts);
+      newPosts = await getPosts(
+        this.props.category,
+        this.state.endCursor,
+        this.state.numberOfPosts
+      );
     }
-    setHasNextPage(newPosts.pageInfo.hasNextPage);
-    setEndCursor(newPosts.pageInfo.endCursor);
-    const allPosts = [...posts];
+    this.setState({
+      hasNextPage: newPosts.pageInfo.hasNextPage,
+      endCursor: newPosts.pageInfo.endCursor,
+    });
+    const allPosts = [...this.state.posts];
     newPosts.edges.map((post) => {
       allPosts.push(post);
     });
-    setPosts(allPosts);
-    setLoadingMore(false);
-  }
-  if (windowWidth && !rendered) {
-    calculateNumberOfPosts();
-  }
+    this.setState({
+      posts: allPosts,
+      loadingMore: false,
+    });
+  };
 
-  return (
-    <div className={styles.container}>
-      <Layout
-        currentCategory={category}
-        subcategories={subcategories}
-        currentSubcategory={subcategory}
-      >
-        {rendered || reduxPosts ? (
-          <div
-            // enterAnimation="fade"
-            // leaveAnimation="fade"
-            // duration={400}
-            className={
-              firstTimeRendered
-                ? [styles.Cards, globalStyles.FadeIn].join(" ")
-                : styles.Cards
-            }
-          >
-            {posts.map(({ node }) =>
-              node.featuredImage ? <Card post={node} key={node.id} /> : null
-            )}
-          </div>
-        ) : null}
-      </Layout>
-    </div>
-  );
-};
+  render() {
+    // if (windowWidth && !rendered) {
+    //   calculateNumberOfPosts();
+    // }
+    if (!this.state.rendered) {
+      this.calculateNumberOfPosts();
+    }
+
+    return (
+      <div className={styles.container}>
+        <Layout
+          currentCategory={this.props.category}
+          subcategories={this.props.subcategories}
+          currentSubcategory={this.props.subcategory}
+        >
+          {this.state.rendered || this.props.reduxPosts ? (
+            <FlipMove
+              enterAnimation="fade"
+              leaveAnimation="fade"
+              duration={400}
+              className={
+                this.state.firstTimeRendered
+                  ? [styles.Cards, globalStyles.FadeIn].join(" ")
+                  : styles.Cards
+              }
+            >
+              {this.state.posts.map(({ node }) =>
+                node.featuredImage ? <Card post={node} key={node.id} /> : null
+              )}
+            </FlipMove>
+          ) : null}
+        </Layout>
+      </div>
+    );
+  }
+}
 
 const mapStateToProps = (state) => ({
   reduxPosts: state.posts,
@@ -174,4 +209,7 @@ const mapDispatchToProps = (dispatch) => ({
   setReduxPosts: (posts) => dispatch(actions.setReduxPosts(posts)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Category);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(Category));
