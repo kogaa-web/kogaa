@@ -43,6 +43,7 @@ const Category = ({
     }
     setPosts(allPosts.edges);
     setReduxPosts(allPosts.edges);
+    calculateNumberOfPosts();
   }, [router.query]);
 
   useEffect(() => {
@@ -57,7 +58,7 @@ const Category = ({
     return () => window.removeEventListener("scroll", onScrollHandler);
   });
 
-  if (windowWidth && !rendered) {
+  const calculateNumberOfPosts = () => {
     // Change number of posts according to screen size
     let count = numberOfPosts;
     if (windowWidth >= 640 && windowWidth < 1200) {
@@ -78,7 +79,7 @@ const Category = ({
 
     setNumberOfPosts(count);
     setRendered(true);
-  }
+  };
 
   async function loadSupportQuery(count) {
     // Fetches only pageInfo object
@@ -132,6 +133,9 @@ const Category = ({
     });
     setPosts(allPosts);
     setLoadingMore(false);
+  }
+  if (windowWidth && !rendered) {
+    calculateNumberOfPosts();
   }
 
   return (
