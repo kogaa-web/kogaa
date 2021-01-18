@@ -49,10 +49,13 @@ const Category = ({
     if (!reduxPosts) {
       setFirstTimeRendered(true);
     }
-    // Adding and removing scroll handler
+  }, []);
+
+  // Adding and removing scroll handler
+  useEffect(() => {
     window.addEventListener("scroll", onScrollHandler);
     return () => window.removeEventListener("scroll", onScrollHandler);
-  }, []);
+  });
 
   if (windowWidth && !rendered) {
     // Change number of posts according to screen size
