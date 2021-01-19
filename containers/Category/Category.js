@@ -35,11 +35,19 @@ class Category extends Component {
         firstTimeRendered: true,
       });
     }
-    window.addEventListener("scroll", this.onScrollHandler, false);
     this.calculateNumberOfPosts();
+    window.addEventListener("scroll", this.onScrollHandler, false);
   }
-  componentWillUnmount() {
-    window.removeEventListener("scroll", this.onScrollHandler, false);
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (
+      this.props !== nextProps ||
+      this.state.posts !== nextState.posts ||
+      this.state.rendered !== nextState.rendered
+    ) {
+      return true;
+    }
+    return false;
   }
 
   componentDidUpdate(prevProps) {
@@ -56,6 +64,10 @@ class Category extends Component {
       });
       this.calculateNumberOfPosts();
     }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.onScrollHandler, false);
   }
 
   calculateNumberOfPosts = () => {
