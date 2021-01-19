@@ -4,12 +4,7 @@ import { connect } from "react-redux";
 import FlipMove from "react-flip-move";
 
 import { getPosts, getPostsBySubcategory } from "../../lib/api/listing";
-import {
-  getSupportPosts,
-  getSupportPostsBySubcategory,
-} from "../../lib/api/support";
 import * as actions from "../../redux/actions";
-import { useWindowSize } from "../../lib/hooks";
 
 import Layout from "../../components/Layout/Layout";
 import Card from "../../components/Card/Card";
