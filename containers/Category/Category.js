@@ -28,52 +28,9 @@ const Category = ({
   const router = useRouter();
   const [loadingMore, setLoadingMore] = useState(false);
   const [posts, setPosts] = useState(reduxPosts ? reduxPosts : allPosts.edges);
-  const [hasNextPage, setHasNextPage] = useState(null);
-  const [endCursor, setEndCursor] = useState(null);
-  const [numberOfPosts, setNumberOfPosts] = useState(10);
-  const [rendered, setRendered] = useState(false);
+  const [hasNextPage, setHasNextPage] = useState(allPosts.pageInfo.hasNextPage);
+  const [endCursor, setEndCursor] = useState(allPosts.pageInfo.endCursor);
   const [firstTimeRendered, setFirstTimeRendered] = useState(false);
-
-  const windowWidth = useWindowSize().width;
-  if (windowWidth && !rendered) {
-    // Change number of posts according to screen size
-    let count = numberOfPosts;
-    if (windowWidth >= 640 && windowWidth < 1200) {
-      count = 16;
-    } else if (windowWidth >= 1200) {
-      count = 15;
-    }
-    if (count != 16) {
-      // Remove unnecessary posts
-      setPosts((currentPosts) => currentPosts.slice(0, count));
-      // Run query to fetch corect endCursor
-      loadSupportQuery(count);
-    } else {
-      // Set original endCursor
-      setHasNextPage(allPosts.pageInfo.hasNextPage);
-      setEndCursor(allPosts.pageInfo.endCursor);
-    }
-
-    setNumberOfPosts(count);
-    setRendered(true);
-  }
-
-  async function loadSupportQuery(count) {
-    // Fetches only pageInfo object
-    let supportQuery = null;
-    if (subcategory) {
-      supportQuery = await getSupportPostsBySubcategory(
-        category,
-        subcategory,
-        null,
-        count
-      );
-    } else {
-      supportQuery = await getSupportPosts(category, null, count);
-    }
-    setHasNextPage(supportQuery.hasNextPage);
-    setEndCursor(supportQuery.endCursor);
-  }
 
   // Sets posts on page change
   useEffect(() => {
@@ -82,6 +39,8 @@ const Category = ({
     }
     setPosts(allPosts.edges);
     setReduxPosts(allPosts.edges);
+    setHasNextPage(allPosts.pageInfo.hasNextPage);
+    setEndCursor(allPosts.pageInfo.endCursor);
   }, [router.query]);
 
   useEffect(() => {
@@ -114,14 +73,9 @@ const Category = ({
   async function loadMorePosts() {
     let newPosts = null;
     if (subcategory) {
-      newPosts = await getPostsBySubcategory(
-        category,
-        subcategory,
-        endCursor,
-        numberOfPosts
-      );
+      newPosts = await getPostsBySubcategory(category, subcategory, endCursor);
     } else {
-      newPosts = await getPosts(category, endCursor, numberOfPosts);
+      newPosts = await getPosts(category, endCursor);
     }
     setHasNextPage(newPosts.pageInfo.hasNextPage);
     setEndCursor(newPosts.pageInfo.endCursor);
@@ -140,7 +94,7 @@ const Category = ({
         subcategories={subcategories}
         currentSubcategory={subcategory}
       >
-        {rendered || reduxPosts ? (
+        {firstTimeRendered || reduxPosts ? (
           <FlipMove
             enterAnimation="fade"
             leaveAnimation="fade"
