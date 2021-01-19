@@ -9,7 +9,6 @@ import {
   getSupportPostsBySubcategory,
 } from "../../lib/api/support";
 import * as actions from "../../redux/actions";
-import { useWindowSize } from "../../lib/hooks";
 
 import Layout from "../../components/Layout/Layout";
 import Card from "../../components/Card/Card";
@@ -18,8 +17,6 @@ import styles from "./Category.module.css";
 import globalStyles from "../../styles/Global.module.css";
 
 class Category extends Component {
-  //const router = useRouter();
-
   state = {
     loadingMore: false,
     posts: this.props.reduxPosts
@@ -32,17 +29,12 @@ class Category extends Component {
     firstTimeRendered: false,
   };
 
-  //const windowWidth = useWindowSize().width;
-
   componentDidMount() {
     if (!this.props.reduxPosts) {
       this.setState({
         firstTimeRendered: true,
       });
     }
-    // if (!this.state.rendered) {
-    //   this.calculateNumberOfPosts();
-    // }
     window.addEventListener("scroll", this.onScrollHandler, false);
   }
   componentWillUnmount() {
@@ -69,12 +61,13 @@ class Category extends Component {
     // Change number of posts according to screen size
     let count = this.state.numberOfPosts;
     if (process.browser) {
-      if (window.width >= 640 && window.width < 1200) {
+      if (window.innerWidth >= 640 && window.innerWidth < 1200) {
         count = 16;
-      } else if (window.width >= 1200) {
+      } else if (window.innerWidth >= 1200) {
         count = 15;
       }
     }
+    console.log("number of posts:", count);
     if (count != 16) {
       // Remove unnecessary posts
       this.setState((prevState) => ({
@@ -113,8 +106,6 @@ class Category extends Component {
       hasNextPage: supportQuery.hasNextPage,
       endCursor: supportQuery.endCursor,
     });
-    // setHasNextPage(supportQuery.hasNextPage);
-    // setEndCursor(supportQuery.endCursor);
   };
 
   // Detecting scroll to bottom of the page
@@ -165,9 +156,6 @@ class Category extends Component {
   };
 
   render() {
-    // if (windowWidth && !rendered) {
-    //   calculateNumberOfPosts();
-    // }
     if (!this.state.rendered) {
       this.calculateNumberOfPosts();
     }
