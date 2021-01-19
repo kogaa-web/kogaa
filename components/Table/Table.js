@@ -1,7 +1,6 @@
 import classes from "./Table.module.css";
 
 const Table = ({ data }) => {
-  console.log(data);
   const tableData = data
     .map((entry, index, array) => {
       return index % 2 === 1
