@@ -21,6 +21,7 @@ const Category = ({
   subcategory,
 }) => {
   const router = useRouter();
+
   const [loadingMore, setLoadingMore] = useState(false);
   const [posts, setPosts] = useState(reduxPosts ? reduxPosts : allPosts.edges);
   const [hasNextPage, setHasNextPage] = useState(allPosts.pageInfo.hasNextPage);
