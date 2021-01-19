@@ -36,6 +36,7 @@ class Category extends Component {
       });
     }
     window.addEventListener("scroll", this.onScrollHandler, false);
+    this.calculateNumberOfPosts();
   }
   componentWillUnmount() {
     window.removeEventListener("scroll", this.onScrollHandler, false);
@@ -67,7 +68,6 @@ class Category extends Component {
         count = 15;
       }
     }
-    console.log("number of posts:", count);
     if (count != 16) {
       // Remove unnecessary posts
       this.setState((prevState) => ({
@@ -89,7 +89,6 @@ class Category extends Component {
   };
 
   loadSupportQuery = async (count) => {
-    console.log("fetching support query");
     // Fetches only pageInfo object
     let supportQuery = null;
     if (this.props.subcategory) {
@@ -156,10 +155,6 @@ class Category extends Component {
   };
 
   render() {
-    if (!this.state.rendered) {
-      this.calculateNumberOfPosts();
-    }
-
     return (
       <div className={styles.container}>
         <Layout
