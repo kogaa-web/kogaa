@@ -28,7 +28,6 @@ class Category extends Component {
     rendered: false,
     firstTimeRendered: false,
   };
-
   componentDidMount() {
     if (!this.props.reduxPosts) {
       this.setState({
