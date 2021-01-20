@@ -62,7 +62,7 @@ const Menu = ({
       if (scrollPosition < prevScroll) {
         setStyle({
           zIndex: 10,
-          transition: "0.1s",
+          transition: "top 0.3s !important",
           position: "fixed",
           top: 0,
           left: 0,
@@ -71,7 +71,7 @@ const Menu = ({
       } else {
         setStyle({
           zIndex: 10,
-          transition: "0.1s",
+          transition: "top 0.3s !important",
           position: "fixed",
           top: "-100%",
           left: 0,
@@ -79,7 +79,7 @@ const Menu = ({
         });
       }
     } else {
-      setStyle({ transition: "0.1s" });
+      setStyle({ transition: "top 0.3s !important" });
     }
     setPrevScroll(scrollPosition);
   };
@@ -118,88 +118,92 @@ const Menu = ({
     }
   };
   return (
-    <div style={style}>
-      <motion.div
-        className={error ? `${classes.Menu} ${classes.Error}` : classes.Menu}
-        layoutId="menu"
-        {...fadeIn}
-      >
-        <div
-          onMouseLeave={() =>
-            loading ? null : setCategoryOnHover(currentCategory)
-          }
-        >
-          <div className={classes.MainMenu}>
-            <Link href="/">
-              <a>
-                <Logo />
-              </a>
-            </Link>
-            <Link href="/news">
-              <a onMouseEnter={() => setCategoryOnHover("news")}>
-                <Circle
-                  className={category === "news" ? classes.Active : null}
-                />
-              </a>
-            </Link>
-            <Link href="/projects">
-              <a onMouseEnter={() => setCategoryOnHover("projects")}>
-                <Square
-                  className={category === "projects" ? classes.Active : null}
-                />
-              </a>
-            </Link>
-            <Link href="/about">
-              <a onMouseEnter={() => setCategoryOnHover("about")}>
-                <Triangle
-                  className={category === "about" ? classes.Active : null}
-                />
-              </a>
-            </Link>
-          </div>
+    <div
+      className={
+        error
+          ? `${classes.MenuHeight} ${classes.ErrorHeight}`
+          : classes.MenuHeight
+      }
+    >
+      <div style={style}>
+        <motion.div className={classes.Menu} layoutId="menu" {...fadeIn}>
+          <div
+            onMouseLeave={() =>
+              loading ? null : setCategoryOnHover(currentCategory)
+            }
+          >
+            <div className={classes.MainMenu}>
+              <Link href="/">
+                <a>
+                  <Logo />
+                </a>
+              </Link>
+              <Link href="/news">
+                <a onMouseEnter={() => setCategoryOnHover("news")}>
+                  <Circle
+                    className={category === "news" ? classes.Active : null}
+                  />
+                </a>
+              </Link>
+              <Link href="/projects">
+                <a onMouseEnter={() => setCategoryOnHover("projects")}>
+                  <Square
+                    className={category === "projects" ? classes.Active : null}
+                  />
+                </a>
+              </Link>
+              <Link href="/about">
+                <a onMouseEnter={() => setCategoryOnHover("about")}>
+                  <Triangle
+                    className={category === "about" ? classes.Active : null}
+                  />
+                </a>
+              </Link>
+            </div>
 
-          {subcategories && category && !postSubcategories ? (
-            <Subcategories
-              category={category}
-              categories={subcategories[categoryIndex].nodes}
-              currentSubcategory={currentSubcategory}
-              onClick={() => setSelected(true)}
-            />
-          ) : null}
+            {subcategories && category && !postSubcategories ? (
+              <Subcategories
+                category={category}
+                categories={subcategories[categoryIndex].nodes}
+                currentSubcategory={currentSubcategory}
+                onClick={() => setSelected(true)}
+              />
+            ) : null}
 
-          <div style={{ background: "white" }}>
-            {postSubcategories && !currentCategory ? (
-              <motion.div className={classes.PostSubcategories} {...fadeIn}>
-                <Back
-                  onClick={() => router.back()}
-                  style={{ cursor: "pointer" }}
-                />
-                {error ? (
-                  <Link href="/">
-                    <a>home</a>
-                  </Link>
-                ) : (
-                  postSubcategories.map((category, index) => {
-                    return (
-                      <Fragment key={category.name}>
-                        <Link href={`/${postCategory}/${category.name}`}>
-                          <a>{category.name}</a>
-                        </Link>
-                        {postSubcategories[index + 1] && "|"}
-                      </Fragment>
-                    );
-                  })
-                )}
-              </motion.div>
-            ) : null}
-            {date && !currentCategory ? (
-              <motion.div {...fadeIn} className={classes.Date}>
-                {formatDate(date)}
-              </motion.div>
-            ) : null}
+            <motion.div style={{ background: "white" }} {...fadeIn}>
+              {postSubcategories && !currentCategory ? (
+                <motion.div className={classes.PostSubcategories} {...fadeIn}>
+                  <Back
+                    onClick={() => router.back()}
+                    style={{ cursor: "pointer" }}
+                  />
+                  {error ? (
+                    <Link href="/">
+                      <a>home</a>
+                    </Link>
+                  ) : (
+                    postSubcategories.map((category, index) => {
+                      return (
+                        <Fragment key={category.name}>
+                          <Link href={`/${postCategory}/${category.name}`}>
+                            <a>{category.name}</a>
+                          </Link>
+                          {postSubcategories[index + 1] && "|"}
+                        </Fragment>
+                      );
+                    })
+                  )}
+                </motion.div>
+              ) : null}
+              {date && !currentCategory ? (
+                <motion.div {...fadeIn} className={classes.Date}>
+                  {formatDate(date)}
+                </motion.div>
+              ) : null}
+            </motion.div>
           </div>
-        </div>
-      </motion.div>
+        </motion.div>
+      </div>
     </div>
   );
 };
