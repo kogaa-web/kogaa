@@ -4,6 +4,7 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
+  background: white !important;
 }
 
 .Subcategories a {
