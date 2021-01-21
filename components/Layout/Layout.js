@@ -10,10 +10,7 @@ const layout = (props) => {
   const [prevScroll, setPrevScroll] = useState(
     process.browser ? window.scrollY : 0
   );
-  const [style, setStyle] = useState({
-    transition: "top 0.3s !important",
-    height: "auto",
-  });
+  const [style, setStyle] = useState({});
   const ref = useRef(null);
   const [menuHeight, setMenuHeight] = useState(0);
 
@@ -36,7 +33,7 @@ const layout = (props) => {
         setStyle({
           zIndex: 10,
           position: "fixed",
-          top: 0,
+          top: "0%",
           left: 0,
           right: 0,
           minHeight: 0,
