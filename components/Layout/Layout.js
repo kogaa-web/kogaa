@@ -7,7 +7,9 @@ import Menu from "../Menu/Menu";
 import classes from "./Layout.module.css";
 
 const layout = (props) => {
-  const [prevScroll, setPrevScroll] = useState(0);
+  const [prevScroll, setPrevScroll] = useState(
+    process.browser ? window.scrollY : 0
+  );
   const [style, setStyle] = useState({
     transition: "top 0.3s !important",
     height: "auto",
@@ -15,9 +17,9 @@ const layout = (props) => {
   const ref = useRef(null);
   const [menuHeight, setMenuHeight] = useState(0);
 
+  // Get menu height
   useEffect(() => {
     setMenuHeight(ref.current.clientHeight);
-    console.log(ref.current.clientHeight);
   }, []);
 
   // Adding and removing scroll handler
