@@ -85,7 +85,7 @@ const Menu = forwardRef(
     };
     return (
       <div ref={ref}>
-        <motion.div layoutId="menu" {...fadeIn} className={classes.Menu}>
+        <div className={classes.Menu}>
           <div
             onMouseLeave={() =>
               loading ? null : setCategoryOnHover(currentCategory)
@@ -161,7 +161,7 @@ const Menu = forwardRef(
               ) : null}
             </motion.div>
           </div>
-        </motion.div>
+        </div>
       </div>
     );
   }
