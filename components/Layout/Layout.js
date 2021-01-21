@@ -98,7 +98,7 @@ const layout = (props) => {
         style={style}
         className={
           props.error
-            ? `${classes.Layout} ${classes.MenuContainer} ${clases.ErrorContainer}`
+            ? `${classes.Layout} ${classes.MenuContainer} ${classes.ErrorContainer}`
             : `${classes.Layout} ${classes.MenuContainer}`
         }
       >
