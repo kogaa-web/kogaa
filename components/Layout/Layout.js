@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Head from "next/head";
 
 import Footer from "../Footer/Footer";
@@ -12,6 +12,13 @@ const layout = (props) => {
     transition: "top 0.3s !important",
     height: "auto",
   });
+  const ref = useRef(null);
+  const [menuHeight, setMenuHeight] = useState(0);
+
+  useEffect(() => {
+    setMenuHeight(ref.current.clientHeight);
+    console.log(ref.current.clientHeight);
+  }, []);
 
   // Adding and removing scroll handler
   useEffect(() => {
@@ -22,12 +29,10 @@ const layout = (props) => {
   // Detecting scroll to bottom of the page
   const onScrollHandler = () => {
     const scrollPosition = window.scrollY;
-    console.log(scrollPosition, prevScroll);
-    if (scrollPosition > 200) {
+    if (scrollPosition > menuHeight) {
       if (scrollPosition < prevScroll) {
         setStyle({
           zIndex: 10,
-          transition: "top 0.3s !important",
           position: "fixed",
           top: 0,
           left: 0,
@@ -37,7 +42,6 @@ const layout = (props) => {
       } else {
         setStyle({
           zIndex: 10,
-          transition: "top 0.3s !important",
           position: "fixed",
           top: "-100%",
           left: 0,
@@ -46,9 +50,7 @@ const layout = (props) => {
         });
       }
     } else {
-      setStyle({
-        transition: "top 0.3s !important",
-      });
+      setStyle({});
     }
     setPrevScroll(scrollPosition);
   };
@@ -98,7 +100,7 @@ const layout = (props) => {
             : `${classes.Layout} ${classes.MenuContainer}`
         }
       >
-        <Menu {...props} />
+        <Menu ref={ref} {...props} />
       </div>
       <div className={classes.Layout}>
         <div className={classes.Content}>{props.children}</div>
