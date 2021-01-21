@@ -1,12 +1,6 @@
-.MenuHeight {
-  min-height: 196px;
-}
 .Menu {
   max-width: 1250px;
   margin: 0 auto;
-}
-.ErrorHeight {
-  min-height: 161px;
 }
 .MainMenu {
   display: flex;
@@ -40,20 +34,9 @@
   display: none;
   padding-top: 20px;
 }
-@media (min-width: 480px) {
-  .ErrorHeight {
-    min-height: 170px;
-  }
-}
 @media (min-width: 768px) {
   .PostSubcategories {
     width: auto;
-  }
-  .MenuHeight {
-    min-height: 216px;
-  }
-  .ErrorHeight {
-    min-height: 182px;
   }
   .MainMenu {
     padding-top: 50px;
@@ -64,12 +47,6 @@
 }
 
 @media (min-width: 1366px) {
-  .MenuHeight {
-    min-height: 251px;
-  }
-  .ErrorHeight {
-    min-height: 200px;
-  }
   .MainMenu {
     padding-top: 60px;
   }

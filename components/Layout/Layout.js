@@ -32,7 +32,7 @@ const layout = (props) => {
           top: 0,
           left: 0,
           right: 0,
-          height: "auto",
+          minHeight: 0,
         });
       } else {
         setStyle({
@@ -42,13 +42,12 @@ const layout = (props) => {
           top: "-100%",
           left: 0,
           right: 0,
-          height: "auto",
+          minHeight: 0,
         });
       }
     } else {
       setStyle({
         transition: "top 0.3s !important",
-        height: "auto",
       });
     }
     setPrevScroll(scrollPosition);
@@ -91,7 +90,14 @@ const layout = (props) => {
           }}
         />
       </Head>
-      <div className={classes.Layout} style={style}>
+      <div
+        style={style}
+        className={
+          props.error
+            ? `${classes.Layout} ${classes.MenuContainer} ${clases.ErrorContainer}`
+            : `${classes.Layout} ${classes.MenuContainer}`
+        }
+      >
         <Menu {...props} />
       </div>
       <div className={classes.Layout}>
