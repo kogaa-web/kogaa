@@ -9,9 +9,27 @@
 .Content {
   flex: 1 0 auto;
 }
+.MenuContainer {
+  transition: top 0.8s ease-out;
+  height: auto;
+  width: 100%;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, 0);
+  position: absolute;
+}
+.ContentContainer {
+  margin-top: 196px;
+}
+.ErrorContainer {
+  margin-top: 161px;
+}
 @media (min-width: 480px) {
   .Layout {
     padding: 0 50px;
+  }
+  .ErrorContainer {
+    margin-top: 170px;
   }
 }
 @media (min-width: 590px) {
@@ -28,6 +46,12 @@
   .Layout {
     padding: 0 52px;
   }
+  .ContentContainer {
+    margin-top: 216px;
+  }
+  .ErrorContainer {
+    margin-top: 182px;
+  }
 }
 @media (min-width: 1024px) {
   .Layout {
@@ -37,5 +61,11 @@
 @media (min-width: 1366px) {
   .Layout {
     padding: 0;
+  }
+  .ContentContainer {
+    margin-top: 251px;
+  }
+  .ErrorContainer {
+    margin-top: 200px;
   }
 }

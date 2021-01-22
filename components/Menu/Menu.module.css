@@ -1,14 +1,13 @@
 .Menu {
-  min-height: 196px;
-}
-.Error {
-  min-height: 161px;
+  max-width: 1250px;
+  margin: 0 auto;
 }
 .MainMenu {
   display: flex;
   border-bottom: 1px solid #ef4123;
   justify-content: space-between;
   padding: 30px 0 19px 0;
+  background: white !important;
 }
 .PostSubcategories,
 .PostSubcategories a {
@@ -19,11 +18,11 @@
   margin-right: auto;
 }
 .PostSubcategories {
-  display: flex;
-  width: 100%;
+  display: inline-block;
+  width: fit-content !important;
   align-items: center;
   padding-top: 17px;
-  float: left;
+  padding-bottom: 17px;
 }
 
 .PostSubcategories a {
@@ -35,20 +34,9 @@
   display: none;
   padding-top: 20px;
 }
-@media (min-width: 480px) {
-  .Error {
-    min-height: 170px;
-  }
-}
 @media (min-width: 768px) {
   .PostSubcategories {
     width: auto;
-  }
-  .Menu {
-    min-height: 216px;
-  }
-  .Error {
-    min-height: 182px;
   }
   .MainMenu {
     padding-top: 50px;
@@ -59,12 +47,6 @@
 }
 
 @media (min-width: 1366px) {
-  .Menu {
-    min-height: 251px;
-  }
-  .Error {
-    min-height: 200px;
-  }
   .MainMenu {
     padding-top: 60px;
   }
