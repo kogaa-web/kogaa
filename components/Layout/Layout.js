@@ -37,6 +37,7 @@ const layout = (props) => {
           left: 0,
           right: 0,
           minHeight: 0,
+          transform: "translate(0, 0)",
         });
       } else {
         setStyle({
@@ -46,6 +47,7 @@ const layout = (props) => {
           left: 0,
           right: 0,
           minHeight: 0,
+          transform: "translate(0, 0)",
         });
       }
     } else {
@@ -93,15 +95,17 @@ const layout = (props) => {
       </Head>
       <div
         style={style}
-        className={
-          props.error
-            ? `${classes.Layout} ${classes.MenuContainer} ${classes.ErrorContainer}`
-            : `${classes.Layout} ${classes.MenuContainer}`
-        }
+        className={`${classes.Layout} ${classes.MenuContainer}`}
       >
         <Menu ref={ref} {...props} />
       </div>
-      <div className={classes.Layout}>
+      <div
+        className={
+          props.error
+            ? `${classes.Layout} ${classes.ErrorContainer}`
+            : `${classes.Layout} ${classes.ContentContainer}`
+        }
+      >
         <div className={classes.Content}>{props.children}</div>
         <Footer hideLine={props.hideLine} />
       </div>
