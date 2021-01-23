@@ -27,27 +27,26 @@ const layout = (props) => {
 
   // Detecting scroll to bottom of the page
   const onScrollHandler = () => {
+    const menuScrollStyle = {
+      zIndex: 10,
+      position: "fixed",
+      left: 0,
+      right: 0,
+      minHeight: 0,
+      transform: "translate(0, 0)",
+    };
+
     const scrollPosition = window.scrollY;
     if (scrollPosition > menuHeight) {
       if (scrollPosition < prevScroll) {
         setStyle({
-          zIndex: 10,
-          position: "fixed",
+          ...menuScrollStyle,
           top: "0%",
-          left: 0,
-          right: 0,
-          minHeight: 0,
-          transform: "translate(0, 0)",
         });
       } else {
         setStyle({
-          zIndex: 10,
-          position: "fixed",
+          ...menuScrollStyle,
           top: "-100%",
-          left: 0,
-          right: 0,
-          minHeight: 0,
-          transform: "translate(0, 0)",
         });
       }
     } else {
