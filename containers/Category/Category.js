@@ -19,6 +19,8 @@ const Category = ({
   reduxPosts,
   setReduxPosts,
   subcategory,
+  reduxScroll,
+  setReduxScroll,
 }) => {
   const router = useRouter();
 
@@ -37,7 +39,12 @@ const Category = ({
     setReduxPosts(allPosts.edges);
     setHasNextPage(allPosts.pageInfo.hasNextPage);
     setEndCursor(allPosts.pageInfo.endCursor);
+    if (process.browser) {
+      setReduxScroll(window.scrollY);
+    }
   }, [router.query]);
+
+  console.log("reduxScroll", reduxScroll);
 
   useEffect(() => {
     if (!reduxPosts) {
@@ -113,10 +120,13 @@ const Category = ({
 
 const mapStateToProps = (state) => ({
   reduxPosts: state.posts,
+  reduxScroll: state.scroll,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   setReduxPosts: (posts) => dispatch(actions.setReduxPosts(posts)),
+  setReduxScroll: (scrollPosition) =>
+    dispatch(actions.setReduxScroll(scrollPosition)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Category);
