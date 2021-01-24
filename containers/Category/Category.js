@@ -42,14 +42,14 @@ const Category = ({
     if (process.browser) {
       setReduxScroll(window.scrollY);
     }
+    return () => window.removeEventListener("scroll", onScrollHandler);
   }, [router.query]);
-
-  console.log("reduxScroll", reduxScroll);
 
   useEffect(() => {
     if (!reduxPosts) {
       setFirstTimeRendered(true);
     }
+    return () => window.removeEventListener("scroll", onScrollHandler);
   }, []);
 
   // Adding and removing scroll handler
@@ -60,6 +60,7 @@ const Category = ({
 
   // Detecting scroll to bottom of the page
   const onScrollHandler = () => {
+    setReduxScroll(window.scrollY);
     const siteHeight = document.body.scrollHeight;
     const scrollPosition = window.scrollY + window.innerHeight * 2;
     if (

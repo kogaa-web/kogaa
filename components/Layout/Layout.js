@@ -17,6 +17,7 @@ const layout = (props) => {
   // Get menu height
   useEffect(() => {
     setMenuHeight(ref.current.clientHeight);
+    return () => window.removeEventListener("scroll", onScrollHandler);
   }, []);
 
   // Adding and removing scroll handler
