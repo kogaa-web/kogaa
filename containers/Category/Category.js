@@ -19,8 +19,8 @@ const Category = ({
   reduxPosts,
   setReduxPosts,
   subcategory,
-  reduxScroll,
   setReduxScroll,
+  setReduxBack,
   reduxBack,
 }) => {
   console.log("reduxBack", reduxBack);
@@ -46,7 +46,6 @@ const Category = ({
     }
     return () => window.removeEventListener("scroll", onScrollHandler);
   }, [router.query]);
-
   useEffect(() => {
     if (!reduxPosts) {
       setFirstTimeRendered(true);
@@ -55,6 +54,7 @@ const Category = ({
       if (reduxBack) {
         console.log(reduxBack);
         window.scrollTo(0, reduxBack);
+        setReduxBack(null);
       }
     }
     return () => window.removeEventListener("scroll", onScrollHandler);
@@ -137,6 +137,7 @@ const mapDispatchToProps = (dispatch) => ({
   setReduxPosts: (posts) => dispatch(actions.setReduxPosts(posts)),
   setReduxScroll: (scrollPosition) =>
     dispatch(actions.setReduxScroll(scrollPosition)),
+  setReduxBack: (back) => dispatch(actions.setReduxBack(back)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Category);
