@@ -9,3 +9,8 @@ export const setReduxScroll = (scrollPosition) => ({
   type: t.SET_SCROLL,
   payload: scrollPosition,
 });
+
+export const setReduxBack = (back) => ({
+  type: t.SET_BACK,
+  payload: back,
+});

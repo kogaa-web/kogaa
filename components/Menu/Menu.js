@@ -2,9 +2,11 @@ import { useEffect, useState, Fragment, forwardRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
+import { connect } from "react-redux";
 
 import { formatDate } from "../../lib/util";
 import { fadeIn } from "../../lib/animations";
+import * as actions from "../../redux/actions";
 
 import Subcategories from "./Subcategories/Subcategories";
 import Logo from "../../assets/kogaa-logo.svg";
@@ -25,6 +27,8 @@ const Menu = forwardRef(
       postCategory,
       date,
       error,
+      setReduxBack,
+      reduxScroll,
     },
     ref
   ) => {
@@ -83,6 +87,12 @@ const Menu = forwardRef(
         setCategory(category);
       }
     };
+
+    const onBackArrowClick = () => {
+      setReduxBack(reduxScroll);
+      router.back();
+    };
+
     return (
       <div ref={ref}>
         <div className={classes.Menu}>
@@ -133,7 +143,7 @@ const Menu = forwardRef(
               {postSubcategories && !currentCategory ? (
                 <motion.div className={classes.PostSubcategories} {...fadeIn}>
                   <Back
-                    onClick={() => router.back()}
+                    onClick={onBackArrowClick}
                     style={{ cursor: "pointer" }}
                   />
                   {error ? (
@@ -167,4 +177,14 @@ const Menu = forwardRef(
   }
 );
 
-export default Menu;
+const mapStateToProps = (state) => ({
+  reduxScroll: state.scroll,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  setReduxBack: (back) => dispatch(actions.setReduxBack(back)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps, null, {
+  forwardRef: true,
+})(Menu);
