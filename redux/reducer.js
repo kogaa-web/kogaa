@@ -1,6 +1,12 @@
 import * as t from "./types";
 
-const reducer = (state = { posts: null, scroll: 0, back: null }, action) => {
+export const initialState = {
+  posts: null,
+  scroll: 0,
+  back: null,
+};
+
+const reducer = (state = initialState, action) => {
   switch (action.type) {
     case t.SET_POSTS:
       return { ...state, posts: action.payload };
