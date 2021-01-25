@@ -11,6 +11,7 @@ import Card from "../../components/Card/Card";
 
 import styles from "./Category.module.css";
 import globalStyles from "../../styles/Global.module.css";
+import { loadGetInitialProps } from "next/dist/next-server/lib/utils";
 
 const Category = ({
   category,
@@ -23,7 +24,6 @@ const Category = ({
   setReduxBack,
   reduxBack,
 }) => {
-  console.log("reduxBack", reduxBack);
   const router = useRouter();
 
   const [loadingMore, setLoadingMore] = useState(false);
@@ -50,15 +50,24 @@ const Category = ({
     if (!reduxPosts) {
       setFirstTimeRendered(true);
     }
-    if (process.browser) {
-      if (reduxBack) {
-        console.log(reduxBack);
-        window.scrollTo(0, reduxBack);
-        setReduxBack(null);
-      }
-    }
+    restoreScroll();
     return () => window.removeEventListener("scroll", onScrollHandler);
   }, []);
+
+  const restoreScroll = () => {
+    if (process.browser) {
+      if (reduxBack) {
+        window.scrollTo(0, reduxBack);
+        console.log(window.scrollY, reduxBack);
+        loadGetInitialProps(window.scrollY, reduxBack);
+        if (window.scrollY === reduxBack) {
+          setReduxBack(null);
+        } else {
+          loadMorePosts();
+        }
+      }
+    }
+  };
 
   // Adding and removing scroll handler
   useEffect(() => {
@@ -97,6 +106,7 @@ const Category = ({
     });
     setPosts(allPosts);
     setLoadingMore(false);
+    restoreScroll();
   }
 
   return (
