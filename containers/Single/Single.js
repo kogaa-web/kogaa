@@ -25,8 +25,6 @@ const Single = ({
 }) => {
   useEffect(() => {
     //setReduxPosts(null);
-    console.log("redux scroll single", reduxScroll);
-    setReduxScroll(reduxScroll);
   }, []);
 
   const postSubcategories = getCategories(postData);
@@ -124,14 +122,8 @@ const Single = ({
   );
 };
 
-const mapStateToProps = (state) => ({
-  reduxScroll: state.scroll,
-});
-
 const mapDispatchToProps = (dispatch) => ({
   setReduxPosts: (posts) => dispatch(actions.setReduxPosts(posts)),
-  setReduxScroll: (scrollPosition) =>
-    dispatch(actions.setReduxScroll(scrollPosition)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Single);
+export default connect(null, mapDispatchToProps)(Single);

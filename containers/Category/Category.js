@@ -63,8 +63,6 @@ const Category = ({
     if (!reduxPosts) {
       setFirstTimeRendered(true);
     }
-    console.log("posts", posts);
-    //restoreScroll();
     return () => window.removeEventListener("scroll", onScrollHandler);
   }, []);
 
@@ -72,7 +70,6 @@ const Category = ({
     if (process.browser) {
       if (reduxBack) {
         window.scrollTo(0, reduxBack);
-        console.log(window.scrollY, reduxBack);
         setReduxBack(null);
       }
     }
@@ -115,7 +112,6 @@ const Category = ({
     newPosts.edges.map((post) => {
       allPosts.push(post);
     });
-    console.log("allPosts", allPosts);
     setPosts(allPosts);
     setReduxPosts(allPosts);
     setLoadingMore(false);
@@ -125,7 +121,7 @@ const Category = ({
     <OnImagesLoaded
       onLoaded={restoreScroll}
       onTimeout={restoreScroll}
-      timeout={7000}
+      timeout={4000}
     >
       <div className={styles.container}>
         <Layout
