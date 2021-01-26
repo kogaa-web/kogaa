@@ -14,3 +14,13 @@ export const setReduxBack = (back) => ({
   type: t.SET_BACK,
   payload: back,
 });
+
+export const setReduxHasNextPage = (hasNextPage) => ({
+  type: t.SET_HAS_NEXT_PAGE,
+  payload: hasNextPage,
+});
+
+export const setReduxEndCursor = (endCursor) => ({
+  type: t.SET_END_CURSOR,
+  payload: endCursor,
+});

@@ -23,6 +23,10 @@ const Category = ({
   setReduxScroll,
   setReduxBack,
   reduxBack,
+  setReduxHasNextPage,
+  reduxHasNextPage,
+  setReduxEndCursor,
+  reduxEndCursor,
 }) => {
   const router = useRouter();
 
@@ -37,19 +41,29 @@ const Category = ({
     if (!reduxPosts) {
       setFirstTimeRendered(true);
     }
-    setPosts(allPosts.edges);
-    setReduxPosts(allPosts.edges);
-    setHasNextPage(allPosts.pageInfo.hasNextPage);
-    setEndCursor(allPosts.pageInfo.endCursor);
+    // If loaded from back arrow click
+    if (reduxPosts && reduxBack) {
+      setHasNextPage(reduxHasNextPage);
+      setEndCursor(reduxEndCursor);
+    } else {
+      setPosts(allPosts.edges);
+      setHasNextPage(allPosts.pageInfo.hasNextPage);
+      setEndCursor(allPosts.pageInfo.endCursor);
+      setReduxPosts(allPosts.edges);
+      setReduxHasNextPage(allPosts.pageInfo.hasNextPage);
+      setReduxEndCursor(allPosts.pageInfo.endCursor);
+    }
     if (process.browser) {
       setReduxScroll(window.scrollY);
     }
     return () => window.removeEventListener("scroll", onScrollHandler);
   }, [router.query]);
+
   useEffect(() => {
     if (!reduxPosts) {
       setFirstTimeRendered(true);
     }
+    console.log("posts", posts);
     restoreScroll();
     return () => window.removeEventListener("scroll", onScrollHandler);
   }, []);
@@ -59,12 +73,7 @@ const Category = ({
       if (reduxBack) {
         window.scrollTo(0, reduxBack);
         console.log(window.scrollY, reduxBack);
-        loadGetInitialProps(window.scrollY, reduxBack);
-        if (window.scrollY === reduxBack) {
-          setReduxBack(null);
-        } else {
-          loadMorePosts();
-        }
+        setReduxBack(null);
       }
     }
   };
@@ -100,13 +109,15 @@ const Category = ({
     }
     setHasNextPage(newPosts.pageInfo.hasNextPage);
     setEndCursor(newPosts.pageInfo.endCursor);
+    setReduxHasNextPage(newPosts.pageInfo.hasNextPage);
+    setReduxEndCursor(newPosts.pageInfo.endCursor);
     const allPosts = [...posts];
     newPosts.edges.map((post) => {
       allPosts.push(post);
     });
     setPosts(allPosts);
+    setReduxPosts(allPosts);
     setLoadingMore(false);
-    restoreScroll();
   }
 
   return (
@@ -141,6 +152,8 @@ const mapStateToProps = (state) => ({
   reduxPosts: state.posts,
   reduxScroll: state.scroll,
   reduxBack: state.back,
+  reduxHasNextPage: state.hasNextPage,
+  reduxEndCursor: state.endCursor,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -148,6 +161,10 @@ const mapDispatchToProps = (dispatch) => ({
   setReduxScroll: (scrollPosition) =>
     dispatch(actions.setReduxScroll(scrollPosition)),
   setReduxBack: (back) => dispatch(actions.setReduxBack(back)),
+  setReduxHasNextPage: (hasNextPage) =>
+    dispatch(actions.setReduxHasNextPage(hasNextPage)),
+  setReduxEndCursor: (endCursor) =>
+    dispatch(actions.setReduxEndCursor(endCursor)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Category);
