@@ -63,9 +63,6 @@ const Category = ({
     if (!reduxPosts) {
       setFirstTimeRendered(true);
     }
-    if (reduxPosts && reduxBack) {
-      setPosts(reduxPosts);
-    }
     console.log("posts", posts);
     //restoreScroll();
     return () => window.removeEventListener("scroll", onScrollHandler);
