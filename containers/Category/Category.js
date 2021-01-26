@@ -115,7 +115,6 @@ const Category = ({
     newPosts.edges.map((post) => {
       allPosts.push(post);
     });
-    console.log("allPosts", allPosts);
     setPosts(allPosts);
     setReduxPosts(allPosts);
     setLoadingMore(false);
