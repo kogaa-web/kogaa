@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { connect } from "react-redux";
 import FlipMove from "react-flip-move";
+import OnImagesLoaded from "react-on-images-loaded";
 
 import { getPosts, getPostsBySubcategory } from "../../lib/api/listing";
 import * as actions from "../../redux/actions";
@@ -11,7 +12,6 @@ import Card from "../../components/Card/Card";
 
 import styles from "./Category.module.css";
 import globalStyles from "../../styles/Global.module.css";
-import { loadGetInitialProps } from "next/dist/next-server/lib/utils";
 
 const Category = ({
   category,
@@ -64,7 +64,7 @@ const Category = ({
       setFirstTimeRendered(true);
     }
     console.log("posts", posts);
-    restoreScroll();
+    //restoreScroll();
     return () => window.removeEventListener("scroll", onScrollHandler);
   }, []);
 
@@ -121,30 +121,36 @@ const Category = ({
   }
 
   return (
-    <div className={styles.container}>
-      <Layout
-        currentCategory={category}
-        subcategories={subcategories}
-        currentSubcategory={subcategory}
-      >
-        {firstTimeRendered || reduxPosts ? (
-          <FlipMove
-            enterAnimation="fade"
-            leaveAnimation="fade"
-            duration={400}
-            className={
-              firstTimeRendered
-                ? [styles.Cards, globalStyles.FadeIn].join(" ")
-                : styles.Cards
-            }
-          >
-            {posts.map(({ node }) =>
-              node.featuredImage ? <Card post={node} key={node.id} /> : null
-            )}
-          </FlipMove>
-        ) : null}
-      </Layout>
-    </div>
+    <OnImagesLoaded
+      onLoaded={restoreScroll}
+      onTimeout={restoreScroll}
+      timeout={7000}
+    >
+      <div className={styles.container}>
+        <Layout
+          currentCategory={category}
+          subcategories={subcategories}
+          currentSubcategory={subcategory}
+        >
+          {firstTimeRendered || reduxPosts ? (
+            <FlipMove
+              enterAnimation="fade"
+              leaveAnimation="fade"
+              duration={400}
+              className={
+                firstTimeRendered
+                  ? [styles.Cards, globalStyles.FadeIn].join(" ")
+                  : styles.Cards
+              }
+            >
+              {posts.map(({ node }) =>
+                node.featuredImage ? <Card post={node} key={node.id} /> : null
+              )}
+            </FlipMove>
+          ) : null}
+        </Layout>
+      </div>
+    </OnImagesLoaded>
   );
 };
 
