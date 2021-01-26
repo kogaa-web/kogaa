@@ -24,7 +24,7 @@ const Single = ({
   reduxScroll,
 }) => {
   useEffect(() => {
-    setReduxPosts(null);
+    //setReduxPosts(null);
     console.log("redux scroll single", reduxScroll);
     setReduxScroll(reduxScroll);
   }, []);
