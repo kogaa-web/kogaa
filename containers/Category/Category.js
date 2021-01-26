@@ -31,7 +31,9 @@ const Category = ({
   const router = useRouter();
 
   const [loadingMore, setLoadingMore] = useState(false);
-  const [posts, setPosts] = useState(reduxPosts ? reduxPosts : allPosts.edges);
+  const [posts, setPosts] = useState(
+    reduxPosts && !reduxBack ? reduxPosts : allPosts.edges
+  );
   const [hasNextPage, setHasNextPage] = useState(allPosts.pageInfo.hasNextPage);
   const [endCursor, setEndCursor] = useState(allPosts.pageInfo.endCursor);
   const [firstTimeRendered, setFirstTimeRendered] = useState(false);
@@ -63,6 +65,7 @@ const Category = ({
     if (!reduxPosts) {
       setFirstTimeRendered(true);
     }
+    //restoreScroll();
     return () => window.removeEventListener("scroll", onScrollHandler);
   }, []);
 
@@ -112,6 +115,7 @@ const Category = ({
     newPosts.edges.map((post) => {
       allPosts.push(post);
     });
+    console.log("allPosts", allPosts);
     setPosts(allPosts);
     setReduxPosts(allPosts);
     setLoadingMore(false);
