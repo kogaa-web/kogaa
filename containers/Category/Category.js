@@ -27,6 +27,8 @@ const Category = ({
   reduxHasNextPage,
   setReduxEndCursor,
   reduxEndCursor,
+  setReduxFromSingle,
+  reduxFromSingle,
 }) => {
   const router = useRouter();
 
@@ -42,6 +44,10 @@ const Category = ({
   useEffect(() => {
     if (!reduxPosts) {
       setFirstTimeRendered(true);
+    }
+    if (reduxFromSingle) {
+      setFirstTimeRendered(true);
+      setReduxFromSingle(false);
     }
     // If loaded from back arrow click
     if (reduxPosts && reduxBack) {
@@ -160,6 +166,7 @@ const mapStateToProps = (state) => ({
   reduxBack: state.back,
   reduxHasNextPage: state.hasNextPage,
   reduxEndCursor: state.endCursor,
+  reduxFromSingle: state.fromSingle,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -171,6 +178,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(actions.setReduxHasNextPage(hasNextPage)),
   setReduxEndCursor: (endCursor) =>
     dispatch(actions.setReduxEndCursor(endCursor)),
+  setReduxFromSingle: (fromSingle) =>
+    dispatch(actions.setReduxFromSingle(fromSingle)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Category);

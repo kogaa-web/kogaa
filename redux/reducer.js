@@ -6,6 +6,7 @@ export const initialState = {
   back: null,
   hasNextPage: false,
   endCursor: null,
+  fromSingle: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -20,6 +21,8 @@ const reducer = (state = initialState, action) => {
       return { ...state, hasNextPage: action.payload };
     case t.SET_END_CURSOR:
       return { ...state, endCursor: action.payload };
+    case t.SET_FROM_SINGLE:
+      return { ...state, fromSingle: action.payload };
     default:
       return state;
   }

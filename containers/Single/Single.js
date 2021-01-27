@@ -15,15 +15,9 @@ import Table from "../../components/Table/Table";
 import styles from "../Category/Category.module.css";
 import singleStyles from "./Single.module.css";
 
-const Single = ({
-  postData,
-  gallery,
-  subcategories,
-  setReduxPosts,
-  setReduxScroll,
-  reduxScroll,
-}) => {
+const Single = ({ postData, gallery, subcategories, setReduxFromSingle }) => {
   useEffect(() => {
+    setReduxFromSingle(true);
     //setReduxPosts(null);
   }, []);
 
@@ -123,7 +117,8 @@ const Single = ({
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  setReduxPosts: (posts) => dispatch(actions.setReduxPosts(posts)),
+  setReduxFromSingle: (fromSingle) =>
+    dispatch(actions.setReduxFromSingle(fromSingle)),
 });
 
 export default connect(null, mapDispatchToProps)(Single);
