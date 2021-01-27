@@ -34,7 +34,7 @@ const Category = ({
 
   const [loadingMore, setLoadingMore] = useState(false);
   const [posts, setPosts] = useState(
-    reduxPosts || reduxBack ? reduxPosts : allPosts.edges
+    reduxPosts && !reduxFromSingle ? reduxPosts : allPosts.edges
   );
   const [hasNextPage, setHasNextPage] = useState(allPosts.pageInfo.hasNextPage);
   const [endCursor, setEndCursor] = useState(allPosts.pageInfo.endCursor);
