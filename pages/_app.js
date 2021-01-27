@@ -1,12 +1,12 @@
 import React from "react";
 import Router from "next/router";
 import { AnimateSharedLayout } from "framer-motion";
+import { Provider } from "react-redux";
 
 import NProgress from "nprogress"; //nprogress module
 import "../styles/nprogress.css"; //styles of nprogress
+import { useStore } from "../redux/store";
 
-import { wrapper } from "../redux/store";
-import App from "next/app";
 import "../styles/globals.css";
 
 Router.events.on("routeChangeStart", () => NProgress.start());
@@ -17,28 +17,14 @@ NProgress.configure({
   showSpinner: false,
 });
 
-class MyApp extends App {
-  static getInitialProps = async ({ Component, ctx }) => {
-    return {
-      pageProps: {
-        // Call page-level getInitialProps
-        ...(Component.getInitialProps
-          ? await Component.getInitialProps(ctx)
-          : {}),
-        // Some custom thing for all pages
-        pathname: ctx.pathname,
-      },
-    };
-  };
+export default function App({ Component, pageProps }) {
+  const store = useStore(pageProps.initialReduxState);
 
-  render() {
-    const { Component, pageProps } = this.props;
-    return (
+  return (
+    <Provider store={store}>
       <AnimateSharedLayout>
         <Component {...pageProps} />
       </AnimateSharedLayout>
-    );
-  }
+    </Provider>
+  );
 }
-
-export default wrapper.withRedux(MyApp);

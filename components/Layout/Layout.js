@@ -17,6 +17,7 @@ const layout = (props) => {
   // Get menu height
   useEffect(() => {
     setMenuHeight(ref.current.clientHeight);
+    return () => window.removeEventListener("scroll", onScrollHandler);
   }, []);
 
   // Adding and removing scroll handler
@@ -78,6 +79,19 @@ const layout = (props) => {
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#EF4123" />
         <meta name="msapplication-TileColor" content="#EF4123" />
         <meta name="theme-color" content="#FFFFFF" />
+        <meta property="og:title" content="KOGAA new web is out" />
+        <meta property="og:type" content="image/jpg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta
+          property="og:image:alt"
+          content="KOGAA’s works, activities, and accomplishments in a nutshell"
+        />
+        <meta property="og:url" content="https://www.kogaa.eu" />
+        <meta
+          property="og:image"
+          content="https://admin.kogaa.eu/wp-content/uploads/2021/01/kogaa-open-graph.jpg"
+        />
         <script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-LM24JH3WGJ"

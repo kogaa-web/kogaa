@@ -1,10 +1,28 @@
-import { HYDRATE } from "next-redux-wrapper";
 import * as t from "./types";
 
-const reducer = (state = { posts: null }, action) => {
+export const initialState = {
+  posts: null,
+  scroll: 0,
+  back: null,
+  hasNextPage: false,
+  endCursor: null,
+  fromSingle: false,
+};
+
+const reducer = (state = initialState, action) => {
   switch (action.type) {
     case t.SET_POSTS:
       return { ...state, posts: action.payload };
+    case t.SET_SCROLL:
+      return { ...state, scroll: action.payload };
+    case t.SET_BACK:
+      return { ...state, back: action.payload };
+    case t.SET_HAS_NEXT_PAGE:
+      return { ...state, hasNextPage: action.payload };
+    case t.SET_END_CURSOR:
+      return { ...state, endCursor: action.payload };
+    case t.SET_FROM_SINGLE:
+      return { ...state, fromSingle: action.payload };
     default:
       return state;
   }

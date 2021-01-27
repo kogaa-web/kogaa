@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { connect } from "react-redux";
 import FlipMove from "react-flip-move";
+import OnImagesLoaded from "react-on-images-loaded";
 
 import { getPosts, getPostsBySubcategory } from "../../lib/api/listing";
 import * as actions from "../../redux/actions";
@@ -19,11 +20,24 @@ const Category = ({
   reduxPosts,
   setReduxPosts,
   subcategory,
+  setReduxScroll,
+  setReduxBack,
+  reduxBack,
+  setReduxHasNextPage,
+  reduxHasNextPage,
+  setReduxEndCursor,
+  reduxEndCursor,
+  setReduxFromSingle,
+  reduxFromSingle,
 }) => {
   const router = useRouter();
 
   const [loadingMore, setLoadingMore] = useState(false);
-  const [posts, setPosts] = useState(reduxPosts ? reduxPosts : allPosts.edges);
+  const [posts, setPosts] = useState(
+    (reduxPosts && !reduxFromSingle) || (reduxPosts && reduxBack)
+      ? reduxPosts
+      : allPosts.edges
+  );
   const [hasNextPage, setHasNextPage] = useState(allPosts.pageInfo.hasNextPage);
   const [endCursor, setEndCursor] = useState(allPosts.pageInfo.endCursor);
   const [firstTimeRendered, setFirstTimeRendered] = useState(false);
@@ -33,17 +47,44 @@ const Category = ({
     if (!reduxPosts) {
       setFirstTimeRendered(true);
     }
-    setPosts(allPosts.edges);
-    setReduxPosts(allPosts.edges);
-    setHasNextPage(allPosts.pageInfo.hasNextPage);
-    setEndCursor(allPosts.pageInfo.endCursor);
+    // Disable regrouping animation if navigated from single page but not from back arrow
+    if (reduxFromSingle && !reduxBack) {
+      setFirstTimeRendered(true);
+      setReduxFromSingle(false);
+    }
+    // If loaded from back arrow click
+    if (reduxPosts && reduxBack) {
+      setHasNextPage(reduxHasNextPage);
+      setEndCursor(reduxEndCursor);
+    } else {
+      setPosts(allPosts.edges);
+      setHasNextPage(allPosts.pageInfo.hasNextPage);
+      setEndCursor(allPosts.pageInfo.endCursor);
+      setReduxPosts(allPosts.edges);
+      setReduxHasNextPage(allPosts.pageInfo.hasNextPage);
+      setReduxEndCursor(allPosts.pageInfo.endCursor);
+    }
+    if (process.browser) {
+      setReduxScroll(window.scrollY);
+    }
+    return () => window.removeEventListener("scroll", onScrollHandler);
   }, [router.query]);
 
   useEffect(() => {
     if (!reduxPosts) {
       setFirstTimeRendered(true);
     }
+    return () => window.removeEventListener("scroll", onScrollHandler);
   }, []);
+
+  const restoreScroll = () => {
+    if (process.browser) {
+      if (reduxBack) {
+        window.scrollTo(0, reduxBack);
+        setReduxBack(null);
+      }
+    }
+  };
 
   // Adding and removing scroll handler
   useEffect(() => {
@@ -53,6 +94,7 @@ const Category = ({
 
   // Detecting scroll to bottom of the page
   const onScrollHandler = () => {
+    setReduxScroll(window.scrollY);
     const siteHeight = document.body.scrollHeight;
     const scrollPosition = window.scrollY + window.innerHeight * 2;
     if (
@@ -75,48 +117,71 @@ const Category = ({
     }
     setHasNextPage(newPosts.pageInfo.hasNextPage);
     setEndCursor(newPosts.pageInfo.endCursor);
+    setReduxHasNextPage(newPosts.pageInfo.hasNextPage);
+    setReduxEndCursor(newPosts.pageInfo.endCursor);
     const allPosts = [...posts];
     newPosts.edges.map((post) => {
       allPosts.push(post);
     });
     setPosts(allPosts);
+    setReduxPosts(allPosts);
     setLoadingMore(false);
   }
 
   return (
-    <div className={styles.container}>
-      <Layout
-        currentCategory={category}
-        subcategories={subcategories}
-        currentSubcategory={subcategory}
-      >
-        {firstTimeRendered || reduxPosts ? (
-          <FlipMove
-            enterAnimation="fade"
-            leaveAnimation="fade"
-            duration={400}
-            className={
-              firstTimeRendered
-                ? [styles.Cards, globalStyles.FadeIn].join(" ")
-                : styles.Cards
-            }
-          >
-            {posts.map(({ node }) =>
-              node.featuredImage ? <Card post={node} key={node.id} /> : null
-            )}
-          </FlipMove>
-        ) : null}
-      </Layout>
-    </div>
+    <OnImagesLoaded
+      onLoaded={restoreScroll}
+      onTimeout={restoreScroll}
+      timeout={2000}
+    >
+      <div className={styles.container}>
+        <Layout
+          currentCategory={category}
+          subcategories={subcategories}
+          currentSubcategory={subcategory}
+        >
+          {firstTimeRendered || reduxPosts ? (
+            <FlipMove
+              enterAnimation="fade"
+              leaveAnimation="fade"
+              duration={400}
+              className={
+                firstTimeRendered
+                  ? [styles.Cards, globalStyles.FadeIn].join(" ")
+                  : styles.Cards
+              }
+            >
+              {posts.map(({ node }) =>
+                node.featuredImage ? <Card post={node} key={node.id} /> : null
+              )}
+            </FlipMove>
+          ) : null}
+        </Layout>
+      </div>
+    </OnImagesLoaded>
   );
 };
 
 const mapStateToProps = (state) => ({
   reduxPosts: state.posts,
+  reduxScroll: state.scroll,
+  reduxBack: state.back,
+  reduxHasNextPage: state.hasNextPage,
+  reduxEndCursor: state.endCursor,
+  reduxFromSingle: state.fromSingle,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   setReduxPosts: (posts) => dispatch(actions.setReduxPosts(posts)),
+  setReduxScroll: (scrollPosition) =>
+    dispatch(actions.setReduxScroll(scrollPosition)),
+  setReduxBack: (back) => dispatch(actions.setReduxBack(back)),
+  setReduxHasNextPage: (hasNextPage) =>
+    dispatch(actions.setReduxHasNextPage(hasNextPage)),
+  setReduxEndCursor: (endCursor) =>
+    dispatch(actions.setReduxEndCursor(endCursor)),
+  setReduxFromSingle: (fromSingle) =>
+    dispatch(actions.setReduxFromSingle(fromSingle)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Category);
