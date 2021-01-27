@@ -84,6 +84,10 @@ const layout = (props) => {
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta
+          property="og:description"
+          content="KOGAA’s works, activities, and accomplishments in a nutshell"
+        />
+        <meta
           property="og:image:alt"
           content="KOGAA’s works, activities, and accomplishments in a nutshell"
         />
