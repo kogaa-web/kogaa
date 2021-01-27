@@ -18,7 +18,6 @@ import singleStyles from "./Single.module.css";
 const Single = ({ postData, gallery, subcategories, setReduxFromSingle }) => {
   useEffect(() => {
     setReduxFromSingle(true);
-    //setReduxPosts(null);
   }, []);
 
   const postSubcategories = getCategories(postData);

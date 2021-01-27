@@ -47,6 +47,7 @@ const Category = ({
     if (!reduxPosts) {
       setFirstTimeRendered(true);
     }
+    // Disable regrouping animation if navigated from single page but not from back arrow
     if (reduxFromSingle && !reduxBack) {
       setFirstTimeRendered(true);
       setReduxFromSingle(false);
@@ -73,7 +74,6 @@ const Category = ({
     if (!reduxPosts) {
       setFirstTimeRendered(true);
     }
-    //restoreScroll();
     return () => window.removeEventListener("scroll", onScrollHandler);
   }, []);
 
@@ -132,7 +132,7 @@ const Category = ({
     <OnImagesLoaded
       onLoaded={restoreScroll}
       onTimeout={restoreScroll}
-      timeout={4000}
+      timeout={2000}
     >
       <div className={styles.container}>
         <Layout
