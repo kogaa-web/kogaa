@@ -80,7 +80,7 @@ const layout = (props) => {
         <meta name="msapplication-TileColor" content="#EF4123" />
         <meta name="theme-color" content="#FFFFFF" />
         <meta property="og:title" content="KOGAA new web is out" />
-        <meta property="og:type" content="image/jpg" />
+        <meta property="og:type" content="image/jpeg" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta
