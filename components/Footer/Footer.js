@@ -10,9 +10,10 @@ const footer = ({ hideLine }) => {
   const fbLink = "https://www.facebook.com/kogaa.studio/";
   if (iOS()) {
     fbLink = "fb://page/?id=822031704526911";
-  } else if (Android()) {
-    fbLink = "fb://page/822031704526911";
   }
+  //  else if (Android()) {
+  //   fbLink = "fb://page/822031704526911";
+  // }
 
   return (
     <motion.footer className={classes.Footer} {...fadeIn}>
