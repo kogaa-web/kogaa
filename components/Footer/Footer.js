@@ -7,7 +7,7 @@ import Line from "../../components/Line/Line";
 import classes from "./Footer.module.css";
 
 const footer = ({ hideLine }) => {
-  const fbLink = "https://www.facebook.com/kogaa.studio/";
+  let fbLink = "https://www.facebook.com/kogaa.studio/";
   if (iOS()) {
     fbLink = "fb://page/?id=822031704526911";
   } else if (Android()) {
