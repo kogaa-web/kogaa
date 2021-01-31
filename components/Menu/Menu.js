@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { motion } from "framer-motion";
 import { connect } from "react-redux";
 
-import { formatDate } from "../../lib/util";
+import { formatDate, iOS } from "../../lib/util";
 import { fadeIn } from "../../lib/animations";
 import * as actions from "../../redux/actions";
 
@@ -66,21 +66,6 @@ const Menu = forwardRef(
         categoryIndex = "aboutCats";
         break;
     }
-
-    const iOS = () => {
-      return (
-        [
-          "iPad Simulator",
-          "iPhone Simulator",
-          "iPod Simulator",
-          "iPad",
-          "iPhone",
-          "iPod",
-        ].includes(navigator.platform) ||
-        // iPad on iOS 13 detection
-        (navigator.userAgent.includes("Mac") && "ontouchend" in document)
-      );
-    };
 
     const setCategoryOnHover = (category) => {
       if (!iOS()) {

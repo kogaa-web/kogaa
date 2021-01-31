@@ -1,14 +1,18 @@
 import { motion } from "framer-motion";
 import { fadeIn } from "../../lib/animations";
+import { iOS, Android } from "../../lib/util";
 
 import Line from "../../components/Line/Line";
 
 import classes from "./Footer.module.css";
 
 const footer = ({ hideLine }) => {
-  const desktopFBLink = "https://www.facebook.com/kogaa.studio/";
-  const androidFBLink = "fb://page/822031704526911";
-  const iosFBLink = "fb://page/?id=822031704526911";
+  const fbLink = "https://www.facebook.com/kogaa.studio/";
+  if (iOS()) {
+    fbLink = "fb://page/?id=822031704526911";
+  } else if (Android()) {
+    fbLink = "fb://page/822031704526911";
+  }
 
   return (
     <motion.footer className={classes.Footer} {...fadeIn}>
@@ -17,7 +21,7 @@ const footer = ({ hideLine }) => {
         <a href="https://www.instagram.com/kogaa_studio" target="_blank">
           Instagram
         </a>
-        <a href={desktopFBLink} target="_blank">
+        <a href={fbLink} target="_blank">
           Facebook
         </a>
         <a href="https://www.linkedin.com/company/kogaa/" target="_blank">
