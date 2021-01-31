@@ -12,7 +12,7 @@ const footer = ({ hideLine }) => (
       <a href="https://www.instagram.com/kogaa_studio" target="_blank">
         Instagram
       </a>
-      <a href="https://www.facebook.com/kogaa.studio" target="_blank">
+      <a href="fb://page/822031704526911" target="_blank">
         Facebook
       </a>
       <a href="https://www.linkedin.com/company/kogaa/" target="_blank">
