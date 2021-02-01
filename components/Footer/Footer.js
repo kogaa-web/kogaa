@@ -5,14 +5,20 @@ import { iOS, Android } from "../../lib/util";
 import Line from "../../components/Line/Line";
 
 import classes from "./Footer.module.css";
+import { useEffect, useState } from "react";
 
 const footer = ({ hideLine }) => {
-  let fbLink = "https://www.facebook.com/kogaa.studio/";
-  if (iOS()) {
-    fbLink = "fb://page/?id=822031704526911";
-  } else if (Android()) {
-    fbLink = "fb://page/822031704526911";
-  }
+  const [fbLink, setFbLink] = useState(
+    "https://www.facebook.com/kogaa.studio/"
+  );
+
+  useEffect(() => {
+    if (iOS()) {
+      setFbLink("fb://page/?id=822031704526911");
+    } else if (Android()) {
+      setFbLink("fb://page/822031704526911");
+    }
+  }, []);
 
   return (
     <motion.footer className={classes.Footer} {...fadeIn}>
