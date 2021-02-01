@@ -1,11 +1,9 @@
 import { motion } from "framer-motion";
 import { fadeIn } from "../../lib/animations";
-import { iOS, Android } from "../../lib/util";
 
 import Line from "../../components/Line/Line";
 
 import classes from "./Footer.module.css";
-import { useEffect, useState } from "react";
 
 const footer = ({ hideLine }) => (
   <motion.footer className={classes.Footer} {...fadeIn}>
