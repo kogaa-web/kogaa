@@ -14,12 +14,12 @@ const Facebook = () => {
           window.location = iosLink;
           window.setTimeout(() => {
             window.location = desktopLink;
-          }, 25);
+          }, 10);
         } else if (Android()) {
           window.location = androidLink;
           window.setTimeout(() => {
             window.location = desktopLink;
-          }, 25);
+          }, 10);
         } else {
           window.location = desktopLink;
         }
