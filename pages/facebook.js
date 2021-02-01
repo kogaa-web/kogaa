@@ -12,6 +12,9 @@ const Facebook = () => {
 
         if (iOS()) {
           window.location = iosLink;
+          window.setTimeout(() => {
+            window.location = desktopLink;
+          }, 25);
         } else if (Android()) {
           window.location = androidLink;
           window.setTimeout(() => {
@@ -19,9 +22,6 @@ const Facebook = () => {
           }, 25);
         } else {
           window.location = desktopLink;
-          window.setTimeout(() => {
-            window.location = desktopLink;
-          }, 25);
         }
 
         const killPopup = () => {
