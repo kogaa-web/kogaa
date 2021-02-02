@@ -29,7 +29,6 @@ const layout = (props) => {
   // Detecting scroll to bottom of the page
   const onScrollHandler = () => {
     const menuScrollStyle = {
-      zIndex: 10,
       position: "fixed",
       left: 0,
       right: 0,
