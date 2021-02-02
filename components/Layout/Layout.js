@@ -40,16 +40,23 @@ const layout = (props) => {
     const scrollPosition = window.scrollY;
     if (scrollPosition > menuHeight) {
       if (scrollPosition < prevScroll) {
-        setStyle({
+        setStyle((prevStyle) => ({
+          ...prevStyle,
           ...menuScrollStyle,
           top: "0%",
-        });
+        }));
       } else {
-        setStyle({
+        setStyle((prevStyle) => ({
+          ...prevStyle,
           ...menuScrollStyle,
           top: "-100%",
-        });
+        }));
       }
+      // const prevStyle = { ...style };
+      setStyle((prevStyle) => ({
+        ...prevStyle,
+        transition: "top 0.8s ease-out",
+      }));
     } else {
       setStyle({});
     }

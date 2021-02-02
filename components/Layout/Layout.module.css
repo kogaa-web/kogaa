@@ -10,7 +10,6 @@
   flex: 1 0 auto;
 }
 .MenuContainer {
-  transition: top 0.8s ease-out;
   height: auto;
   width: 100%;
   left: 50%;
