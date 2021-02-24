@@ -82,7 +82,6 @@ const Menu = forwardRef(
       <div ref={ref}>
         <div className={classes.Menu}>
           <div
-            style={{ paddingBottom: "1em" }}
             onMouseLeave={() =>
               loading ? null : setCategoryOnHover(currentCategory)
             }

@@ -116,11 +116,10 @@ const layout = (props) => {
           }}
         />
       </Head>
-      <div
-        style={style}
-        className={`${classes.Layout} ${classes.MenuContainer}`}
-      >
-        <Menu ref={ref} {...props} />
+      <div style={style} className={classes.MenuContainer}>
+        <div className={classes.Layout}>
+          <Menu ref={ref} {...props} />
+        </div>
       </div>
       <div
         className={

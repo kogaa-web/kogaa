@@ -10,6 +10,7 @@
   flex: 1 0 auto;
 }
 .MenuContainer {
+  background: white;
   z-index: 1;
   height: auto;
   width: 100%;
