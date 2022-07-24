@@ -25,6 +25,9 @@
 .ErrorContainer {
   margin-top: 161px;
 }
+.ErrorContainer > div {
+  z-index: 1;
+}
 @media (min-width: 480px) {
   .Layout {
     padding: 0 50px;
