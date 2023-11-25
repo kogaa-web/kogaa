@@ -42,13 +42,13 @@ const Menu = forwardRef(
       router.events.on("routeChangeError", () => setLoading(false));
     }
 
-    useEffect(async () => {
+    useEffect(() => {
       if (currentCategory) {
         setCategory(currentCategory);
       }
     }, [currentCategory]);
 
-    useEffect(async () => {
+    useEffect(() => {
       if (postCategory) {
         setCategory(postCategory);
       }
