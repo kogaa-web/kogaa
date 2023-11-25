@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import Head from "next/head";
+import Script from "next/script";
 
 import Footer from "../Footer/Footer";
 import Menu from "../Menu/Menu";
@@ -102,11 +103,11 @@ const layout = (props) => {
           property="og:image"
           content="https://admin.kogaa.eu/wp-content/uploads/2021/01/kogaa-open-graph.jpg"
         />
-        <script
+        <Script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-LM24JH3WGJ"
-        ></script>
-        <script
+        />
+        <Script
           dangerouslySetInnerHTML={{
             __html: `
       window.dataLayer = window.dataLayer || []; function gtag()
