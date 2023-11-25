@@ -52,7 +52,6 @@ const layout = (props) => {
           top: "-100%",
         }));
       }
-      // const prevStyle = { ...style };
       setStyle((prevStyle) => ({
         ...prevStyle,
         transition: "top 0.8s ease-out",
