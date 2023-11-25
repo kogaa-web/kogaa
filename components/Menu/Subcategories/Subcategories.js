@@ -10,13 +10,13 @@ const Subcategories = ({ category, categories, currentSubcategory }) => (
     {categories.map((item) => {
       return (
         <Link href={`/${category}/${item.name}`} key={item.name}>
-          <motion.a
+          <motion.span
             {...fadeIn}
             layoutId={item.name + "menuitem"}
             className={currentSubcategory === item.name ? classes.Active : null}
           >
             {item.name}
-          </motion.a>
+          </motion.span>
         </Link>
       );
     })}

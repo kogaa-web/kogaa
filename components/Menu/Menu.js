@@ -88,30 +88,31 @@ const Menu = forwardRef(
           >
             <div className={classes.MainMenu}>
               <Link href="/">
-                <a>
-                  <Logo />
-                </a>
+                <Logo />
               </Link>
-              <Link href="/news">
-                <a onMouseEnter={() => setCategoryOnHover("news")}>
-                  <Circle
-                    className={category === "news" ? classes.Active : null}
-                  />
-                </a>
+              <Link
+                href="/news"
+                onMouseEnter={() => setCategoryOnHover("news")}
+              >
+                <Circle
+                  className={category === "news" ? classes.Active : null}
+                />
               </Link>
-              <Link href="/projects">
-                <a onMouseEnter={() => setCategoryOnHover("projects")}>
-                  <Square
-                    className={category === "projects" ? classes.Active : null}
-                  />
-                </a>
+              <Link
+                href="/projects"
+                onMouseEnter={() => setCategoryOnHover("projects")}
+              >
+                <Square
+                  className={category === "projects" ? classes.Active : null}
+                />
               </Link>
-              <Link href="/about">
-                <a onMouseEnter={() => setCategoryOnHover("about")}>
-                  <Triangle
-                    className={category === "about" ? classes.Active : null}
-                  />
-                </a>
+              <Link
+                href="/about"
+                onMouseEnter={() => setCategoryOnHover("about")}
+              >
+                <Triangle
+                  className={category === "about" ? classes.Active : null}
+                />
               </Link>
             </div>
 
@@ -132,15 +133,13 @@ const Menu = forwardRef(
                     style={{ cursor: "pointer" }}
                   />
                   {error ? (
-                    <Link href="/">
-                      <a>home</a>
-                    </Link>
+                    <Link href="/">home</Link>
                   ) : (
                     postSubcategories.map((category, index) => {
                       return (
                         <Fragment key={category.name}>
                           <Link href={`/${postCategory}/${category.name}`}>
-                            <a>{category.name}</a>
+                            {category.name}
                           </Link>
                           {postSubcategories[index + 1] && "|"}
                         </Fragment>

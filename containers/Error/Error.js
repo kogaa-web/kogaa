@@ -30,9 +30,7 @@ export default function Error({ subcategories }) {
           <br />
           Please try again.
         </p>
-        <Link href="/">
-          <a>go home</a>
-        </Link>
+        <Link href="/">go home</Link>
       </div>
     </Layout>
   );
