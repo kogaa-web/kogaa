@@ -1,6 +1,5 @@
 import React from "react";
 import Router from "next/router";
-import { AnimateSharedLayout } from "framer-motion";
 import { Provider } from "react-redux";
 import { Kumbh_Sans } from "next/font/google";
 
@@ -28,11 +27,9 @@ export default function App({ Component, pageProps }) {
 
   return (
     <Provider store={store}>
-      <AnimateSharedLayout>
-        <div className={kumbhSans.className}>
-          <Component {...pageProps} />
-        </div>
-      </AnimateSharedLayout>
+      <div className={kumbhSans.className}>
+        <Component {...pageProps} />
+      </div>
     </Provider>
   );
 }
