@@ -80,6 +80,7 @@ const Category = ({
   const restoreScroll = () => {
     if (process.browser) {
       if (reduxBack) {
+        console.log("restoreScroll", reduxBack);
         window.scrollTo(0, reduxBack);
         setReduxBack(null);
       }
