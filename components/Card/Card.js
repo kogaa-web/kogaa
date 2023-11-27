@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useRef, useEffect, Fragment, forwardRef } from "react";
 
 import { formatDate, getCategories } from "../../lib/util";
@@ -31,7 +32,11 @@ const Card = forwardRef(({ post }, ref) => {
   if (post.featuredImage) {
     cardImage = (
       <Link href={`/${post.contentType.node.name}/${post.slug}`}>
-        <img
+        <Image
+          width="0"
+          height="0"
+          sizes="100vw"
+          style={{ width: "100%", height: "auto" }}
           ref={image}
           src={post.featuredImage.node.sourceUrl}
           alt={post.title}
@@ -44,7 +49,11 @@ const Card = forwardRef(({ post }, ref) => {
         <div className={classes.TriangleContainer}>
           <div className={classes.TriangleContent}>
             <Link href={`/${post.contentType.node.name}/${post.slug}`}>
-              <img
+              <Image
+                width="0"
+                height="0"
+                sizes="100vw"
+                style={{ width: "100%", height: "100%" }}
                 ref={image}
                 src={post.featuredImage.node.sourceUrl}
                 alt={post.title}

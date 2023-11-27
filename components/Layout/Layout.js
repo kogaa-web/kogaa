@@ -7,7 +7,7 @@ import Menu from "../Menu/Menu";
 
 import classes from "./Layout.module.css";
 
-const layout = (props) => {
+const Layout = (props) => {
   const [prevScroll, setPrevScroll] = useState(
     process.browser ? window.scrollY : 0
   );
@@ -102,20 +102,21 @@ const layout = (props) => {
           property="og:image"
           content="https://admin.kogaa.eu/wp-content/uploads/2021/01/kogaa-open-graph.jpg"
         />
-        <Script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-LM24JH3WGJ"
-        />
-        <Script
-          dangerouslySetInnerHTML={{
-            __html: `
+      </Head>
+      <Script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=G-LM24JH3WGJ"
+      />
+      <Script
+        id="gtagScript"
+        dangerouslySetInnerHTML={{
+          __html: `
       window.dataLayer = window.dataLayer || []; function gtag()
       {dataLayer.push(arguments)}
       gtag("js", new Date()); gtag("config", "G-LM24JH3WGJ");
         `,
-          }}
-        />
-      </Head>
+        }}
+      />
       <div style={style} className={classes.MenuContainer}>
         <div className={classes.Layout}>
           <Menu ref={ref} {...props} />
@@ -135,4 +136,4 @@ const layout = (props) => {
   );
 };
 
-export default layout;
+export default Layout;
