@@ -11,6 +11,7 @@ import Card from "../../components/Card/Card";
 
 import styles from "./Category.module.css";
 import globalStyles from "../../styles/Global.module.css";
+import Head from "next/head";
 
 const Category = ({
   category,
@@ -81,34 +82,34 @@ const Category = ({
     return () => window.removeEventListener("scroll", onScrollHandler);
   }, []);
 
-  // set scroll restoration to manual
-  useEffect(() => {
-    if (
-      "scrollRestoration" in history &&
-      history.scrollRestoration !== "manual"
-    ) {
-      history.scrollRestoration = "manual";
-    }
-  }, []);
+  // // set scroll restoration to manual
+  // useEffect(() => {
+  //   if (
+  //     "scrollRestoration" in history &&
+  //     history.scrollRestoration !== "manual"
+  //   ) {
+  //     history.scrollRestoration = "manual";
+  //   }
+  // }, []);
 
-  // handle and store scroll position
-  useEffect(() => {
-    const handleRouteChange = () => {
-      sessionStorage.setItem("scrollPosition", window.scrollY.toString());
-    };
-    router.events.on("routeChangeStart", handleRouteChange);
-    return () => {
-      router.events.off("routeChangeStart", handleRouteChange);
-    };
-  }, [router.events]);
+  // // handle and store scroll position
+  // useEffect(() => {
+  //   const handleRouteChange = () => {
+  //     sessionStorage.setItem("scrollPosition", window.scrollY.toString());
+  //   };
+  //   router.events.on("routeChangeStart", handleRouteChange);
+  //   return () => {
+  //     router.events.off("routeChangeStart", handleRouteChange);
+  //   };
+  // }, [router.events]);
 
-  // restore scroll position
-  useEffect(() => {
-    if ("scrollPosition" in sessionStorage) {
-      window.scrollTo(0, Number(sessionStorage.getItem("scrollPosition")));
-      sessionStorage.removeItem("scrollPosition");
-    }
-  }, []);
+  // // restore scroll position
+  // useEffect(() => {
+  //   if ("scrollPosition" in sessionStorage) {
+  //     window.scrollTo(0, Number(sessionStorage.getItem("scrollPosition")));
+  //     sessionStorage.removeItem("scrollPosition");
+  //   }
+  // }, []);
 
   // Detecting scroll to bottom of the page
   const onScrollHandler = () => {
@@ -147,30 +148,36 @@ const Category = ({
   }
 
   return (
-    <div className={styles.container}>
-      <Layout
-        currentCategory={category}
-        subcategories={subcategories}
-        currentSubcategory={subcategory}
-      >
-        {firstTimeRendered || reduxPosts ? (
-          <FlipMove
-            enterAnimation="fade"
-            leaveAnimation="fade"
-            duration={400}
-            className={
-              firstTimeRendered
-                ? [styles.Cards, globalStyles.FadeIn].join(" ")
-                : styles.Cards
-            }
-          >
-            {posts.map(({ node }) =>
-              node.featuredImage ? <Card post={node} key={node.id} /> : null
-            )}
-          </FlipMove>
-        ) : null}
-      </Layout>
-    </div>
+    <>
+      <Head>
+        <meta name="prerender-status-code" content="200" />
+        <meta name="prerender" content="true" />
+      </Head>
+      <div className={styles.container}>
+        <Layout
+          currentCategory={category}
+          subcategories={subcategories}
+          currentSubcategory={subcategory}
+        >
+          {firstTimeRendered || reduxPosts ? (
+            <FlipMove
+              enterAnimation="fade"
+              leaveAnimation="fade"
+              duration={400}
+              className={
+                firstTimeRendered
+                  ? [styles.Cards, globalStyles.FadeIn].join(" ")
+                  : styles.Cards
+              }
+            >
+              {posts.map(({ node }) =>
+                node.featuredImage ? <Card post={node} key={node.id} /> : null
+              )}
+            </FlipMove>
+          ) : null}
+        </Layout>
+      </div>
+    </>
   );
 };
 

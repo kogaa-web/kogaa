@@ -2,9 +2,9 @@ module.exports = {
   images: {
     domains: ["admin.kogaa.eu"],
   },
-  // experimental: {
-  //   scrollRestoration: true,
-  // },
+  experimental: {
+    scrollRestoration: true,
+  },
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,
