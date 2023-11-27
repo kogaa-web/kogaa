@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { connect } from "react-redux";
 import FlipMove from "react-flip-move";
-import OnImagesLoaded from "react-on-images-loaded";
 
 import { getPosts, getPostsBySubcategory } from "../../lib/api/listing";
 import * as actions from "../../redux/actions";
@@ -21,7 +20,6 @@ const Category = ({
   setReduxPosts,
   subcategory,
   setReduxScroll,
-  setReduxBack,
   reduxBack,
   setReduxHasNextPage,
   reduxHasNextPage,
@@ -77,15 +75,6 @@ const Category = ({
     return () => window.removeEventListener("scroll", onScrollHandler);
   }, []);
 
-  const restoreScroll = () => {
-    if (process.browser) {
-      if (reduxBack) {
-        window.scrollTo(0, reduxBack);
-        setReduxBack(null);
-      }
-    }
-  };
-
   // Adding and removing scroll handler
   useEffect(() => {
     window.addEventListener("scroll", onScrollHandler);
@@ -129,36 +118,30 @@ const Category = ({
   }
 
   return (
-    <OnImagesLoaded
-      onLoaded={restoreScroll}
-      onTimeout={restoreScroll}
-      timeout={2000}
-    >
-      <div className={styles.container}>
-        <Layout
-          currentCategory={category}
-          subcategories={subcategories}
-          currentSubcategory={subcategory}
-        >
-          {firstTimeRendered || reduxPosts ? (
-            <FlipMove
-              enterAnimation="fade"
-              leaveAnimation="fade"
-              duration={400}
-              className={
-                firstTimeRendered
-                  ? [styles.Cards, globalStyles.FadeIn].join(" ")
-                  : styles.Cards
-              }
-            >
-              {posts.map(({ node }) =>
-                node.featuredImage ? <Card post={node} key={node.id} /> : null
-              )}
-            </FlipMove>
-          ) : null}
-        </Layout>
-      </div>
-    </OnImagesLoaded>
+    <div className={styles.container}>
+      <Layout
+        currentCategory={category}
+        subcategories={subcategories}
+        currentSubcategory={subcategory}
+      >
+        {firstTimeRendered || reduxPosts ? (
+          <FlipMove
+            enterAnimation="fade"
+            leaveAnimation="fade"
+            duration={400}
+            className={
+              firstTimeRendered
+                ? [styles.Cards, globalStyles.FadeIn].join(" ")
+                : styles.Cards
+            }
+          >
+            {posts.map(({ node }) =>
+              node.featuredImage ? <Card post={node} key={node.id} /> : null
+            )}
+          </FlipMove>
+        ) : null}
+      </Layout>
+    </div>
   );
 };
 
@@ -175,7 +158,6 @@ const mapDispatchToProps = (dispatch) => ({
   setReduxPosts: (posts) => dispatch(actions.setReduxPosts(posts)),
   setReduxScroll: (scrollPosition) =>
     dispatch(actions.setReduxScroll(scrollPosition)),
-  setReduxBack: (back) => dispatch(actions.setReduxBack(back)),
   setReduxHasNextPage: (hasNextPage) =>
     dispatch(actions.setReduxHasNextPage(hasNextPage)),
   setReduxEndCursor: (endCursor) =>
