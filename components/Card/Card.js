@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useRef, useEffect, Fragment, forwardRef } from "react";
 
 import { formatDate, getCategories } from "../../lib/util";
@@ -31,14 +32,16 @@ const Card = forwardRef(({ post }, ref) => {
   if (post.featuredImage) {
     cardImage = (
       <Link href={`/${post.contentType.node.name}/${post.slug}`}>
-        <a>
-          <img
-            ref={image}
-            src={post.featuredImage.node.sourceUrl}
-            alt={post.title}
-            onLoad={() => setLoaded(true)}
-          />
-        </a>
+        <Image
+          width="0"
+          height="0"
+          sizes="100vw"
+          style={{ width: "100%", height: "auto" }}
+          ref={image}
+          src={post.featuredImage.node.sourceUrl}
+          alt={post.title}
+          onLoad={() => setLoaded(true)}
+        />
       </Link>
     );
     if (post.contentType.node.name === "about") {
@@ -46,14 +49,16 @@ const Card = forwardRef(({ post }, ref) => {
         <div className={classes.TriangleContainer}>
           <div className={classes.TriangleContent}>
             <Link href={`/${post.contentType.node.name}/${post.slug}`}>
-              <a>
-                <img
-                  ref={image}
-                  src={post.featuredImage.node.sourceUrl}
-                  alt={post.title}
-                  onLoad={() => setLoaded(true)}
-                />
-              </a>
+              <Image
+                width="0"
+                height="0"
+                sizes="100vw"
+                style={{ width: "100%", height: "100%" }}
+                ref={image}
+                src={post.featuredImage.node.sourceUrl}
+                alt={post.title}
+                onLoad={() => setLoaded(true)}
+              />
             </Link>
           </div>
         </div>
@@ -75,7 +80,7 @@ const Card = forwardRef(({ post }, ref) => {
                     <Link
                       href={`/${post.contentType.node.name}/${category.name}`}
                     >
-                      <a>{category.name}</a>
+                      {category.name}
                     </Link>
                     {categories[index + 1] && "|"}
                   </Fragment>
@@ -84,9 +89,7 @@ const Card = forwardRef(({ post }, ref) => {
             </div>
           </div>
           <Link href={`/${post.contentType.node.name}/${post.slug}`}>
-            <a>
-              <h2>{post.title}</h2>
-            </a>
+            <h2>{post.title}</h2>
           </Link>
           <p className={classes.Excerpt}>
             {post.excerpt.replace(/(<([^>]+)>)/gi, "")}

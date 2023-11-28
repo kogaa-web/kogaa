@@ -1,7 +1,7 @@
 import React from "react";
 import Router from "next/router";
-import { AnimateSharedLayout } from "framer-motion";
 import { Provider } from "react-redux";
+import { Kumbh_Sans } from "next/font/google";
 
 import NProgress from "nprogress"; //nprogress module
 import "../styles/nprogress.css"; //styles of nprogress
@@ -17,14 +17,19 @@ NProgress.configure({
   showSpinner: false,
 });
 
+const kumbhSans = Kumbh_Sans({
+  weight: ["300", "400", "700"],
+  subsets: ["latin"],
+});
+
 export default function App({ Component, pageProps }) {
   const store = useStore(pageProps.initialReduxState);
 
   return (
     <Provider store={store}>
-      <AnimateSharedLayout>
+      <div className={kumbhSans.className}>
         <Component {...pageProps} />
-      </AnimateSharedLayout>
+      </div>
     </Provider>
   );
 }

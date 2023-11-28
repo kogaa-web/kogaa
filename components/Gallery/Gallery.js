@@ -1,16 +1,16 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { useSwipeable } from "react-swipeable";
-import CSSTransition from "react-transition-group/CSSTransition";
 import { motion, useAnimation } from "framer-motion";
 
 import classes from "./Gallery.module.css";
 
-export default function gallery({ images }) {
+export default function Gallery({ images }) {
   const animationSpeed = 0.4;
   const [index, setIndex] = useState(0);
   const indexRef = useRef(index);
   const ref = useRef(null);
   const controls = [];
+
   images.map(() => {
     controls.push(useAnimation());
   });
