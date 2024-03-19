@@ -1,25 +1,18 @@
-import { useEffect } from "react";
 import { motion } from "framer-motion";
 import Head from "next/head";
-import { connect } from "react-redux";
 
-import { getCategories, capitalize } from "../../lib/util";
-import { useWindowSize } from "../../lib/hooks";
 import { fadeIn } from "../../lib/animations";
-import * as actions from "../../redux/actions";
+import { useWindowSize } from "../../lib/hooks";
+import { capitalize, getCategories } from "../../lib/util";
 
-import Layout from "../../components/Layout/Layout";
 import Gallery from "../../components/Gallery/Gallery";
+import Layout from "../../components/Layout/Layout";
 import Table from "../../components/Table/Table";
 
 import styles from "../Category/Category.module.css";
 import singleStyles from "./Single.module.css";
 
-const Single = ({ postData, gallery, subcategories, setReduxFromSingle }) => {
-  useEffect(() => {
-    setReduxFromSingle(true);
-  }, []);
-
+const Single = ({ postData, gallery, subcategories, type }) => {
   const postSubcategories = getCategories(postData);
 
   const windowWidth = useWindowSize().width;
@@ -74,6 +67,7 @@ const Single = ({ postData, gallery, subcategories, setReduxFromSingle }) => {
         postCategory={postData.contentType.node.name}
         date={postData.date}
         hideLine={showButton}
+        pageType={type}
       >
         {images ? <Gallery images={images} /> : null}
         <motion.div {...fadeIn}>
@@ -115,9 +109,4 @@ const Single = ({ postData, gallery, subcategories, setReduxFromSingle }) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  setReduxFromSingle: (fromSingle) =>
-    dispatch(actions.setReduxFromSingle(fromSingle)),
-});
-
-export default connect(null, mapDispatchToProps)(Single);
+export default Single;

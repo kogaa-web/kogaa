@@ -1,14 +1,23 @@
-import Link from "next/link";
 import Image from "next/image";
-import { useState, useRef, useEffect, Fragment, forwardRef } from "react";
+import Link from "next/link";
+import {
+  Fragment,
+  forwardRef,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 import { formatDate, getCategories } from "../../lib/util";
 
-import classes from "./Card.module.css";
+import { ScrollRestorationContext } from "../../lib/ScrollRestorationProvider";
 import globalClasses from "../../styles/Global.module.css";
+import classes from "./Card.module.css";
 
 const Card = forwardRef(({ post }, ref) => {
   const [loaded, setLoaded] = useState(false);
+  const { setScrollPosition } = useContext(ScrollRestorationContext);
   const image = useRef();
 
   const categories = getCategories(post);
@@ -67,7 +76,14 @@ const Card = forwardRef(({ post }, ref) => {
   }
 
   return (
-    <div ref={ref} className={cardClasses.join(" ")}>
+    <div
+      ref={ref}
+      className={cardClasses.join(" ")}
+      id={post.id}
+      onClick={() => {
+        setScrollPosition(window.scrollY);
+      }}
+    >
       {cardImage}
       {loaded ? (
         <>

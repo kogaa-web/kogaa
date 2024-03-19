@@ -4,26 +4,17 @@ import { getPosts, fetchCategories } from "../lib/api/listing";
 
 import Category from "../containers/Category/Category";
 
-const Page = (props) => (
-  <>
-    <Head>
-      <title>KOGAA</title>
-    </Head>
-    <Category {...props} />
-    {/* <div
-      style={{
-        width: "100%",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <h1 style={{ color: "#ef4123", textAlign: "center" }}>
-        KOGAA page is under construction
-      </h1>
-    </div> */}
-  </>
-);
+const Page = (props) => {
+  console.log({ props });
+  return (
+    <>
+      <Head>
+        <title>KOGAA</title>
+      </Head>
+      <Category {...props} />
+    </>
+  );
+};
 export default Page;
 
 export async function getStaticProps() {

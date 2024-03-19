@@ -1,41 +1,29 @@
-import { useEffect, useState, Fragment, forwardRef } from "react";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { motion } from "framer-motion";
-import { connect } from "react-redux";
-
-import { formatDate, iOS } from "../../lib/util";
+import { Fragment, forwardRef, useContext, useEffect, useState } from "react";
 import { fadeIn } from "../../lib/animations";
-import * as actions from "../../redux/actions";
-
-import Subcategories from "./Subcategories/Subcategories";
-import Logo from "../../assets/kogaa-logo.svg";
+import { formatDate, iOS } from "../../lib/util";
+import Back from "../../assets/back.svg";
 import Circle from "../../assets/circle.svg";
+import Logo from "../../assets/kogaa-logo.svg";
 import Square from "../../assets/square.svg";
 import Triangle from "../../assets/triangle.svg";
-import Back from "../../assets/back.svg";
-
+import Subcategories from "./Subcategories/Subcategories";
 import classes from "./Menu.module.css";
+import { ScrollRestorationContext } from "../../lib/ScrollRestorationProvider";
+import { set } from "nprogress";
 
 const Menu = forwardRef(
   (
-    {
-      currentCategory,
-      currentSubcategory,
-      subcategories,
-      postSubcategories,
-      postCategory,
-      date,
-      error,
-      setReduxBack,
-      reduxScroll,
-    },
+    { subcategories, postCategory, date, postSubcategories, error, pageType },
     ref
   ) => {
-    const [category, setCategory] = useState(currentCategory);
+    const router = useRouter();
+    const [category, setCategory] = useState(router.query?.category);
+    const { setScrollPosition } = useContext(ScrollRestorationContext);
     const [loading, setLoading] = useState(false);
 
-    const router = useRouter();
     if (router.events) {
       router.events.on("routeChangeStart", () => setLoading(true));
       router.events.on("routeChangeComplete", () => setLoading(false));
@@ -43,10 +31,8 @@ const Menu = forwardRef(
     }
 
     useEffect(() => {
-      if (currentCategory) {
-        setCategory(currentCategory);
-      }
-    }, [currentCategory]);
+      setCategory(router.query?.category || null);
+    }, [router.query?.category]);
 
     useEffect(() => {
       if (postCategory) {
@@ -74,7 +60,6 @@ const Menu = forwardRef(
     };
 
     const onBackArrowClick = () => {
-      setReduxBack(reduxScroll);
       router.back();
     };
 
@@ -82,17 +67,27 @@ const Menu = forwardRef(
       <div ref={ref}>
         <div className={classes.Menu}>
           <div
-            onMouseLeave={() =>
-              loading ? null : setCategoryOnHover(currentCategory)
-            }
+            onMouseLeave={() => {
+              loading
+                ? null
+                : setCategoryOnHover(router.pathname === "/" ? null : category);
+            }}
           >
             <div className={classes.MainMenu}>
-              <Link href="/">
+              <Link
+                href="/"
+                onClick={() => {
+                  setScrollPosition(null);
+                }}
+              >
                 <Logo />
               </Link>
               <Link
                 href="/news"
                 onMouseEnter={() => setCategoryOnHover("news")}
+                onClick={() => {
+                  setScrollPosition(null);
+                }}
               >
                 <Circle
                   className={category === "news" ? classes.Active : null}
@@ -101,6 +96,9 @@ const Menu = forwardRef(
               <Link
                 href="/projects"
                 onMouseEnter={() => setCategoryOnHover("projects")}
+                onClick={() => {
+                  setScrollPosition(null);
+                }}
               >
                 <Square
                   className={category === "projects" ? classes.Active : null}
@@ -109,6 +107,9 @@ const Menu = forwardRef(
               <Link
                 href="/about"
                 onMouseEnter={() => setCategoryOnHover("about")}
+                onClick={() => {
+                  setScrollPosition(null);
+                }}
               >
                 <Triangle
                   className={category === "about" ? classes.Active : null}
@@ -120,38 +121,48 @@ const Menu = forwardRef(
               <Subcategories
                 category={category}
                 categories={subcategories[categoryIndex].nodes}
-                currentSubcategory={currentSubcategory}
-                onClick={() => setSelected(true)}
+                currentSubcategory={router.query?.post}
+                onClick={() => {
+                  setSelected(true);
+                  setScrollPosition(null);
+                }}
               />
             ) : null}
 
             <motion.div style={{ background: "white" }} {...fadeIn}>
-              {postSubcategories && !currentCategory ? (
-                <motion.div className={classes.PostSubcategories} {...fadeIn}>
-                  <Back
-                    onClick={onBackArrowClick}
-                    style={{ cursor: "pointer" }}
-                  />
-                  {error ? (
-                    <Link href="/">home</Link>
-                  ) : (
-                    postSubcategories.map((category, index) => {
-                      return (
-                        <Fragment key={category.name}>
-                          <Link href={`/${postCategory}/${category.name}`}>
-                            {category.name}
-                          </Link>
-                          {postSubcategories[index + 1] && "|"}
-                        </Fragment>
-                      );
-                    })
+              {pageType === "post" ? (
+                <>
+                  <motion.div className={classes.PostSubcategories} {...fadeIn}>
+                    <Back
+                      onClick={onBackArrowClick}
+                      style={{ cursor: "pointer" }}
+                    />
+                    {error ? (
+                      <Link href="/">home</Link>
+                    ) : (
+                      postSubcategories.map((category, index) => {
+                        return (
+                          <Fragment key={category.name}>
+                            <Link
+                              href={`/${postCategory}/${category.name}`}
+                              onClick={() => {
+                                setScrollPosition(null);
+                              }}
+                            >
+                              {category.name}
+                            </Link>
+                            {postSubcategories[index + 1] && "|"}
+                          </Fragment>
+                        );
+                      })
+                    )}
+                  </motion.div>
+                  {date && (
+                    <motion.div {...fadeIn} className={classes.Date}>
+                      {formatDate(date)}
+                    </motion.div>
                   )}
-                </motion.div>
-              ) : null}
-              {date && !currentCategory ? (
-                <motion.div {...fadeIn} className={classes.Date}>
-                  {formatDate(date)}
-                </motion.div>
+                </>
               ) : null}
             </motion.div>
           </div>
@@ -161,14 +172,4 @@ const Menu = forwardRef(
   }
 );
 
-const mapStateToProps = (state) => ({
-  reduxScroll: state.scroll,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  setReduxBack: (back) => dispatch(actions.setReduxBack(back)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps, null, {
-  forwardRef: true,
-})(Menu);
+export default Menu;

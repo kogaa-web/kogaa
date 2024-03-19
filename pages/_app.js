@@ -1,13 +1,12 @@
-import React from "react";
-import Router from "next/router";
-import { Provider } from "react-redux";
 import { Kumbh_Sans } from "next/font/google";
+import Router from "next/router";
+import React from "react";
 
 import NProgress from "nprogress"; //nprogress module
 import "../styles/nprogress.css"; //styles of nprogress
-import { useStore } from "../redux/store";
 
 import "../styles/globals.css";
+import { ScrollRestorationProvider } from "../lib/ScrollRestorationProvider";
 
 Router.events.on("routeChangeStart", () => NProgress.start());
 Router.events.on("routeChangeComplete", () => NProgress.done());
@@ -23,13 +22,11 @@ const kumbhSans = Kumbh_Sans({
 });
 
 export default function App({ Component, pageProps }) {
-  const store = useStore(pageProps.initialReduxState);
-
   return (
-    <Provider store={store}>
+    <ScrollRestorationProvider>
       <div className={kumbhSans.className}>
         <Component {...pageProps} />
       </div>
-    </Provider>
+    </ScrollRestorationProvider>
   );
 }
