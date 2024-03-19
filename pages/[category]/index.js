@@ -36,7 +36,7 @@ export async function getStaticProps({ params }) {
     getPosts(params.category),
     fetchCategories(),
   ]);
-  // console.log(allPosts.edges.forEach((post) => console.log(post.node.title)));
+
   return {
     props: {
       category: params.category,

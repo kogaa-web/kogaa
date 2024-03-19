@@ -1,82 +1,36 @@
-import { useState, useEffect, Fragment, use } from "react";
 import { useRouter } from "next/router";
-import { connect } from "react-redux";
-import FlipMove from "react-flip-move";
+import { Fragment, useEffect, useState } from "react";
 
-import { getPosts, getPostsBySubcategory } from "../../lib/api/listing";
-import * as actions from "../../redux/actions";
-
-import Layout from "../../components/Layout/Layout";
 import Card from "../../components/Card/Card";
+import Layout from "../../components/Layout/Layout";
 
-import styles from "./Category.module.css";
+import { getPosts } from "../../lib/api/listing";
 import globalStyles from "../../styles/Global.module.css";
+import styles from "./Category.module.css";
 
-const Category = ({
-  category,
-  subcategories,
-  allPosts,
-  reduxPosts,
-  setReduxPosts,
-  subcategory,
-  setReduxScroll,
-  reduxBack,
-  setReduxHasNextPage,
-  reduxHasNextPage,
-  setReduxEndCursor,
-  reduxEndCursor,
-  setReduxFromSingle,
-  reduxFromSingle,
-}) => {
+const Category = ({ subcategories, allPosts }) => {
   const router = useRouter();
 
-  const [loadingMore, setLoadingMore] = useState(false);
-  console.log(allPosts.edges.forEach((post) => console.log(post.node.title)));
-  const [posts, setPosts] = useState(
-    allPosts.edges
-    // (reduxPosts && !reduxFromSingle) || (reduxPosts && reduxBack)
-    //   ? reduxPosts
-    //   : allPosts.edges
-  );
+  const [posts, setPosts] = useState(allPosts.edges);
   const [hasNextPage, setHasNextPage] = useState(allPosts.pageInfo.hasNextPage);
   const [endCursor, setEndCursor] = useState(allPosts.pageInfo.endCursor);
-  const [firstTimeRendered, setFirstTimeRendered] = useState(false);
 
   // Sets posts on page change
   useEffect(() => {
-    if (!reduxPosts) {
-      setFirstTimeRendered(true);
-    }
-    // Disable regrouping animation if navigated from single page but not from back arrow
-    if (reduxFromSingle && !reduxBack) {
-      setFirstTimeRendered(true);
-      setReduxFromSingle(false);
-    }
-    // If loaded from back arrow click
-    if (reduxPosts && reduxBack) {
-      setHasNextPage(reduxHasNextPage);
-      setEndCursor(reduxEndCursor);
-    } else {
-      setPosts(allPosts.edges);
-      setHasNextPage(allPosts.pageInfo.hasNextPage);
-      setEndCursor(allPosts.pageInfo.endCursor);
-      setReduxPosts(allPosts.edges);
-      setReduxHasNextPage(allPosts.pageInfo.hasNextPage);
-      setReduxEndCursor(allPosts.pageInfo.endCursor);
-    }
-    if (process.browser) {
-      setReduxScroll(window.scrollY);
-    }
+    setPosts(allPosts.edges);
+    setHasNextPage(allPosts.pageInfo.hasNextPage);
+    setEndCursor(allPosts.pageInfo.endCursor);
   }, [router.query]);
 
   useEffect(() => {
-    if (!reduxPosts) {
-      setFirstTimeRendered(true);
+    function loadMorePosts() {
+      if (!hasNextPage) return;
+      getPosts(router.query.category, endCursor).then((data) => {
+        setPosts([...posts, ...data.edges]);
+        setHasNextPage(data.pageInfo.hasNextPage);
+        setEndCursor(data.pageInfo.endCursor);
+      });
     }
-  }, []);
-
-  useEffect(() => {
-    if (!reduxPosts || !firstTimeRendered) return;
     const loadMoreEl = document.querySelector("#loadMore");
     const observer = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) {
@@ -87,81 +41,28 @@ const Category = ({
     return () => {
       observer.disconnect();
     };
-  }, [reduxPosts, firstTimeRendered]);
-
-  async function loadMorePosts() {
-    if (!hasNextPage) return;
-    let newPosts = null;
-    if (subcategory) {
-      newPosts = await getPostsBySubcategory(category, subcategory, endCursor);
-    } else {
-      newPosts = await getPosts(category, endCursor);
-    }
-    setHasNextPage(newPosts.pageInfo.hasNextPage);
-    setEndCursor(newPosts.pageInfo.endCursor);
-    setReduxHasNextPage(newPosts.pageInfo.hasNextPage);
-    setReduxEndCursor(newPosts.pageInfo.endCursor);
-    const allPosts = [...posts];
-    newPosts.edges.map((post) => {
-      allPosts.push(post);
-    });
-    setPosts(allPosts);
-    setReduxPosts(allPosts);
-    setLoadingMore(false);
-  }
+  }, [hasNextPage, endCursor, posts, router.query]);
 
   return (
     <div className={styles.container}>
-      <Layout
-        currentCategory={category}
-        subcategories={subcategories}
-        currentSubcategory={subcategory}
-      >
-        {firstTimeRendered || reduxPosts ? (
-          <FlipMove
-            enterAnimation="fade"
-            leaveAnimation="fade"
-            duration={400}
-            className={
-              firstTimeRendered
-                ? [styles.Cards, globalStyles.FadeIn].join(" ")
-                : styles.Cards
-            }
-          >
-            {posts.map(({ node }, i) => {
-              return (
-                <Fragment key={node.id}>
-                  {node.featuredImage && <Card post={node} />}
-                </Fragment>
-              );
-            })}
-          </FlipMove>
-        ) : null}
+      <Layout subcategories={subcategories}>
+        <div
+          className={
+            true ? [styles.Cards, globalStyles.FadeIn].join(" ") : styles.Cards
+          }
+        >
+          {posts.map(({ node }, i) => {
+            return (
+              <Fragment key={node.id}>
+                {node.featuredImage && <Card post={node} />}
+              </Fragment>
+            );
+          })}
+        </div>
         <div id="loadMore" />
       </Layout>
     </div>
   );
 };
 
-const mapStateToProps = (state) => ({
-  reduxPosts: state.posts,
-  reduxScroll: state.scroll,
-  reduxBack: state.back,
-  reduxHasNextPage: state.hasNextPage,
-  reduxEndCursor: state.endCursor,
-  reduxFromSingle: state.fromSingle,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  setReduxPosts: (posts) => dispatch(actions.setReduxPosts(posts)),
-  setReduxScroll: (scrollPosition) =>
-    dispatch(actions.setReduxScroll(scrollPosition)),
-  setReduxHasNextPage: (hasNextPage) =>
-    dispatch(actions.setReduxHasNextPage(hasNextPage)),
-  setReduxEndCursor: (endCursor) =>
-    dispatch(actions.setReduxEndCursor(endCursor)),
-  setReduxFromSingle: (fromSingle) =>
-    dispatch(actions.setReduxFromSingle(fromSingle)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Category);
+export default Category;

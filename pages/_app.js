@@ -1,11 +1,9 @@
-import React from "react";
-import Router from "next/router";
-import { Provider } from "react-redux";
 import { Kumbh_Sans } from "next/font/google";
+import Router from "next/router";
+import React from "react";
 
 import NProgress from "nprogress"; //nprogress module
 import "../styles/nprogress.css"; //styles of nprogress
-import { useStore } from "../redux/store";
 
 import "../styles/globals.css";
 
@@ -23,13 +21,9 @@ const kumbhSans = Kumbh_Sans({
 });
 
 export default function App({ Component, pageProps }) {
-  const store = useStore(pageProps.initialReduxState);
-
   return (
-    <Provider store={store}>
-      <div className={kumbhSans.className}>
-        <Component {...pageProps} />
-      </div>
-    </Provider>
+    <div className={kumbhSans.className}>
+      <Component {...pageProps} />
+    </div>
   );
 }
