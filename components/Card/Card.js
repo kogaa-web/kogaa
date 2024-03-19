@@ -7,7 +7,7 @@ import { formatDate, getCategories } from "../../lib/util";
 import classes from "./Card.module.css";
 import globalClasses from "../../styles/Global.module.css";
 
-const Card = forwardRef(({ post }, ref) => {
+const Card = forwardRef(({ post, id }, ref) => {
   const [loaded, setLoaded] = useState(false);
   const image = useRef();
 
@@ -67,7 +67,7 @@ const Card = forwardRef(({ post }, ref) => {
   }
 
   return (
-    <div ref={ref} className={cardClasses.join(" ")}>
+    <div ref={ref} className={cardClasses.join(" ")} id={post.id}>
       {cardImage}
       {loaded ? (
         <>

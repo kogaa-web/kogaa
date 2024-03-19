@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment, use } from "react";
 import { useRouter } from "next/router";
 import { connect } from "react-redux";
 import FlipMove from "react-flip-move";
@@ -31,10 +31,12 @@ const Category = ({
   const router = useRouter();
 
   const [loadingMore, setLoadingMore] = useState(false);
+  console.log(allPosts.edges.forEach((post) => console.log(post.node.title)));
   const [posts, setPosts] = useState(
-    (reduxPosts && !reduxFromSingle) || (reduxPosts && reduxBack)
-      ? reduxPosts
-      : allPosts.edges
+    allPosts.edges
+    // (reduxPosts && !reduxFromSingle) || (reduxPosts && reduxBack)
+    //   ? reduxPosts
+    //   : allPosts.edges
   );
   const [hasNextPage, setHasNextPage] = useState(allPosts.pageInfo.hasNextPage);
   const [endCursor, setEndCursor] = useState(allPosts.pageInfo.endCursor);
@@ -65,39 +67,30 @@ const Category = ({
     if (process.browser) {
       setReduxScroll(window.scrollY);
     }
-    return () => window.removeEventListener("scroll", onScrollHandler);
   }, [router.query]);
 
   useEffect(() => {
     if (!reduxPosts) {
       setFirstTimeRendered(true);
     }
-    return () => window.removeEventListener("scroll", onScrollHandler);
   }, []);
 
-  // Adding and removing scroll handler
   useEffect(() => {
-    window.addEventListener("scroll", onScrollHandler);
-    return () => window.removeEventListener("scroll", onScrollHandler);
-  }, []);
-
-  // Detecting scroll to bottom of the page
-  const onScrollHandler = () => {
-    setReduxScroll(window.scrollY);
-    const siteHeight = document.body.scrollHeight;
-    const scrollPosition = window.scrollY + window.innerHeight * 2;
-    if (
-      scrollPosition >= siteHeight &&
-      !loadingMore &&
-      hasNextPage &&
-      endCursor
-    ) {
-      setLoadingMore(true);
-      loadMorePosts();
-    }
-  };
+    if (!reduxPosts || !firstTimeRendered) return;
+    const loadMoreEl = document.querySelector("#loadMore");
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        loadMorePosts();
+      }
+    });
+    observer.observe(loadMoreEl);
+    return () => {
+      observer.disconnect();
+    };
+  }, [reduxPosts, firstTimeRendered]);
 
   async function loadMorePosts() {
+    if (!hasNextPage) return;
     let newPosts = null;
     if (subcategory) {
       newPosts = await getPostsBySubcategory(category, subcategory, endCursor);
@@ -135,11 +128,16 @@ const Category = ({
                 : styles.Cards
             }
           >
-            {posts.map(({ node }) =>
-              node.featuredImage ? <Card post={node} key={node.id} /> : null
-            )}
+            {posts.map(({ node }, i) => {
+              return (
+                <Fragment key={node.id}>
+                  {node.featuredImage && <Card post={node} />}
+                </Fragment>
+              );
+            })}
           </FlipMove>
         ) : null}
+        <div id="loadMore" />
       </Layout>
     </div>
   );

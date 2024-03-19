@@ -1,13 +1,9 @@
 import Head from "next/head";
-
-import { capitalize } from "../../lib/util";
-
 import Category from "../../containers/Category/Category";
 import Error from "../../containers/Error/Error";
+import { fetchCategories, getPosts } from "../../lib/api/listing";
+import { capitalize } from "../../lib/util";
 
-// data
-import { getPosts } from "../../lib/api/listing";
-import { fetchCategories } from "../../lib/api/listing";
 const Page = (props) => {
   return props.error ? (
     <Error subcategories={props.subcategories} />
@@ -40,6 +36,7 @@ export async function getStaticProps({ params }) {
     getPosts(params.category),
     fetchCategories(),
   ]);
+  // console.log(allPosts.edges.forEach((post) => console.log(post.node.title)));
   return {
     props: {
       category: params.category,
