@@ -1,21 +1,21 @@
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 import {
-  useState,
-  useRef,
-  useEffect,
   Fragment,
   forwardRef,
   useContext,
+  useEffect,
+  useRef,
+  useState,
 } from "react";
 
 import { formatDate, getCategories } from "../../lib/util";
 
-import classes from "./Card.module.css";
-import globalClasses from "../../styles/Global.module.css";
 import { ScrollRestorationContext } from "../../lib/ScrollRestorationProvider";
+import globalClasses from "../../styles/Global.module.css";
+import classes from "./Card.module.css";
 
-const Card = forwardRef(({ post, id }, ref) => {
+const Card = forwardRef(({ post }, ref) => {
   const [loaded, setLoaded] = useState(false);
   const { setScrollPosition } = useContext(ScrollRestorationContext);
   const image = useRef();
@@ -40,12 +40,7 @@ const Card = forwardRef(({ post, id }, ref) => {
   let cardImage = null;
   if (post.featuredImage) {
     cardImage = (
-      <Link
-        href={`/${post.contentType.node.name}/${post.slug}`}
-        onClick={() => {
-          setScrollPosition(window.scrollY);
-        }}
-      >
+      <Link href={`/${post.contentType.node.name}/${post.slug}`}>
         <Image
           width="0"
           height="0"
@@ -81,7 +76,14 @@ const Card = forwardRef(({ post, id }, ref) => {
   }
 
   return (
-    <div ref={ref} className={cardClasses.join(" ")} id={post.id}>
+    <div
+      ref={ref}
+      className={cardClasses.join(" ")}
+      id={post.id}
+      onClick={() => {
+        setScrollPosition(window.scrollY);
+      }}
+    >
       {cardImage}
       {loaded ? (
         <>
