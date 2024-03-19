@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 import { fadeIn } from "../../../lib/animations";
 
