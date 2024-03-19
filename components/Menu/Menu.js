@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Fragment, forwardRef, useEffect, useState } from "react";
+import { Fragment, forwardRef, useContext, useEffect, useState } from "react";
 import { fadeIn } from "../../lib/animations";
 import { formatDate, iOS } from "../../lib/util";
 import Back from "../../assets/back.svg";
@@ -11,6 +11,8 @@ import Square from "../../assets/square.svg";
 import Triangle from "../../assets/triangle.svg";
 import Subcategories from "./Subcategories/Subcategories";
 import classes from "./Menu.module.css";
+import { ScrollRestorationContext } from "../../lib/ScrollRestorationProvider";
+import { set } from "nprogress";
 
 const Menu = forwardRef(
   (
@@ -19,6 +21,7 @@ const Menu = forwardRef(
   ) => {
     const router = useRouter();
     const [category, setCategory] = useState(router.query?.category);
+    const { setScrollPosition } = useContext(ScrollRestorationContext);
     const [loading, setLoading] = useState(false);
 
     if (router.events) {
@@ -71,12 +74,20 @@ const Menu = forwardRef(
             }}
           >
             <div className={classes.MainMenu}>
-              <Link href="/">
+              <Link
+                href="/"
+                onClick={() => {
+                  setScrollPosition(null);
+                }}
+              >
                 <Logo />
               </Link>
               <Link
                 href="/news"
                 onMouseEnter={() => setCategoryOnHover("news")}
+                onClick={() => {
+                  setScrollPosition(null);
+                }}
               >
                 <Circle
                   className={category === "news" ? classes.Active : null}
@@ -85,6 +96,9 @@ const Menu = forwardRef(
               <Link
                 href="/projects"
                 onMouseEnter={() => setCategoryOnHover("projects")}
+                onClick={() => {
+                  setScrollPosition(null);
+                }}
               >
                 <Square
                   className={category === "projects" ? classes.Active : null}
@@ -93,6 +107,9 @@ const Menu = forwardRef(
               <Link
                 href="/about"
                 onMouseEnter={() => setCategoryOnHover("about")}
+                onClick={() => {
+                  setScrollPosition(null);
+                }}
               >
                 <Triangle
                   className={category === "about" ? classes.Active : null}
@@ -105,7 +122,10 @@ const Menu = forwardRef(
                 category={category}
                 categories={subcategories[categoryIndex].nodes}
                 currentSubcategory={router.query?.post}
-                onClick={() => setSelected(true)}
+                onClick={() => {
+                  setSelected(true);
+                  setScrollPosition(null);
+                }}
               />
             ) : null}
 
@@ -123,7 +143,12 @@ const Menu = forwardRef(
                       postSubcategories.map((category, index) => {
                         return (
                           <Fragment key={category.name}>
-                            <Link href={`/${postCategory}/${category.name}`}>
+                            <Link
+                              href={`/${postCategory}/${category.name}`}
+                              onClick={() => {
+                                setScrollPosition(null);
+                              }}
+                            >
                               {category.name}
                             </Link>
                             {postSubcategories[index + 1] && "|"}

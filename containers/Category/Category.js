@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 
 import Card from "../../components/Card/Card";
 import Layout from "../../components/Layout/Layout";
@@ -7,6 +7,8 @@ import Layout from "../../components/Layout/Layout";
 import { getPosts } from "../../lib/api/listing";
 import globalStyles from "../../styles/Global.module.css";
 import styles from "./Category.module.css";
+import { ScrollRestorationContext } from "../../lib/ScrollRestorationProvider";
+import { set } from "nprogress";
 
 const Category = ({ subcategories, allPosts }) => {
   const router = useRouter();
@@ -14,12 +16,19 @@ const Category = ({ subcategories, allPosts }) => {
   const [posts, setPosts] = useState(allPosts.edges);
   const [hasNextPage, setHasNextPage] = useState(allPosts.pageInfo.hasNextPage);
   const [endCursor, setEndCursor] = useState(allPosts.pageInfo.endCursor);
+  const { setScrollPosition, scrollPosition } = useContext(
+    ScrollRestorationContext
+  );
 
   // Sets posts on page change
   useEffect(() => {
     setPosts(allPosts.edges);
     setHasNextPage(allPosts.pageInfo.hasNextPage);
     setEndCursor(allPosts.pageInfo.endCursor);
+    if (scrollPosition) {
+      window.scrollTo(0, scrollPosition);
+      setScrollPosition(null);
+    }
   }, [router.query]);
 
   useEffect(() => {

@@ -6,6 +6,7 @@ import NProgress from "nprogress"; //nprogress module
 import "../styles/nprogress.css"; //styles of nprogress
 
 import "../styles/globals.css";
+import { ScrollRestorationProvider } from "../lib/ScrollRestorationProvider";
 
 Router.events.on("routeChangeStart", () => NProgress.start());
 Router.events.on("routeChangeComplete", () => NProgress.done());
@@ -22,8 +23,10 @@ const kumbhSans = Kumbh_Sans({
 
 export default function App({ Component, pageProps }) {
   return (
-    <div className={kumbhSans.className}>
-      <Component {...pageProps} />
-    </div>
+    <ScrollRestorationProvider>
+      <div className={kumbhSans.className}>
+        <Component {...pageProps} />
+      </div>
+    </ScrollRestorationProvider>
   );
 }
